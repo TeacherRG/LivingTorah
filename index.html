@@ -919,8 +919,8 @@ body::before {
     <div class="sec-header">
       <div class="sec-num">✦</div>
       <div class="sec-title-wrap">
-        <div class="sec-label" id="s9-label">Закрепление — Часть 2</div>
-        <div class="sec-title" id="s9-title">Викторина по части 2б</div>
+        <div class="sec-label" id="s9-label">Мини-Викторина — Часть 2</div>
+        <div class="sec-title" id="s9-title">Проверь себя — Мини-Викторина</div>
       </div>
     </div>
 
@@ -946,7 +946,7 @@ body::before {
     <div class="sec-header">
       <div class="sec-num">✦</div>
       <div class="sec-title-wrap">
-        <div class="sec-label" id="s6-label">Закрепление — Часть 1</div>
+        <div class="sec-label" id="s6-label">Мини-Викторина — Часть 1</div>
         <div class="sec-title" id="s6-title">Проверь себя — Мини-Викторина</div>
       </div>
     </div>
@@ -967,33 +967,6 @@ body::before {
     </div>
   </div>
 
-  <!-- PLACEHOLDER: old sec-6 reference kept for JS compat -->
-  <div class="section" id="sec-6-old" style="display:none!important"></div>
-
-
-    <div class="sec-header">
-      <div class="sec-num">✦</div>
-      <div class="sec-title-wrap">
-        <div class="sec-label" id="s6-label">Закрепление</div>
-        <div class="sec-title" id="s6-title">Проверь себя — Мини-Викторина</div>
-      </div>
-    </div>
-
-    <div class="score-bar fade-in">
-      <span class="score-label" id="score-label">Правильных ответов:</span>
-      <span class="score-val" id="scoreVal">0 / 5</span>
-      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
-    </div>
-
-    <div class="quiz-wrap" id="quizWrap"></div>
-
-    <div class="nav-btns" id="quizNavBtns">
-      <button class="btn-prev" onclick="prevSection()">← <span id="btn-prev-6">Назад</span></button>
-      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
-        <span id="btn-finish">Завершить урок</span> 🎓
-      </button>
-    </div>
-  </div>
 
 </div>
 
@@ -1049,7 +1022,7 @@ const T = {
     's5-col1-title':'Обычная любовь','s5-col1-p':'Основана на знакомстве и симпатии.',
     's5-col2-title':'Любовь к Израилю','s5-col2-p':'Основана на общей Б-жественной душе. Мы одна семья.',
     's5-p4':'Уровень практической обязанности — выше к ближнему. Но <strong>внутренняя связь</strong> одинакова со всеми.',
-    's6-label':'Закрепление','s6-title':'Проверь себя — Мини-Викторина',
+    's6-label':'Мини-Викторина — Часть 1','s6-title':'Проверь себя — Мини-Викторина',
     'score-label':'Правильных ответов:',
     'btn-next-1':'Далее','btn-next-2':'Далее','btn-next-3':'Далее','btn-next-4':'Далее','btn-next-5':'К викторине',
     'btn-prev-2':'Назад','btn-prev-3':'Назад','btn-prev-4':'Назад','btn-prev-5':'Назад','btn-prev-6':'Назад',
@@ -1095,7 +1068,7 @@ const T = {
     's5-col1-title':'Звичайна любов','s5-col1-p':'Заснована на знайомстві та симпатії.',
     's5-col2-title':'Любов до Ісраелю','s5-col2-p':'Заснована на спільній Б-жественній душі. Ми одна сім\'я.',
     's5-p4':'Рівень практичного обов\'язку — вищий до ближнього. Але <strong>внутрішній зв\'язок</strong> однаковий з усіма.',
-    's6-label':'Закріплення','s6-title':'Перевір себе — Міні-Вікторина',
+    's6-label':'Міні-Вікторина — Частина 1','s6-title':'Перевір себе — Міні-Вікторина',
     'score-label':'Правильних відповідей:',
     'btn-next-1':'Далі','btn-next-2':'Далі','btn-next-3':'Далі','btn-next-4':'Далі','btn-next-5':'До вікторини',
     'btn-prev-2':'Назад','btn-prev-3':'Назад','btn-prev-4':'Назад','btn-prev-5':'Назад','btn-prev-6':'Назад',
@@ -1610,7 +1583,7 @@ T.de = {
   's5-col1-title':'Gewöhnliche Liebe','s5-col1-p':'Gründet auf Bekanntschaft und Sympathie.',
   's5-col2-title':'Liebe zu Israel','s5-col2-p':'Gründet auf der gemeinsamen g-ttlichen Seele. Wir sind eine Familie.',
   's5-p4':'Die praktische Pflicht ist gegenüber dem Nächsten höher. Aber die <strong>innere Verbindung</strong> ist zu allen gleich.',
-  's6-label':'Wiederholung','s6-title':'Teste dich — Mini-Quiz',
+  's6-label':'Mini-Quiz — Teil 1','s6-title':'Teste dich — Mini-Quiz',
   'score-label':'Richtige Antworten:',
   'btn-next-1':'Weiter','btn-next-2':'Weiter','btn-next-3':'Weiter','btn-next-4':'Weiter','btn-next-5':'Weiter',
   'btn-prev-2':'Zurück','btn-prev-3':'Zurück','btn-prev-4':'Zurück','btn-prev-5':'Zurück','btn-prev-6':'Zurück',
@@ -1646,8 +1619,8 @@ T.de = {
   's8-col2-p':'Eine persönliche Entscheidung ist auch wichtig. Aber die öffentliche erhält zusätzliche Stärke.',
   's8-key-title':'Hauptaussage der Lektion',
   's8-key':'Das wichtigste „Wajakhel" — <strong style="color:var(--gold2)">die Versammlung des ganzen Israels</strong> — ist die vollständige Erlösung, Kibuz Galujos!',
-  's9-label':'Wiederholung — Teil 2b',
-  's9-title':'Quiz: Fürsorge, Kritik und Geula',
+  's9-label':'Mini-Quiz — Teil 2',
+  's9-title':'Teste dich — Mini-Quiz',
   'score-label-2':'Richtige Antworten:',
   'btn-prev-6b':'Zurück','btn-next-6b':'Weiter',
   'btn-prev-7':'Zurück','btn-next-7':'Weiter',
@@ -1874,8 +1847,8 @@ const newKeysRu = {
   's8-col2-p': 'Личное решение тоже важно. Но публичное обретает дополнительную силу общины.',
   's8-key-title': 'Главный вывод урока',
   's8-key': 'Главное «ваякhэль» — <strong style="color:var(--gold2)">собрание всего Израиля</strong> в Кибуц Галуёт, полное Освобождение!',
-  's9-label': 'Закрепление — Часть 2б',
-  's9-title': 'Викторина: Забота, критика и Геула',
+  's9-label': 'Мини-Викторина — Часть 2',
+  's9-title': 'Проверь себя — Мини-Викторина',
   'score-label-2': 'Правильных ответов:',
   'btn-prev-6b': 'Назад', 'btn-next-6b': 'Далее',
   'btn-prev-7': 'Назад', 'btn-next-7': 'Далее',
@@ -1913,8 +1886,8 @@ const newKeysUk = {
   's8-col2-p': 'Особисте рішення теж важливе. Але публічне набуває додаткової сили громади.',
   's8-key-title': 'Головний висновок уроку',
   's8-key': 'Головне «ваякhель» — <strong style="color:var(--gold2)">зібрання всього Ісраелю</strong> у Кібуц Галуйот, повне Визволення!',
-  's9-label': 'Закріплення — Частина 2б',
-  's9-title': 'Вікторина: Турбота, критика та Геула',
+  's9-label': 'Міні-Вікторина — Частина 2',
+  's9-title': 'Перевір себе — Міні-Вікторина',
   'score-label-2': 'Правильних відповідей:',
   'btn-prev-6b': 'Назад', 'btn-next-6b': 'Далі',
   'btn-prev-7': 'Назад', 'btn-next-7': 'Далі',
