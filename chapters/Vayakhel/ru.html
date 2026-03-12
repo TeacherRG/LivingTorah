@@ -56,6 +56,17 @@ body::before {
   box-shadow: 0 0 10px var(--gold);
 }
 
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
 /* Lang toggle */
 .lang-toggle {
   position:fixed; top:16px; right:16px;
@@ -513,6 +524,8 @@ body::before {
 <body>
 
 <div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
 
 <div class="lang-toggle">
   <button class="lang-btn active" onclick="setLang('ru')" id="btnRu">RU</button>

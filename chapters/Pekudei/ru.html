@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרשת פקודי — Секрет возведения Мишкана</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0a1a;
+  --bg2: #13102a;
+  --gold: #d4a843;
+  --gold2: #f0c96a;
+  --gold-dim: rgba(212,168,67,0.18);
+  --gold-faint: rgba(212,168,67,0.07);
+  --blue: #3a7bd5;
+  --blue2: #5b9cf6;
+  --blue-dim: rgba(58,123,213,0.15);
+  --teal: #2ec4b6;
+  --rose: #e05c7a;
+  --text: #e8e0cc;
+  --text-dim: rgba(232,224,204,0.55);
+  --text-faint: rgba(232,224,204,0.25);
+  --border: rgba(212,168,67,0.2);
+  --border-faint: rgba(212,168,67,0.08);
+  --card: rgba(255,255,255,0.035);
+  --radius: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rubik', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(58,123,213,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(212,168,67,0.06) 0%, transparent 60%);
+  pointer-events:none; z-index:0;
+}
+
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
+/* Lang toggle */
+.lang-toggle {
+  position:fixed; top:16px; right:16px;
+  display:flex; gap:6px; z-index:99;
+}
+.lang-btn {
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px;
+}
+.lang-btn.active { background:var(--gold); color:#0d0a1a; border-color:var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  text-align:center;
+  padding: 80px 20px 60px;
+  border-bottom: 1px solid var(--border-faint);
+  overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center 60%, rgba(212,168,67,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.parasha-label {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:4px;
+  text-shadow: 0 0 40px rgba(212,168,67,0.4);
+  direction:rtl;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+.hero-sub {
+  font-size:clamp(13px,2vw,16px);
+  color:var(--text-dim);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(22px,4vw,38px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  max-width:700px;
+  margin:0 auto 16px;
+}
+
+.hero-verse {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--gold);
+  direction:rtl;
+  padding: 12px 24px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--gold-faint);
+  margin-bottom:12px;
+}
+
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  font-style:italic; margin-bottom:32px;
+}
+
+/* Section nav dots */
+.nav-dots {
+  display:flex; gap:8px; justify-content:center;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border);
+  cursor:pointer; transition:all 0.3s;
+  position:relative;
+}
+.nav-dot.active, .nav-dot.done { background:var(--gold); }
+.nav-dot.done::after {
+  content:'✓'; position:absolute; top:-20px; left:50%;
+  transform:translateX(-50%); font-size:10px; color:var(--gold);
+  white-space:nowrap;
+}
+
+/* Start btn */
+.start-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 40px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow: 0 8px 30px rgba(212,168,67,0.3);
+  letter-spacing:1px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.4); }
+
+/* ── SECTIONS ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:0 20px 80px;
+  position:relative; z-index:1;
+}
+
+.section {
+  display:none; opacity:0;
+  transform:translateY(24px);
+  transition:all 0.5s ease;
+}
+.section.active {
+  display:block; opacity:1; transform:translateY(0);
+}
+
+/* Section header */
+.sec-header {
+  display:flex; align-items:center; gap:16px;
+  margin:48px 0 28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border-faint);
+}
+
+.sec-num {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6010);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:18px;
+  color:#0d0a1a; flex-shrink:0;
+}
+
+.sec-title-wrap {}
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(18px,3vw,26px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+
+/* Hebrew section subtitle */
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold);
+  direction:rtl;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* Content cards */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+
+.card p {
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.85;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.card p:last-child { margin-bottom:0; }
+
+.card p em { color:var(--gold2); font-style:normal; font-weight:500; }
+.card p strong { color:var(--gold2); }
+
+/* Footnote style */
+.footnote {
+  font-size:12px;
+  color:var(--text-faint);
+  line-height:1.6;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--border-faint);
+}
+
+/* Hebrew quote */
+.heb-quote {
+  background:rgba(212,168,67,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin:20px 0;
+  direction:rtl;
+  text-align:right;
+}
+.heb-quote .heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2);
+  line-height:1.9;
+  margin-bottom:10px;
+}
+.heb-quote .heb-src {
+  font-size:12px; color:var(--text-faint);
+  letter-spacing:1px; direction:rtl;
+}
+
+/* Key concept box */
+.key-concept {
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin:20px 0;
+}
+.key-icon {
+  font-size:28px; flex-shrink:0; margin-top:2px;
+}
+.key-body .key-title {
+  font-weight:700; color:var(--blue2);
+  font-size:15px; margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.key-body p {
+  font-size:15px; line-height:1.7;
+  color:var(--text); margin:0;
+}
+
+/* Two columns */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin:20px 0;
+}
+@media(max-width:560px){ .two-col{ grid-template-columns:1fr; } }
+
+.col-card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:10px;
+  padding:18px 20px;
+}
+.col-card .col-title {
+  font-weight:700; font-size:15px;
+  margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.col-card p { font-size:14px; line-height:1.7; color:var(--text-dim); }
+
+/* Formula style */
+.formula-block {
+  display:flex; align-items:center;
+  justify-content:center; gap:12px;
+  flex-wrap:wrap;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(58,123,213,0.05));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin:20px 0;
+  font-family:'Merriweather',serif;
+}
+.f-part {
+  padding:8px 18px; border-radius:8px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+  text-align:center;
+}
+.f-eq { font-size:22px; color:var(--gold); }
+.f-result {
+  background:var(--gold);
+  color:#0d0a1a;
+  padding:10px 20px; border-radius:10px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+}
+
+/* Navigation buttons */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:40px; gap:16px; flex-wrap:wrap;
+}
+
+.btn-prev, .btn-next {
+  font-family:'Rubik',sans-serif; font-weight:600;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; font-size:15px; transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-prev {
+  background:transparent; color:var(--text-dim);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { background:var(--card); color:var(--text); }
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a;
+  box-shadow: 0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── QUIZ ── */
+.quiz-wrap { margin:28px 0; }
+
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  transition:all 0.3s;
+}
+
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+
+.q-options { display:flex; flex-direction:column; gap:10px; }
+
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  animation:fadeInUp 0.5s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnRu">RU</button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">פרשת פְּקוּדֵי</div>
+  <div class="hero-sub">Парашат Пкудей · Урок</div>
+  <div class="hero-title">Секрет возведения Мишкана</div>
+  <div class="hero-verse">וַיָּקָם הַמִּשְׁכָּן</div>
+  <div class="hero-verse-ru">«И встал Мишкан» (Шмот 40:17)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
+</div>
+
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1 -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Тема урока</div>
+        <div class="sec-title">Чудесное возведение</div>
+        <div class="sec-heb-sub">הקמה ניסית</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Наша глава рассказывает: <em>«И было: в первом месяце второго года, в первый день месяца встал Мишкан»</em> (Шмот, 40:17).</p>
+      <p>Мидраш, а вслед за ним и Раши, обращают внимание на то, что Тора говорит <em>«встал Мишкан»</em>. Это слово приводит их к простому выводу: <strong>Мишкан встал сам собой, без участия людей.</strong></p>
+      <p>Почему? Потому что никто из евреев не смог бы его воздвигнуть — из-за тяжести балок. В том числе и Моше.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיָּקָם הַמִּשְׁכָּן</div>
+      <div class="heb-src">— שמות מ:יז · Шмот 40:17</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Тогда <strong>Всевышний сказал Моше:</strong> «Приложи руку и делай вид, будто ты поднимаешь балки, и они сами встанут. Я же напишу о тебе, что это ты поставил Мишкан».</p>
+      <p>Так и сказано: «И было: в первом месяце второго года, в первый день месяца встал Мишкан». Кто же его поставил? Моше, как написано: <em>«И воздвиг Моше Мишкан»</em>.</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>В этом же комментарии Мидраш — а следом и Раши — рассказывает, что уже с 23 адара, в течение всех «семи дней посвящения», предшествовавших воздвижению Мишкана, <em>Моше ежедневно строил Мишкан и разбирал его</em>.</p>
+      <p><strong>Но вот вопрос:</strong> как же ему удавалось это делать, если человеку это было просто не под силу?!</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🕍</div>
+      <div class="key-body">
+        <div class="key-title">Центральный вопрос урока</div>
+        <p>Откуда у Моше брались силы собирать Мишкан в «семь дней посвящения», если чудо самостоятельного вставания произошло лишь 1 нисана? Ответ зависит от позиции <strong style="color:var(--gold2)">Раши или Рамбана</strong> — и обнаруживает глубокое различие в понимании самой природы Мишкана.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Спор комментаторов</div>
+        <div class="sec-title">Два взгляда на Мишкан в «семь дней посвящения»</div>
+        <div class="sec-heb-sub">שתי דעות בנוגע למשכן בשבעת ימי המילואים</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Зачем Моше воздвигал Мишкан в «семь дней посвящения»? Ведь повеление Всевышнего установить его касалось лишь <em>«первого дня первого месяца»</em>. На этот счёт мнения Раши и Рамбана разошлись.</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>📜</span> Рамбан</div>
+        <p>Моше получил <em>два</em> повеления. Первое: «И собери Мишкан в том порядке, который указан тебе на горе». Второе: «В первый день первого месяца воздвигни Мишкан». Моше понял: в 1 нисана — <strong>окончательное</strong> воздвижение; значит, в «дни посвящения» надо было собирать и разбирать обратно.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>📖</span> Раши</div>
+        <p>Раши придерживается простого смысла Торы. Слова «В первый день первого месяца воздвигни Мишкан» означают лишь то, что <em>в этот день он должен быть установлен</em>. Вторая фраза раскрывает смысл первой: «собери Мишкан... в 1 нисана». Никакого особого «окончательного» воздвижения нет.</p>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Зачем же тогда, по мнению <strong>Раши</strong>, Моше собирал Мишкан ещё до 1 нисана, если не получал об этом повеления Всевышнего?</p>
+      <p>Моше сам пришёл к выводу, что в этом есть необходимость. Он рассудил так: <em>«Всевышний приказал мне провести посвящение Аѓарона и его сыновей в храмовую службу. Где именно должны будущие служители пройти подготовку? Там, где им предстоит служить — в Мишкане! А Всевышний сказал, чтобы "семь дней посвящения" проходили у входа в Шатёр собрания»</em>.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p><strong>Итог:</strong> по Рамбану, сборка в «семь дней» была <em>прямым Божественным повелением</em>. По Раши — это было собственное решение Моше, продиктованное логикой подготовки к служению.</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">Рамбан<br><small>2 повеления = временная + окончательная сборка</small></div>
+      <div class="f-eq">≠</div>
+      <div class="f-part" style="background:var(--gold-faint);border:1px solid var(--border);color:var(--gold2)">Раши<br><small>1 повеление = сборка 1 нисана; до этого — решение Моше</small></div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Суть различия</div>
+        <div class="sec-title">Когда Мишкан стал Мишканом</div>
+        <div class="sec-heb-sub">כיצד משכן נהיה משכן</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Принципиальное отличие 1 нисана — восьмого дня, следующего после «семи дней посвящения» — от предыдущих семи дней в том, что <em>именно тогда на Мишкан опустилась Шхина, Божественное присутствие</em>.</p>
+      <p>Говоря словами Торы: <em>«И слава Б-га наполнила Мишкан»</em>. Но почему Шхина не раскрылась в «семь дней посвящения»? Ведь Мишкан был уже сооружён!</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְעָשׂוּ לִי מִקְדָּשׁ וְשָׁכַנְתִּי בְּתוֹכָם</div>
+      <div class="heb-src">— שמות כה:ח · Шмот 25:8</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«И сделают Мне святилище, и Я буду обитать среди них» — из чего следует, что раскрытие Шхины зависит <em>лишь от сооружения Мишкана</em>. Почему же этого не произошло в «семь дней посвящения»?</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>📖</span> Ответ по Раши</div>
+        <p>Раши считает, что сборка в «семь дней» была лишь <em>частью подготовки Аѓарона</em> к будущей службе — не ради воздвижения Мишкана как такового. Поэтому это нельзя назвать тем «воздвижением», которое приводит к раскрытию Шхины: у действия была другая цель.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>📜</span> Ответ по Рамбану</div>
+        <p>Рамбан объясняет: установка в «семь дней» была <em>временной, репетиционной</em> — чтобы помочь левитам привыкнуть к исполнению обязанностей и придать воздвижению 1 нисана особую торжественность. Шхина приходит только в «настоящее» место пребывания.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Разница между статусом Мишкана в «семь дней посвящения» и в восьмой день (1 нисана) напоминает отличие <em>между репетицией и самим событием</em>. Репетиция может быть совершенной во всех деталях — но полное раскрытие Б-жественного присутствия наступает только тогда, когда наступает <strong>подлинный момент</strong>.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">✨</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Главный вывод</div>
+        <p>Несмотря на разницу в объяснениях, и Раши, и Рамбан сходятся: <strong style="color:var(--gold2)">Шхина нисходит не просто туда, где стоит Мишкан, а туда, где Мишкан выполняет своё истинное предназначение.</strong> Форма без содержания — ещё не «Мишкан» в полном смысле слова.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">К викторине →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: QUIZ -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Мини-Викторина</div>
+        <div class="sec-title">Проверь себя</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Правильных ответов:</span>
+      <span class="score-val" id="scoreVal">0 / 5</span>
+      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
+        Завершить урок 🎓
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div class="lesson-container">
+  <div class="result-screen" id="resultScreen">
+    <div class="result-star" id="resultStar">⭐</div>
+    <div class="result-title" id="result-title">Урок завершён!</div>
+    <div class="result-score-big" id="resultScoreBig">0</div>
+    <div class="result-score-label" id="result-score-label">из 5 правильных</div>
+    <div class="result-sub" id="result-sub">Молодец! Ты познакомился с глубокими идеями о возведении Мишкана.</div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="restart-btn" onclick="restartLesson()">↺ Начать снова</button>
+      <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Почему никто из евреев не мог воздвигнуть Мишкан?',
+    opts: [
+      'Потому что это было привилегией только первосвященника',
+      'Из-за тяжести балок — никакой человек физически не был способен их поднять',
+      'Потому что они ещё не знали порядок сборки',
+      'Из-за нечистоты — требовалось очищение перед сборкой'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Раши объясняет: балки были настолько тяжёлыми, что никто — в том числе Моше — не мог их поднять. Поэтому Мишкан встал чудесным образом сам.',
+    fb_no: '✗ Неверно. Причина в тяжести балок: никто физически не был способен их поднять. Поэтому Мишкан встал сам собой, а Моше лишь «делал вид», что поднимает.'
+  },
+  {
+    q: 'Что сказал Всевышний Моше, когда тот не мог поднять балки?',
+    opts: [
+      'Что нужно позвать на помощь левитов и сделать это вместе',
+      'Что нужно молиться и тогда придут силы',
+      'Что Моше должен приложить руку, делая вид, что поднимает, и Мишкан встанет сам, а в Торе будет написано, что Моше его воздвиг',
+      'Что чудо произойдёт только если весь народ Израиля соберётся вместе'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! Всевышний сказал: «Приложи руку и делай вид, будто поднимаешь — и они сами встанут. А Я напишу о тебе, что ты поставил Мишкан».',
+    fb_no: '✗ Неверно. Всевышний сказал Моше: приложи руку и делай вид, что поднимаешь балки. Они встанут сами, а Тора напишет, что Моше воздвиг Мишкан.'
+  },
+  {
+    q: 'Как Рамбан объясняет то, что Моше собирал Мишкан в «семь дней посвящения»?',
+    opts: [
+      'Это была личная инициатива Моше, чтобы потренироваться перед настоящей сборкой',
+      'Рамбан считает, что в «семь дней» Мишкан не собирался вовсе — это легенда',
+      'Моше получил два повеления: первое — собрать Мишкан по плану с горы, второе — воздвигнуть 1 нисана как окончательное. Значит, в «семь дней» — временная сборка согласно первому повелению',
+      'Это было нужно, чтобы проверить, не было ли ошибок в изготовлении деталей'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! Рамбан считает, что два Б-жественных повеления предполагали сборку в «семь дней» (согласно первому) и окончательное постоянное воздвижение 1 нисана (согласно второму).',
+    fb_no: '✗ Неверно. По Рамбану, Моше получил два повеления: одно — собрать Мишкан «в порядке, указанном на горе», второе — воздвигнуть 1 нисана. Отсюда — временные сборки в «семь дней».'
+  },
+  {
+    q: 'Почему, по мнению Раши, Моше принял самостоятельное решение собирать Мишкан в «семь дней посвящения»?',
+    opts: [
+      'Потому что именно в эти дни выпадал удобный момент — все евреи были свободны',
+      'Потому что Мишкан нужно было собрать хотя бы один раз до 1 нисана для проверки',
+      'Потому что Всевышний повелел, чтобы «семь дней посвящения» проходили у входа в Шатёр собрания — значит, Мишкан должен стоять в эти дни',
+      'Потому что Раши считает, что 1 нисана Мишкан нельзя было собирать — был запрет из-за Шаббата'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! По Раши, Моше рассудил: повеление о «семи днях посвящения» у входа в Шатёр собрания подразумевает, что Мишкан должен стоять в эти дни. Это была логика самого Моше.',
+    fb_no: '✗ Неверно. Раши объясняет: Моше сам понял, что Мишкан нужен уже в «семь дней посвящения», поскольку Всевышний повелел проводить служение «у входа в Шатёр собрания».'
+  },
+  {
+    q: 'Почему Шхина не нисходила на Мишкан в «семь дней посвящения», хотя он был построен?',
+    opts: [
+      'Потому что в те дни Моше совершал ошибки при сборке',
+      'По Раши: эта сборка была ради подготовки Аѓарона, а не ради воздвижения Мишкана как такового — значит, это не то действие, которое приводит к раскрытию Шхины',
+      'Потому что Шхина не нисходила нигде в пустыне, только в Эрец Исраэль',
+      'Потому что Аѓарон и его сыновья ещё не были посвящены в служение'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! По Раши, сборка в «семь дней» имела другую цель — подготовку к служению. Поэтому она не является тем «воздвижением Мишкана», которое влечёт раскрытие Шхины.',
+    fb_no: '✗ Неверно. По Раши, причина в том, что сборка в «семь дней» была направлена на подготовку к служению, а не на создание Б-жественного жилища. Поэтому Шхина и не нисходила.'
+  }
+];
+
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+let quizInitialized = false;
+
+const SECTION_ORDER = [1, 2, 3, 4];
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  goToSection(1);
+  buildNavDots();
+}
+
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 4 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил идеи урока о возведении Мишкана.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.6 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  goToSection(1);
+}
+</script>
+</body>
+</html>
