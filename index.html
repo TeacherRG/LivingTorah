@@ -2,13 +2,281 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=chapters/Vayakhel/ru.html">
-<title>פרשת ויקהל — Урок: Єдність Ісраелю</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תורה חיה — Living Torah · Уроки Торы</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0a1a;
+  --bg2: #13102a;
+  --gold: #d4a843;
+  --gold2: #f0c96a;
+  --gold-dim: rgba(212,168,67,0.18);
+  --gold-faint: rgba(212,168,67,0.07);
+  --blue: #3a7bd5;
+  --blue2: #5b9cf6;
+  --blue-dim: rgba(58,123,213,0.15);
+  --teal: #2ec4b6;
+  --rose: #e05c7a;
+  --text: #e8e0cc;
+  --text-dim: rgba(232,224,204,0.55);
+  --text-faint: rgba(232,224,204,0.25);
+  --border: rgba(212,168,67,0.2);
+  --border-faint: rgba(212,168,67,0.08);
+  --card: rgba(255,255,255,0.035);
+  --radius: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rubik', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(58,123,213,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(212,168,67,0.06) 0%, transparent 60%);
+  pointer-events:none; z-index:0;
+}
+
+.site-header {
+  text-align: center;
+  padding: 70px 20px 50px;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--border-faint);
+  margin-bottom: 56px;
+}
+
+.site-header::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center 70%, rgba(212,168,67,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.site-logo {
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(44px, 9vw, 88px);
+  font-weight: 900;
+  color: var(--gold2);
+  text-shadow: 0 0 50px rgba(212,168,67,0.4);
+  direction: rtl;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.site-subtitle {
+  font-size: clamp(13px, 2vw, 16px);
+  color: var(--text-dim);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.site-desc {
+  font-size: 15px;
+  color: var(--text-dim);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.lessons-section {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 20px 100px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.lesson-card {
+  background: var(--card);
+  border: 1px solid var(--border-faint);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.lesson-card:nth-child(2) { animation-delay: 0.12s; }
+.lesson-card:nth-child(3) { animation-delay: 0.24s; }
+
+.lesson-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+}
+
+.lesson-parasha {
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 900;
+  color: var(--gold2);
+  direction: rtl;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.lesson-num {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.lesson-title {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.lesson-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.lesson-source {
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+.lesson-langs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+
+.lang-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-faint);
+}
+
+.lesson-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold), #a87800);
+  color: #0d0a1a;
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 24px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  align-self: flex-start;
+  box-shadow: 0 4px 18px rgba(212,168,67,0.25);
+}
+
+.lesson-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(212,168,67,0.35);
+}
+
+@media (max-width: 520px) {
+  .lessons-grid { grid-template-columns: 1fr; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
 <body>
-<p>Переадресация... / Перенаправлення... / Weiterleitung...<br>
-<a href="chapters/Vayakhel/ru.html">RU</a> ·
-<a href="chapters/Vayakhel/uk.html">УК</a> ·
-<a href="chapters/Vayakhel/de.html">DE</a></p>
+
+<div class="site-header">
+  <div class="site-logo">תורה חיה</div>
+  <div class="site-subtitle">Living Torah · Живая Тора</div>
+  <div class="site-desc">Уроки по учению Ребе — Менахема Менделя Шнеерсона</div>
+</div>
+
+<div class="lessons-section">
+  <div class="section-label">Уроки Торы</div>
+  <div class="lessons-grid">
+
+    <!-- Lesson 1: Vayakhel -->
+    <a class="lesson-card" href="chapters/Vayakhel/ru.html">
+      <div class="lesson-parasha">פרשת וַיַּקְהֵל</div>
+      <div class="lesson-num">Парашат Ваякhэль</div>
+      <div class="lesson-title">Единство Израиля:<br>от «каждого» к «всем»</div>
+      <div class="lesson-desc">Почему единство — это не средство, а цель? Урок о любви к ближнему, силе единения и приближении Геулы.</div>
+      <div class="lesson-source">Ликутей сихот · Ваякhэль</div>
+      <div class="lesson-langs">
+        <span class="lang-tag">RU</span>
+        <span class="lang-tag">УК</span>
+        <span class="lang-tag">DE</span>
+      </div>
+      <span class="lesson-btn">Начать урок →</span>
+    </a>
+
+    <!-- Lesson 2: Pekudei -->
+    <a class="lesson-card" href="chapters/Pekudei/ru.html">
+      <div class="lesson-parasha">פרשת פְּקוּדֵי</div>
+      <div class="lesson-num">Парашат Пкудей</div>
+      <div class="lesson-title">Секрет возведения Мишкана</div>
+      <div class="lesson-desc">Как Моше удавалось воздвигать неподъёмный Мишкан? В чём спор Раши и Рамбана о «семи днях посвящения» и явлении Шхины?</div>
+      <div class="lesson-source">Ликутей сихот · т. 11</div>
+      <div class="lesson-langs">
+        <span class="lang-tag">RU</span>
+      </div>
+      <span class="lesson-btn">Начать урок →</span>
+    </a>
+
+  </div>
+</div>
+
 </body>
 </html>
