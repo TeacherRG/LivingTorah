@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרשת וַיַּקְהֵל-פְּקוּדֵי — Шаббат: компас жизни</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0a1a;
+  --bg2: #13102a;
+  --gold: #d4a843;
+  --gold2: #f0c96a;
+  --gold-dim: rgba(212,168,67,0.18);
+  --gold-faint: rgba(212,168,67,0.07);
+  --blue: #3a7bd5;
+  --blue2: #5b9cf6;
+  --blue-dim: rgba(58,123,213,0.15);
+  --teal: #2ec4b6;
+  --rose: #e05c7a;
+  --text: #e8e0cc;
+  --text-dim: rgba(232,224,204,0.55);
+  --text-faint: rgba(232,224,204,0.25);
+  --border: rgba(212,168,67,0.2);
+  --border-faint: rgba(212,168,67,0.08);
+  --card: rgba(255,255,255,0.035);
+  --radius: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rubik', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(58,123,213,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(212,168,67,0.06) 0%, transparent 60%);
+  pointer-events:none; z-index:0;
+}
+
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:20px; z-index:99;
+  background:rgba(13,10,26,0.85);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  font-family:'Rubik',sans-serif; font-size:13px;
+  padding:8px 18px; border-radius:30px;
+  text-decoration:none; transition:all 0.2s;
+  backdrop-filter:blur(8px);
+}
+.home-btn:hover { color:var(--gold2); border-color:var(--gold); }
+
+/* Language toggle */
+.lang-toggle {
+  position:fixed; top:16px; right:20px; z-index:99;
+  display:flex; gap:6px;
+}
+.lang-btn {
+  background:rgba(13,10,26,0.85);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:7px 14px; border-radius:30px; cursor:pointer;
+  transition:all 0.2s; backdrop-filter:blur(8px);
+}
+.lang-btn.active { background:var(--gold-dim); color:var(--gold2); border-color:var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:80px 20px 60px;
+  position:relative; z-index:1;
+}
+
+.parasha-label {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(52px,10vw,96px); font-weight:900;
+  color:var(--gold2);
+  text-shadow:0 0 60px rgba(212,168,67,0.5);
+  direction:rtl; line-height:1;
+  margin-bottom:12px;
+}
+
+.hero-sub {
+  font-size:13px; letter-spacing:4px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:18px;
+}
+
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,5vw,44px); font-weight:700;
+  color:var(--text); line-height:1.25;
+  max-width:700px; margin-bottom:24px;
+}
+
+.hero-verse {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(18px,3vw,26px);
+  color:var(--gold); direction:rtl;
+  margin-bottom:6px; font-weight:700;
+}
+
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  margin-bottom:40px; font-style:italic;
+}
+
+.nav-dots {
+  display:flex; gap:10px; margin-bottom:36px;
+  justify-content:center;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  border:1.5px solid var(--border);
+  cursor:pointer; transition:all 0.25s;
+}
+.nav-dot.active { background:var(--gold); border-color:var(--gold); transform:scale(1.25); }
+.nav-dot.done { background:rgba(212,168,67,0.4); border-color:var(--gold); }
+
+.start-btn {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 44px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.25s;
+  box-shadow:0 8px 30px rgba(212,168,67,0.35);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.45); }
+
+/* ── LESSON CONTAINER ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:60px 24px 80px;
+  position:relative; z-index:1;
+}
+
+/* ── SECTION ── */
+.section { display:none; }
+.section.active { display:block; }
+
+.sec-header {
+  display:flex; align-items:flex-start; gap:20px;
+  margin-bottom:32px;
+}
+
+.sec-num {
+  flex-shrink:0; width:52px; height:52px;
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  border-radius:50%; display:flex;
+  align-items:center; justify-content:center;
+  font-family:'Merriweather',serif; font-size:20px;
+  font-weight:700; color:#0d0a1a;
+  box-shadow:0 4px 20px rgba(212,168,67,0.3);
+}
+
+.sec-title-wrap { flex:1; }
+
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:8px;
+}
+
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(20px,3.5vw,28px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:18px; color:var(--gold2);
+  direction:rtl; margin-top:6px; opacity:0.7;
+}
+
+/* ── CARDS ── */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-top:2px solid transparent;
+  border-image:linear-gradient(90deg,transparent,var(--gold),transparent) 1;
+  border-radius:var(--radius);
+  padding:24px 28px; margin-bottom:20px;
+  line-height:1.75;
+}
+.card p { margin-bottom:14px; }
+.card p:last-child { margin-bottom:0; }
+.card em { color:var(--gold2); font-style:normal; }
+.card strong { color:var(--gold2); }
+
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+
+/* ── HEBREW QUOTE ── */
+.heb-quote {
+  background:rgba(212,168,67,0.06);
+  border:1px solid rgba(212,168,67,0.2);
+  border-radius:var(--radius);
+  padding:24px 28px; margin-bottom:20px;
+  text-align:right; direction:rtl;
+}
+.heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(20px,3.5vw,28px);
+  color:var(--gold2); line-height:1.5;
+  margin-bottom:10px;
+}
+.heb-src {
+  font-size:13px; color:var(--text-faint);
+  letter-spacing:1px; direction:ltr; text-align:right;
+}
+
+/* ── KEY CONCEPT ── */
+.key-concept {
+  display:flex; gap:18px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:22px 24px; margin-bottom:20px;
+}
+.key-icon { font-size:28px; flex-shrink:0; line-height:1; }
+.key-body { flex:1; }
+.key-title {
+  font-family:'Merriweather',serif;
+  font-size:15px; font-weight:700;
+  color:var(--blue2); margin-bottom:8px;
+}
+.key-body p { line-height:1.7; font-size:15px; }
+
+/* ── FORMULA BLOCK ── */
+.formula-block {
+  display:flex; align-items:center; justify-content:center;
+  gap:16px; flex-wrap:wrap;
+  background:rgba(0,0,0,0.2);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 20px; margin-bottom:20px;
+}
+.f-part {
+  text-align:center; padding:14px 20px;
+  border-radius:10px; font-size:14px;
+  font-weight:600; line-height:1.4;
+  min-width:130px;
+}
+.f-part small { display:block; font-weight:400; font-size:12px; opacity:0.8; margin-top:4px; }
+.f-eq { font-size:24px; color:var(--gold); font-weight:700; }
+.f-result {
+  background:linear-gradient(135deg,var(--gold-dim),rgba(212,168,67,0.08));
+  border:1px solid var(--gold);
+  color:var(--gold2); padding:14px 20px;
+  border-radius:10px; font-weight:700; font-size:15px;
+  text-align:center;
+}
+
+/* ── TWO COLUMNS ── */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-bottom:20px;
+}
+@media(max-width:600px){ .two-col { grid-template-columns:1fr; } }
+
+.col-card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.col-title {
+  font-family:'Merriweather',serif;
+  font-size:15px; font-weight:700;
+  margin-bottom:10px; display:flex; align-items:center; gap:8px;
+}
+.col-card p { font-size:14px; line-height:1.7; }
+.col-card em { color:var(--gold2); font-style:normal; }
+.col-card strong { color:var(--gold2); }
+
+/* ── STORY BLOCK ── */
+.story-block {
+  background:rgba(224,92,122,0.06);
+  border:1px solid rgba(224,92,122,0.2);
+  border-left:3px solid var(--rose);
+  border-radius:var(--radius);
+  padding:22px 24px; margin-bottom:20px;
+}
+.story-title {
+  font-family:'Merriweather',serif;
+  font-size:14px; font-weight:700;
+  color:var(--rose); margin-bottom:12px;
+  letter-spacing:1px; text-transform:uppercase;
+}
+.story-block p { line-height:1.75; font-size:15px; margin-bottom:12px; }
+.story-block p:last-child { margin-bottom:0; }
+.story-block em { color:var(--gold2); font-style:normal; }
+.story-block strong { color:#f0a0b0; }
+
+/* Footnote */
+.footnote {
+  font-size:12px; color:var(--text-faint);
+  margin-top:16px; letter-spacing:1px;
+  border-top:1px solid var(--border-faint);
+  padding-top:12px;
+}
+
+/* ── NAV BUTTONS ── */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:36px; gap:12px;
+}
+.btn-prev {
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  font-family:'Rubik',sans-serif; font-size:14px;
+  padding:12px 28px; border-radius:30px; cursor:pointer;
+  transition:all 0.2s;
+}
+.btn-prev:hover { color:var(--text); border-color:var(--gold); }
+
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:14px; font-weight:700;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled {
+  opacity:0.4; cursor:default;
+  transform:none !important; box-shadow:none !important;
+}
+
+/* ── QUIZ ── */
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:22px 24px; margin-bottom:20px;
+  transition:border-color 0.3s, background 0.3s;
+}
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+
+.q-options { display:flex; flex-direction:column; gap:10px; }
+
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  animation:fadeInUp 0.5s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnRu">RU</button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">שַׁבָּת</div>
+  <div class="hero-sub">Ваякhэль-Пкудей · Урок рава Ашкенази</div>
+  <div class="hero-title">Шаббат: компас жизни</div>
+  <div class="hero-verse">שֵׁשֶׁת יָמִים תֵּעָשֶׂה מְלָאכָה</div>
+  <div class="hero-verse-ru">«Шесть дней совершается работа» (Шмот 35:2)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
+</div>
+
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1: Вступление -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Вступление</div>
+        <div class="sec-title">Чудеса в Шаббат и два главных вопроса</div>
+        <div class="sec-heb-sub">ניסים בשבת ושתי שאלות מרכזיות</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Урок начинается с удивительного наблюдения: многие ключевые события текущей войны, изменившие лицо Ближнего Востока, — в том числе ликвидации лидеров врагов и чудесное спасение Дональда Трампа от покушения — произошли именно в <em>Шаббат</em>.</p>
+      <p>Раввин подчёркивает: Шаббат — это не день, когда всё замирает в негативном смысле. Шаббат <strong>охраняет</strong> и <strong>хранит</strong> еврейский народ.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">שַׁבָּת שׁוֹמֵר עָלֵינוּ</div>
+      <div class="heb-src">— Шаббат хранит нас</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Это наблюдение ставит перед нами два фундаментальных вопроса, на которых строится весь урок:</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>❓</span> Вопрос первый</div>
+        <p><strong>Зачем Богу понадобился отдых?</strong></p>
+        <p>Тора говорит: «В седьмой день перестал работать и <em>отдыхал</em>» (וַיִּנָּפַשׁ — вайинафаш). Но ведь Всевышнему не было тяжело творить мир — Он создавал всё словом, без физических усилий. Что же означает этот «отдых» для Творца?</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>❓</span> Вопрос второй</div>
+        <p><strong>Почему Моше изменил порядок указаний Всевышнего?</strong></p>
+        <p>В главе «Ки Тиса» Бог сначала даёт указания о строительстве Мишкана, и лишь в конце добавляет заповедь о Шаббате. Однако в главе «Ваякhэль» Моше <em>сначала</em> говорит о запрете работы в Шаббат, и только потом — о строительстве Мишкана. Почему?</p>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🧭</div>
+      <div class="key-body">
+        <div class="key-title">Главная тема урока</div>
+        <p>Шаббат — это не просто день отдыха. Это <strong style="color:var(--gold2)">компас жизни</strong>, данный Всевышним, чтобы мы не потерялись в суете будних дней и всегда помнили, ради чего мы живём.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Философия Шаббата -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Философия Шаббата</div>
+        <div class="sec-title">«Зачем» против «Что»: компас жизни</div>
+        <div class="sec-heb-sub">למה מול מה — מצפן החיים</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Перед тем как ответить на вопросы, раввин замечает: Тора не поощряет безделье. Наоборот, Иудаизм освящает труд. Прежде чем заповедать покой, Тора говорит: <em>«Шесть дней работай»</em>.</p>
+      <p>Даже понятие «выхода на пенсию» в Торе иное, чем в современном мире. В 50 лет левиты в Мишкане переставали носить тяжести, но <strong>не прекращали служение</strong> — они переходили к наставничеству и пению. Главное — не быть в праздности.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Именно поэтому тот факт, что Тора выделяет седьмую часть жизни (Шаббат) на <em>полный отказ от созидательного труда</em>, является беспрецедентным и требует глубокого осмысления.</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>Раввин объясняет: у каждого человека есть изначальная мечта, видение и цель — его личное <em>«Зачем»</em> (לָמָּה). Например, человек открывает парикмахерскую не просто чтобы стричь волосы — а чтобы дарить людям радость и живое общение.</p>
+      <p>Однако в течение шести рабочих дней рутина и детали работы (вопрос <strong>«Что»</strong> и <strong>«Как»</strong>) поглощают человека целиком. Он забывает о великой цели и сводит свою жизнь к автоматическим действиям.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">מִי שֶׁיֵּשׁ לוֹ שַׁבָּת — יֵשׁ לוֹ חַיִּים</div>
+      <div class="heb-src">— У того, у кого есть Шаббат, — есть жизнь</div>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">Будние дни<br><small>«Что» и «Как» — рутина, детали, выгорание</small></div>
+      <div class="f-eq">→</div>
+      <div class="f-part" style="background:var(--gold-faint);border:1px solid var(--border);color:var(--gold2)">Шаббат<br><small>Возвращение к «Зачем» — мечте, видению, истинной сути</small></div>
+      <div class="f-eq">=</div>
+      <div class="f-result">Жизнь с компасом</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Шаббат — это <em>еженедельное возвращение</em> к нашему «Зачем». День, когда мы отрываемся от суеты и вспоминаем, кто мы есть на самом деле и ради чего живём.</p>
+      <p>Тот, у кого нет Шаббата, рискует потерять себя в деталях и почувствовать <strong>выгорание</strong>: «На что я трачу свою жизнь?» — спрашивает он в какой-то момент, уже не помня ответа.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Почему Моше изменил порядок + Виктор Франкл -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Два объяснения</div>
+        <div class="sec-title">Почему Моше поставил Шаббат первым</div>
+        <div class="sec-heb-sub">מדוע משה הקדים שבת למשכן</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Ответ на второй вопрос — почему Моше Рабейну изменил порядок указаний Всевышнего — раввин объясняет через два дополняющих друг друга взгляда.</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>🧠</span> Психологическая необходимость</div>
+        <p>Евреи были так одержимы идеей построить Мишкан — чтобы искупить грех Золотого Тельца и вернуть присутствие Бога, — что могли полностью раствориться в работе, забыв о самом главном.</p>
+        <p><em>Услышав, что Всевышний хочет построить с ними дом, они уже не услышали бы ничего после этого.</em></p>
+        <p>Поэтому Моше поставил Шаббат в начало: <strong>только тот, у кого есть Шаббат, сможет правильно построить Мишкан.</strong> Без Шаббата — затеряешься в золоте и серебре и забудешь о святости.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>💛</span> Путь любящих (Кли Якар)</div>
+        <p>Это хасидское объяснение: истинно любящие <em>всегда ставят интересы другого выше своих</em>.</p>
+        <p>Всевышний любит народ Израиля — поэтому говорит <strong>сначала о Мишкане</strong>: «Я хочу быть с вами».</p>
+        <p>Моше любит Всевышнего — поэтому говорит <strong>сначала о Шаббате</strong>: это честь и слава Всевышнего. Каждый ставит любимого впереди себя.</p>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">📖</div>
+      <div class="key-body">
+        <div class="key-title">Виктор Франкл: «У кого есть "зачем" — выдержит любое "как"»</div>
+        <p>Раввин подкрепляет эту идею концепцией <strong style="color:var(--gold2)">логотерапии</strong> Виктора Франкла. Выживший в Освенциме, Франкл заметил: те, кто просыпался с <em>голодом в глазах</em>, — с целью и смыслом вне лагеря, — выживали. Те, у кого не было «зачем», угасали.</p>
+        <p>Точно так же в будни: человек идёт на работу ради великой мечты, но в процессе сужается до размеров самой работы. <strong>Шаббат — это еженедельное возвращение к «Зачем»</strong>, спасение от духовного и эмоционального выгорания.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Тайна отдыха Всевышнего + Рамбам -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Учение Адмор Азакена</div>
+        <div class="sec-title">Тайна отдыха Всевышнего: от «Элоким» к «Авайе»</div>
+        <div class="sec-heb-sub">מסוד מנוחת הבורא: מאלקים לשם הויה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Отвечая на первый вопрос — зачем Богу отдых? — раввин обращается к глубокому учению <strong>Адмор Азакена</strong> (Алтер Ребе).</p>
+      <p>Всё повествование о сотворении мира в Торе использует Имя <em>Элоким</em>, которое символизирует Суд, сокрытие и природу. Числовое значение слова «Элоким» (אלהים) равно числовому значению слова «Тева» (טבע) — природа. Это не случайно.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">אֱלֹהִים = טֶבַע</div>
+      <div class="heb-src">— Элоким = Тева (природа). Числовое значение обоих слов: 86</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Имя «Элоким» — это мера <em>сжатия (цимцум)</em>: перевод колоссальных, бесконечных способностей Творца в предельно маленькие, детальные действия в рамках ограниченного физического мира.</p>
+      <p>Тора говорит: «<em>И завершил Элоким в день седьмой</em>» — Он заканчивает с именем Элоким, заканчивает со сжатием... и <strong>возвращается к имени Авайе (יהוה)</strong> — к Своей изначальной, бесконечной сути.</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">Шесть дней<br><small>«Элоким» — сжатие, сокрытие, природа, детали мира</small></div>
+      <div class="f-eq">→</div>
+      <div class="f-part" style="background:var(--gold-faint);border:1px solid var(--border);color:var(--gold2)">Шаббат<br><small>«Авайе» — возвращение к бесконечной сути, к истинному «Я»</small></div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Для человека, созданного «по образу Творца», всё так же: труд — это «сжатие», погружение в рутину и детали. Мы сужаемся до размеров наших задач.</p>
+      <p>Шаббат — это день, когда еврей <em>прекращает самоограничение</em> и возвращается к своей истинной сути.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">✨</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Рамбам: Шаббат — это вкус Будущего Мира</div>
+        <p>Рамбам (Маймонид) пишет в конце законов Шаббата: награда за соблюдение Шаббата даётся уже <em>в этом мире</em> — в отличие от большинства заповедей. Ребе объясняет: Шаббат — это не просто заповедь, за которую полагается награда. <strong style="color:var(--gold2)">Шаббат — это и есть частица Будущего Мира (Олам Аба)</strong>, доступная нам прямо сейчас. Это «прыжок к Цели», когда человек уже в этом мире может на мгновение почувствовать внутреннюю целостность.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Притча о поезде + Истинное определение мелахи -->
+  <div class="section" id="sec-5">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Притча и закон</div>
+        <div class="sec-title">Не перепутай мешки — и что такое настоящая «работа»</div>
+        <div class="sec-heb-sub">אל תחליף שקים — ומהי מלאכה אמיתית</div>
+      </div>
+    </div>
+
+    <div class="story-block fade-in">
+      <div class="story-title">🚂 Притча о поезде (времена Второй мировой войны)</div>
+      <p>Еврейская женщина бежала от нацистов в поезде. При ней было два мешка: один лёгкий — с остатками овощей и фруктов, а второй тяжёлый — в котором она <em>спрятала своего младенца</em>.</p>
+      <p>Когда возникла опасность проверки, ей пришлось срочно выпрыгивать с одним мешком. <strong>В панике она схватила лёгкий.</strong></p>
+      <p>Она бежала в поля... и лишь там обнаружила, что взяла мешок с овощами. А младенец остался в поезде и уехал дальше.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Это метафора нашей жизни. В будни мы часто хватаем «лёгкий мешок»: карьеру, дополнительные часы на работе, сиюминутную выгоду — <em>оставляя самое дорогое</em> (семью, душу, Тору) «ехать дальше» без нас.</p>
+      <p><strong>Шаббат возвращает нас к реальности</strong> и заставляет переоценить: какой «мешок» мы держим в руках?</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>Многие задают вопрос: почему в Шаббат нельзя нажать кнопку (включить свет) или взять телефон, но по закону Торы разрешено бегать по лестницам и носить тяжёлые сумки?</p>
+      <p>Раввин объясняет: <em>запрет Шаббата касается не физических усилий (מַאֲמָץ), а созидательной работы (יְצִירָה)</em>.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">מְלָאכָה — יְצִירָה, לֹא מַאֲמָץ</div>
+      <div class="heb-src">— «Мелаха» — это созидание, а не усилие</div>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--teal)">
+        <div class="col-title" style="color:var(--teal)"><span>🏃</span> Бег и ходьба — разрешены</div>
+        <p>Прогулка или бег <em>не выводят человека из самого себя</em>. Напротив — они очищают разум и возвращают к внутренним мыслям. Нет «созидания» новой реальности.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--rose)">
+        <div class="col-title" style="color:var(--rose)"><span>💡</span> Нажать кнопку — запрещено</div>
+        <p>Включить свет — и ты уже <em>создал новую реальность</em>. Взял телефон — прочитал новости, расстроился, забыл, что сейчас Шаббат. Ты вышел из себя в мир внешних объектов.</p>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">⚖️</div>
+      <div class="key-body">
+        <div class="key-title">Суть запрета: созидание уводит нас из Шаббата</div>
+        <p>Любое <strong style="color:var(--gold2)">созидательное действие</strong> немедленно поглощает наше внимание и переносит нас в мир будних дней. Шаббат — это время, когда мы <em>не создаём параллельные вселенные</em>, а пребываем в самих себе, возвращаясь к своей истинной сути.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Заключение -->
+  <div class="section" id="sec-6">
+    <div class="sec-header">
+      <div class="sec-num">6</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Заключение</div>
+        <div class="sec-title">Шаббат как еженедельное Дарование Торы</div>
+        <div class="sec-heb-sub">שבת כמתן תורה שבועי</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Урок завершается ответом на вопрос о самой главе «Ваякhэль». Тора говорит: <em>«И собрал (Ваякhэль) Моше всю общину сынов Израиля»</em>. В Торе есть лишь ещё одно место с таким же торжественным всенародным собранием — <strong>Матан Тора</strong> (Дарование Торы на горе Синай).</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיַּקְהֵל מֹשֶׁה אֶת־כָּל־עֲדַת בְּנֵי יִשְׂרָאֵל</div>
+      <div class="heb-src">— שמות לה:א · Шмот 35:1</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Моше Рабейну собирает евреев с той же торжественностью, потому что <em>Шаббат — это еженедельное повторение Синайского откровения</em>. В Шаббат мы заново получаем Тору.</p>
+      <p>В еврейской традиции Шаббат уподобляется <strong>Невесте</strong> (Кала), а народ Израиля — Жениху. Встреча с этой Невестой требует полного присутствия: невозможно по-настоящему встретить её, продолжая жить новостями, телефоном и тревогами будних дней.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">🕯️</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Призыв раввина: «Сделайте свой Шаббат»</div>
+        <p>Раввин призывает: откажитесь от суеты, не спрашивайте у соседей о новостях и политике. Посвятите этот день <em>Торе, семье и своей душе</em>. Тот, кто удостаивается <strong style="color:var(--gold2)">истинного Шаббата</strong>, уже в этом мире ощущает вкус грядущего Избавления — и приближает его для всего Израиля.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Шаббат — это не ограничение. Это <em>подарок</em>: еженедельная возможность вернуться к себе, к своей мечте, к своему «Зачем» — и почувствовать, что вещи стоят на своих правильных местах, и ты находишься на своём правильном месте.</p>
+      <div class="footnote">Урок рава Шнеура Ашкенази · Парашат Ваякhэль-Пкудей</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">К викторине →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7: QUIZ -->
+  <div class="section" id="sec-7">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Мини-Викторина</div>
+        <div class="sec-title">Проверь себя</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Правильных ответов:</span>
+      <span class="score-val" id="scoreVal">0 / 6</span>
+      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
+        Завершить урок 🎓
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- RESULT -->
+<div class="lesson-container">
+  <div class="result-screen" id="resultScreen">
+    <div class="result-star" id="resultStar">⭐</div>
+    <div class="result-title" id="result-title">Урок завершён!</div>
+    <div class="result-score-big" id="resultScoreBig">0</div>
+    <div class="result-score-label" id="result-score-label">из 6 правильных</div>
+    <div class="result-sub" id="result-sub">Молодец! Ты познакомился с глубоким смыслом Шаббата.</div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="restart-btn" onclick="restartLesson()">↺ Начать снова</button>
+      <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+    </div>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-faint)">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--text-faint);text-transform:uppercase;margin-bottom:12px">Другие уроки</div>
+      <a href="../Vayakhel/ru.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--border);color:var(--gold2);font-family:'Rubik',sans-serif;font-size:14px;font-weight:600;padding:12px 24px;border-radius:30px;text-decoration:none;transition:all 0.2s;margin:4px;" onmouseover="this.style.background='var(--gold-faint)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--gold-dim)';this.style.transform='none'">
+        Ваякhэль: единство Израиля →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Что замечает рав Ашкенази о ключевых событиях текущей войны?',
+    opts: [
+      'Они происходили преимущественно в будние дни',
+      'Они происходили именно в Шаббат',
+      'Они происходили в праздничные дни',
+      'Они происходили случайно, без видимой закономерности'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Рав Ашкенази обращает внимание: ключевые события войны — ликвидации лидеров врагов и спасение Трампа — произошли именно в Шаббат. «Шаббат хранит нас».',
+    fb_no: '✗ Неверно. Раввин указывает, что все ключевые события — ликвидации и спасение Трампа — произошли именно в Шаббат, что подчёркивает охраняющую силу этого дня.'
+  },
+  {
+    q: 'Что символизирует «Зачем» (לָמָּה) в философии Шаббата по объяснению раввина?',
+    opts: [
+      'Потребность в физическом отдыхе после тяжёлой работы',
+      'Изначальная мечта, видение и жизненная цель человека',
+      'Технические детали профессиональной деятельности',
+      'Еженедельное расписание дел'
+    ],
+    correct: 1,
+    fb_ok: '✓ Правильно! «Зачем» — это изначальная мечта, видение и цель. Именно к ней возвращает нас Шаббат, когда рутина будних дней уводит нас к «Что» и «Как».',
+    fb_no: '✗ Неверно. «Зачем» — это изначальная мечта и жизненная цель. Будние дни уводят нас к «Что» и «Как» (рутинным задачам), а Шаббат возвращает к «Зачем».'
+  },
+  {
+    q: 'Почему, по учению Адмор Азакена (Алтер Ребе), Всевышний «отдыхал» в Шаббат?',
+    opts: [
+      'Потому что сотворение мира было физически изнурительным трудом',
+      'Потому что Тора запрещает работу в седьмой день даже Богу',
+      'Потому что Шаббат — это возвращение от имени «Элоким» (сжатие, детализация) к имени «Авайе» (бесконечная суть)',
+      'Потому что нужно было освятить седьмой день особым образом'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! Имя «Элоким» — это сжатие, ограничение, работа с деталями мира. В Шаббат Всевышний завершает работу Элоким и возвращается к имени Авайе — к Своей изначальной, бесконечной сути.',
+    fb_no: '✗ Неверно. По Адмор Азакену, Имя «Элоким» символизирует сжатие и сокрытие бесконечного в деталях конечного мира. Шаббат — возвращение от «Элоким» к имени «Авайе» (истинная суть).'
+  },
+  {
+    q: 'Что означает «путь любящих» по комментарию Кли Якар?',
+    opts: [
+      'Любящие всегда ставят себя и свои нужды на первое место',
+      'Любящие никогда не говорят о строительстве Мишкана',
+      'Любящие всегда ставят интересы и честь другого выше своих',
+      'Любящие соблюдают Шаббат строже всех остальных заповедей'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! Путь любящих — ставить другого впереди себя. Всевышний говорит о Мишкане первым (хочет быть с народом), Моше — о Шаббате первым (чтит Всевышнего).',
+    fb_no: '✗ Неверно. «Путь любящих» — ставить интересы любимого выше своих. Всевышний говорит о Мишкане первым (любит Израиль), Моше ставит Шаббат первым (любит Всевышнего).'
+  },
+  {
+    q: 'Что является запрещённой «работой» (мелахой) в Шаббат по объяснению раввина?',
+    opts: [
+      'Любое физическое усилие — ходьба, бег, подъём по лестнице',
+      'Созидательная работа, выводящая человека из самого себя во внешний мир',
+      'Любое движение на расстояние более четырёх локтей',
+      'Только использование электричества и современных технологий'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Мелаха — это созидание (יְצִירָה), а не усилие (מַאֲמָץ). Созидательное действие создаёт «параллельную вселенную» и уводит человека из пространства Шаббата.',
+    fb_no: '✗ Неверно. Мелаха — это не физическое усилие, а созидательная работа. Бег не запрещён — он не создаёт новой реальности. А нажатие кнопки — создаёт, и уводит нас из Шаббата.'
+  },
+  {
+    q: 'С каким великим событием можно сравнить сбор народа Израиля в главе «Ваякhэль»?',
+    opts: [
+      'С переходом через Красное море',
+      'С отправкой разведчиков в Землю Ханаан',
+      'С Дарованием Торы на горе Синай (Матан Тора)',
+      'С постройкой первого Храма при царе Шломо'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! В Торе лишь два места с таким торжественным всенародным собранием: Матан Тора и глава Ваякhэль. Это не случайно: Шаббат — это еженедельное Дарование Торы.',
+    fb_no: '✗ Неверно. В Торе есть только ещё одно место с таким всенародным собранием — Матан Тора (Дарование Торы на Синае). Моше собирает народ с такой же торжественностью, потому что Шаббат — это еженедельное повторение Синайского откровения.'
+  }
+];
+
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+let quizInitialized = false;
+
+const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7];
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  goToSection(1);
+  buildNavDots();
+}
+
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 7 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил идеи урока о смысле Шаббата.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.6 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  goToSection(1);
+}
+</script>
+</body>
+</html>
