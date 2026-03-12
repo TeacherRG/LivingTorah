@@ -1386,11 +1386,12 @@ function answerQ(qi, oi) {
 
 function showResult() {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  const total = quizData[currentLang].length;
-  const pct = score/total;
+  const total = quizData[currentLang].length + quiz2Data[currentLang].length;
+  const combinedScore = score + score2;
+  const pct = total > 0 ? combinedScore / total : 0;
   let star = pct===1 ? '🏆' : pct>=0.8 ? '⭐' : pct>=0.6 ? '👍' : '📖';
   document.getElementById('resultStar').textContent = star;
-  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('resultScoreBig').textContent = combinedScore;
   document.getElementById('result-score-label').textContent =
     currentLang==='ru' ? `из ${total} правильных` : currentLang==='uk' ? `з ${total} правильних` : `von ${total} richtig`;
   document.getElementById('result-title').textContent =
