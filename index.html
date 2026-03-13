@@ -155,7 +155,9 @@
   <div class="lessons-grid">
 
     <!-- Lesson 1: Vayakhel -->
-    <a class="lesson-card" href="chapters/Vayakhel/ru.html">
+    <a class="lesson-card" href="chapters/Vayakhel/ru.html"
+       data-popup-title="Единство Израиля: от «каждого» к «всем»"
+       data-popup-points='["Что такое настоящее единство — средство или цель?","Почему Моше обращался ко «всему собранию» (כָּל-עֲדַת)?","Связь между Шаббатом и строительством Мишкана","Как любовь к ближнему приближает Геулу","Урок из Ликутей Сихот Ребе Менахема Менделя"]'>
       <div class="lesson-parasha">פרשת וַיַּקְהֵל</div>
       <div class="lesson-num">Парашат Ваякhэль</div>
       <div class="lesson-title">Единство Израиля:<br>от «каждого» к «всем»</div>
@@ -170,7 +172,9 @@
     </a>
 
     <!-- Lesson 2: Pekudei -->
-    <a class="lesson-card" href="chapters/Pekudei/ru.html">
+    <a class="lesson-card" href="chapters/Pekudei/ru.html"
+       data-popup-title="Секрет возведения Мишкана"
+       data-popup-points='["Как Моше воздвигал неподъёмный Мишкан?","Спор Раши и Рамбана о семи днях посвящения","Что значит «Моше не мог войти» в Шатёр собрания?","Явление Шхины и связь с действиями человека","Урок из Ликутей Сихот, том 11"]'>
       <div class="lesson-parasha">פרשת פְּקוּדֵי</div>
       <div class="lesson-num">Парашат Пкудей</div>
       <div class="lesson-title">Секрет возведения Мишкана</div>
@@ -183,7 +187,9 @@
     </a>
 
     <!-- Lesson 3: Shabbat (Rabbi Ashkenazi) -->
-    <a class="lesson-card" href="chapters/Shabbat/ru.html">
+    <a class="lesson-card" href="chapters/Shabbat/ru.html"
+       data-popup-title="Шаббат: компас жизни"
+       data-popup-points='["Зачем Всевышнему понадобился отдых?","Почему Моше поставил Шаббат перед Мишканом?","Тайна двух имён: Элоким и Авайе (יהוה)","Притча о поезде: что значит «остановиться»","Истинный смысл запрета мелахи в Шаббат"]'>
       <div class="lesson-parasha">שַׁבָּת</div>
       <div class="lesson-num">Ваякhэль-Пкудей · Рав Ашкенази</div>
       <div class="lesson-title">Шаббат: компас жизни</div>
@@ -196,7 +202,9 @@
     </a>
 
     <!-- Lesson 4: Baalturim -->
-    <a class="lesson-card" href="chapters/Baalturim/Ru.html">
+    <a class="lesson-card" href="chapters/Baalturim/Ru.html"
+       data-popup-title="Тайны Шаббата и Мишкана"
+       data-popup-points='["Числовые намёки (гематрия) в тексте Торы","Откуда берётся число 39 запрещённых работ?","Почему запрет огня выделен отдельным стихом?","Связь слов «Шаббат» и «Мишкан» в буквах Торы","Метод Бааль а-Турима: тайный язык Писания"]'>
       <div class="lesson-parasha">בַּעַל הַטּוּרִים</div>
       <div class="lesson-num">Бааль а-Турим · Ваякhэль</div>
       <div class="lesson-title">Тайны Шаббата и Мишкана</div>
@@ -252,6 +260,100 @@
 </div>
 
 <script src="assets/settings.js"></script>
+
+<!-- Lesson preview popup -->
+<div id="lessonPopup" class="lesson-popup" role="tooltip" aria-hidden="true">
+  <div class="lesson-popup-title" id="popupTitle"></div>
+  <ul class="lesson-popup-points" id="popupPoints"></ul>
+</div>
+
+<script>
+(function () {
+  const popup  = document.getElementById('lessonPopup');
+  const ptitle = document.getElementById('popupTitle');
+  const plist  = document.getElementById('popupPoints');
+  let hideTimer = null;
+
+  function showPopup(card) {
+    const title  = card.dataset.popupTitle;
+    const points = JSON.parse(card.dataset.popupPoints || '[]');
+    if (!title && !points.length) return;
+
+    ptitle.textContent = title || '';
+    plist.innerHTML = points.map(p => `<li>${p}</li>`).join('');
+
+    popup.classList.add('visible');
+    popup.removeAttribute('aria-hidden');
+    positionPopup(card);
+  }
+
+  function hidePopup() {
+    popup.classList.remove('visible');
+    popup.setAttribute('aria-hidden', 'true');
+  }
+
+  function positionPopup(card) {
+    const rect = card.getBoundingClientRect();
+    const pw   = popup.offsetWidth  || 300;
+    const ph   = popup.offsetHeight || 200;
+    const gap  = 12;
+    const vw   = window.innerWidth;
+    const vh   = window.innerHeight;
+
+    // Try to place popup to the right; fall back to left, then below
+    let left = rect.right + gap + window.scrollX;
+    let top  = rect.top  + window.scrollY;
+
+    if (left + pw > vw + window.scrollX - 8) {
+      left = rect.left - pw - gap + window.scrollX;
+    }
+    if (left < 8) {
+      left = rect.left + window.scrollX;
+      top  = rect.bottom + gap + window.scrollY;
+    }
+    if (top + ph > vh + window.scrollY - 8) {
+      top = rect.top - ph - gap + window.scrollY;
+    }
+    top  = Math.max(window.scrollY + 8, top);
+    left = Math.max(8, Math.min(left, vw + window.scrollX - pw - 8));
+
+    popup.style.top  = top  + 'px';
+    popup.style.left = left + 'px';
+  }
+
+  document.querySelectorAll('.lesson-card[data-popup-title]').forEach(card => {
+    // Desktop: hover
+    card.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimer);
+      showPopup(card);
+    });
+    card.addEventListener('mouseleave', () => {
+      hideTimer = setTimeout(hidePopup, 120);
+    });
+
+    // Mobile / keyboard: click toggles
+    card.addEventListener('click', e => {
+      if (window.matchMedia('(hover: none)').matches) {
+        if (popup.classList.contains('visible')) {
+          // second tap — navigate normally
+          return;
+        }
+        e.preventDefault();
+        showPopup(card);
+      }
+    });
+  });
+
+  popup.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+  popup.addEventListener('mouseleave', () => { hideTimer = setTimeout(hidePopup, 120); });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hidePopup(); });
+  document.addEventListener('click',   e => {
+    if (!popup.contains(e.target) && !e.target.closest('.lesson-card')) hidePopup();
+  });
+  window.addEventListener('scroll', () => { if (popup.classList.contains('visible')) hidePopup(); }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
