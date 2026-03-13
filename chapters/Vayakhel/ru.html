@@ -1303,6 +1303,8 @@ var LS = {
 // ─── STATE ───
 let currentLang = 'ru';
 let currentSection = 0;
+var _navScrolling = false;
+var _scrollSaveTimer;
 let totalSections = 9;
 let score = 0;
 let answered = 0;
@@ -1335,7 +1337,7 @@ function getProgressKey() {
   return 'lt-progress-' + window.location.pathname;
 }
 function saveProgress() {
-  LS.set(getProgressKey(), JSON.stringify({section: currentSection, lang: currentLang}));
+  LS.set(getProgressKey(), JSON.stringify({section: currentSection, lang: currentLang, scroll: Math.round(window.scrollY)}));
 }
 function clearProgress() {
   LS.set(getProgressKey(), '');
@@ -1393,6 +1395,7 @@ function continueLesson() {
   var btn = document.getElementById('continueBtn');
   var section = parseInt(btn.dataset.section, 10);
   var lang = btn.dataset.lang;
+  var scroll = parseInt(btn.dataset.scroll || '0', 10);
   if (lang && lang !== currentLang) setLang(lang);
   document.getElementById('heroSection').style.display = 'none';
   document.getElementById('lessonContainer').style.display = 'block';
@@ -1400,6 +1403,9 @@ function continueLesson() {
   buildNavDots();
   buildTOC();
   goToSection(section);
+  if (scroll > 0) {
+    setTimeout(function() { window.scrollTo({top: scroll, behavior: 'smooth'}); }, 400);
+  }
 }
 
 function goToSection(n) {
@@ -1413,6 +1419,7 @@ function goToSection(n) {
   updateNavDots();
   updateTOC();
   saveProgress();
+  _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
   window.scrollTo({top:0, behavior:'smooth'});
 
   if (n === 10 && !quizInitialized) {
@@ -1464,6 +1471,13 @@ function updateNavDots() {
     else if (i < idx) d.classList.add('done');
   });
 }
+
+// ─── SCROLL POSITION AUTOSAVE ───
+window.addEventListener('scroll', function() {
+  if (_navScrolling || currentSection <= 0) return;
+  clearTimeout(_scrollSaveTimer);
+  _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
 
 // ─── QUIZ ───
 function buildQuiz() {
@@ -2082,6 +2096,7 @@ applyTranslations();
       var orderIdx = SECTION_ORDER.indexOf(p.section);
       continueBtn.dataset.section = p.section;
       continueBtn.dataset.lang = p.lang || 'ru';
+      continueBtn.dataset.scroll = p.scroll || 0;
       document.getElementById('continueBtnLabel').textContent =
         'Продолжить (' + (orderIdx + 1) + ' / ' + SECTION_ORDER.length + ')';
       continueBtn.classList.add('shown');
