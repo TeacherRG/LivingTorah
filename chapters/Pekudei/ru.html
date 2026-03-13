@@ -1072,6 +1072,8 @@ var LS = {
 let currentSection = 0;
 let score = 0;
 let answered = 0;
+var _navScrolling = false;
+var _scrollSaveTimer;
 let quizInitialized = false;
 
 const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7];
@@ -1081,7 +1083,7 @@ function getProgressKey() {
   return 'lt-progress-' + window.location.pathname;
 }
 function saveProgress() {
-  LS.set(getProgressKey(), JSON.stringify({section: currentSection}));
+  LS.set(getProgressKey(), JSON.stringify({section: currentSection, scroll: Math.round(window.scrollY)}));
 }
 function clearProgress() {
   LS.set(getProgressKey(), '');
@@ -1138,12 +1140,16 @@ function startLesson() {
 function continueLesson() {
   var btn = document.getElementById('continueBtn');
   var section = parseInt(btn.dataset.section, 10);
+  var scroll = parseInt(btn.dataset.scroll || '0', 10);
   document.getElementById('heroSection').style.display = 'none';
   document.getElementById('lessonContainer').style.display = 'block';
   document.getElementById('tocSidebar').classList.add('visible');
   buildNavDots();
   buildTOC();
   goToSection(section);
+  if (scroll > 0) {
+    setTimeout(function() { window.scrollTo({top: scroll, behavior: 'smooth'}); }, 400);
+  }
 }
 
 function goToSection(n) {
@@ -1157,6 +1163,7 @@ function goToSection(n) {
   updateNavDots();
   updateTOC();
   saveProgress();
+  _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
   window.scrollTo({top: 0, behavior: 'smooth'});
 
   if (n === 7 && !quizInitialized) {
@@ -1202,6 +1209,13 @@ function updateNavDots() {
     else if (i < idx) d.classList.add('done');
   });
 }
+
+// ─── SCROLL POSITION AUTOSAVE ───
+window.addEventListener('scroll', function() {
+  if (_navScrolling || currentSection <= 0) return;
+  clearTimeout(_scrollSaveTimer);
+  _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
 
 // ─── QUIZ ───
 function buildQuiz() {
@@ -1318,6 +1332,7 @@ function restartLesson() {
       var continueBtn = document.getElementById('continueBtn');
       var orderIdx = SECTION_ORDER.indexOf(p.section);
       continueBtn.dataset.section = p.section;
+      continueBtn.dataset.scroll = p.scroll || 0;
       document.getElementById('continueBtnLabel').textContent =
         'Продолжить (' + (orderIdx + 1) + ' / ' + SECTION_ORDER.length + ')';
       continueBtn.classList.add('shown');
