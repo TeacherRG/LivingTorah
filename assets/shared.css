@@ -144,6 +144,53 @@ body::before {
   color: var(--gold2);
 }
 
+/* ── Light theme overrides ── */
+/* Applied when JS sets data-theme="light" on <html> */
+:root[data-theme="light"] {
+  --gold: #8b5e08;
+  --gold2: #6b4200;
+  --gold-dim: rgba(120,80,0,0.12);
+  --gold-faint: rgba(120,80,0,0.07);
+  --blue: #1a5cb0;
+  --blue2: #1a5cb0;
+  --blue-dim: rgba(26,92,176,0.1);
+  --teal: #0a7a6e;
+  --rose: #a01e38;
+}
+
+/* Quiz option & feedback colors are hardcoded in chapter pages —
+   override them here via higher-specificity selectors */
+:root[data-theme="light"] .q-opt {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.15);
+}
+:root[data-theme="light"] .q-opt.correct {
+  background: rgba(10,122,110,0.1);
+  border-color: rgba(10,122,110,0.35);
+  color: #0a5c52;
+}
+:root[data-theme="light"] .q-opt.wrong {
+  background: rgba(160,30,56,0.1);
+  border-color: rgba(160,30,56,0.35);
+  color: #8b1a2c;
+}
+:root[data-theme="light"] .q-feedback.correct-fb {
+  background: rgba(10,122,110,0.08);
+  border-color: rgba(10,122,110,0.2);
+  color: #0a5c52;
+}
+:root[data-theme="light"] .q-feedback.wrong-fb {
+  background: rgba(160,30,56,0.08);
+  border-color: rgba(160,30,56,0.2);
+  color: #8b1a2c;
+}
+:root[data-theme="light"] .score-progress {
+  background: rgba(0,0,0,0.08);
+}
+:root[data-theme="light"] .nav-dot {
+  background: rgba(0,0,0,0.12);
+}
+
 /* ── Footer ── */
 .site-footer {
   position: relative;

@@ -1,5 +1,8 @@
 /* settings.js — shared settings panel logic for LivingTorah */
 (function () {
+  /* ── Light background keys (trigger data-theme="light") ── */
+  var LIGHT_BACKGROUNDS = ['#f5f0e8', '#ffffff'];
+
   /* ── Per-background theme definitions ── */
   var THEMES = {
     /* Dark blue (default) */
@@ -85,6 +88,7 @@
     root.style.setProperty('--border',       t.border);
     root.style.setProperty('--border-faint', t.borderFaint);
     root.style.setProperty('--panel-bg',     t.panelBg);
+    root.dataset.theme = LIGHT_BACKGROUNDS.indexOf(bg) !== -1 ? 'light' : 'dark';
     document.body.style.background = bg;
     document.body.style.color      = t.text;
   }
