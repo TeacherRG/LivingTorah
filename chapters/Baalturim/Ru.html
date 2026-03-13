@@ -3,161 +3,1205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ваякhель — Бааль а‑Турим</title>
+<title>פרשת ויקהל — Бааль а‑Турим</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/shared.css">
 <style>
-body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#0f0f18;color:#f2f2f2;line-height:1.7}
-.home-btn{display:inline-flex;align-items:center;gap:6px;position:fixed;top:16px;left:16px;background:rgba(30,28,50,0.9);border:1px solid rgba(212,168,67,0.3);color:#d4a843;font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;text-decoration:none;z-index:999;backdrop-filter:blur(6px);transition:all 0.2s}
-.home-btn:hover{background:rgba(212,168,67,0.15);border-color:#d4a843}
-header{padding:60px 20px;text-align:center;background:linear-gradient(180deg,#1a1a2e,#0f0f18)}
-h1{font-size:42px;margin-bottom:10px}
-h2{color:#f5c542;margin-top:40px}
-.container{max-width:900px;margin:auto;padding:20px}
-.card{background:#1b1b2b;border-radius:10px;padding:22px;margin:18px 0}
-.highlight{border-left:4px solid #f5c542;background:#222238}
-.hebrew{font-size:22px;color:#f5c542;text-align:right}
-.quiz{margin-top:40px}
-.question{background:#1b1b2b;padding:20px;border-radius:10px;margin-bottom:20px}
-button.option{display:block;width:100%;margin:8px 0;padding:10px;background:#222238;border:none;color:white;border-radius:6px;cursor:pointer}
-button.option:hover{background:#2e2e48}
-.correct{background:#2a7c5f !important}
-.wrong{background:#7c2a2a !important}
-#result{font-size:22px;text-align:center;margin-top:30px;color:#f5c542}
+/* (Variables, reset, body are in ../../assets/shared.css) */
+
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  text-align:center;
+  padding:80px 20px 60px;
+  border-bottom:1px solid var(--border-faint);
+  overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at center 60%, rgba(212,168,67,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+.parasha-label {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:4px;
+  text-shadow:0 0 40px rgba(212,168,67,0.4);
+  direction:rtl;
+  line-height:1;
+  margin-bottom:12px;
+}
+.hero-sub {
+  font-size:clamp(13px,2vw,16px);
+  color:var(--text-dim);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(22px,4vw,38px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  max-width:700px;
+  margin:0 auto 16px;
+}
+.hero-verse {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--gold);
+  direction:rtl;
+  padding:12px 24px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--gold-faint);
+  margin-bottom:12px;
+}
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  font-style:italic; margin-bottom:32px;
+}
+
+/* Section nav dots */
+.nav-dots {
+  display:flex; gap:8px; justify-content:center;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border);
+  cursor:pointer; transition:all 0.3s;
+  position:relative;
+}
+.nav-dot.active, .nav-dot.done { background:var(--gold); }
+.nav-dot.done::after {
+  content:'✓'; position:absolute; top:-20px; left:50%;
+  transform:translateX(-50%); font-size:10px; color:var(--gold);
+  white-space:nowrap;
+}
+
+/* Start button */
+.start-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 40px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow:0 8px 30px rgba(212,168,67,0.3);
+  letter-spacing:1px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.4); }
+
+/* ── LESSON CONTAINER ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:0 20px 80px;
+  position:relative; z-index:1;
+}
+.section {
+  display:none; opacity:0;
+  transform:translateY(24px);
+  transition:all 0.5s ease;
+}
+.section.active {
+  display:block; opacity:1; transform:translateY(0);
+}
+
+/* Section header */
+.sec-header {
+  display:flex; align-items:center; gap:16px;
+  margin:48px 0 28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border-faint);
+}
+.sec-num {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6010);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:18px;
+  color:#0d0a1a; flex-shrink:0;
+}
+.sec-title-wrap {}
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(18px,3vw,26px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold);
+  direction:rtl;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* Content cards */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+.card p {
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.85;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.card p:last-child { margin-bottom:0; }
+.card p em { color:var(--gold2); font-style:normal; font-weight:500; }
+.card p strong { color:var(--gold2); }
+.card ul {
+  margin:10px 0 10px 20px;
+  line-height:1.85;
+}
+.card ul li {
+  font-size:clamp(15px,2vw,17px);
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+/* Hebrew quote */
+.heb-quote {
+  background:rgba(212,168,67,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin:20px 0;
+  direction:rtl;
+  text-align:right;
+}
+.heb-quote .heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2);
+  line-height:1.9;
+  margin-bottom:10px;
+}
+.heb-quote .heb-src {
+  font-size:12px; color:var(--text-faint);
+  letter-spacing:1px; direction:rtl;
+}
+
+/* Key concept box */
+.key-concept {
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin:20px 0;
+}
+.key-icon { font-size:28px; flex-shrink:0; margin-top:2px; }
+.key-body .key-title {
+  font-weight:700; color:var(--blue2);
+  font-size:15px; margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.key-body p {
+  font-size:15px; line-height:1.7;
+  color:var(--text); margin:0;
+}
+
+/* Formula style */
+.formula-block {
+  display:flex; align-items:center;
+  justify-content:center; gap:12px;
+  flex-wrap:wrap;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(58,123,213,0.05));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin:20px 0;
+  font-family:'Merriweather',serif;
+}
+.f-part {
+  padding:8px 18px; border-radius:8px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+  text-align:center;
+}
+.f-part small { display:block; font-weight:400; font-size:12px; opacity:0.8; margin-top:4px; }
+.f-eq { font-size:22px; color:var(--gold); }
+.f-result {
+  background:var(--gold);
+  color:#0d0a1a;
+  padding:10px 20px; border-radius:10px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+}
+
+/* Navigation buttons */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:40px; gap:16px; flex-wrap:wrap;
+}
+.btn-prev, .btn-next {
+  font-family:'Rubik',sans-serif; font-weight:600;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; font-size:15px; transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-prev {
+  background:transparent; color:var(--text-dim);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { background:var(--card); color:var(--text); }
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a;
+  box-shadow:0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── QUIZ ── */
+.quiz-wrap { margin:28px 0; }
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  transition:all 0.3s;
+}
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+.q-options { display:flex; flex-direction:column; gap:10px; }
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in { animation:fadeInUp 0.5s ease both; }
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+
+/* ── Settings button & panel ── */
+/* ── Footer ── */
+/* (These styles are in ../../assets/shared.css) */
 </style>
 </head>
 <body>
+
+<div id="progressBar" style="width:0%"></div>
+
 <a class="home-btn" href="../../index.html">← Все уроки</a>
-<header>
-<h1>פרשת ויקהל</h1>
-<p>Тайны Шаббата и Мишкана<br>Комментарий Бааль а‑Турим</p>
-</header>
 
-<div class="container">
-
-<div class="card">
-<h2>1. "И собрал Моше"</h2>
-<p>Глава начинается словами: <b>«Ваякhель Моше» — «И собрал Моше»</b>. Бааль а‑Турим замечает, что перед этим сказано о сиянии лица Моше после получения скрижалей.</p>
-<p>Почему сразу после этого говорится о Шаббате? Потому что свет Шаббата отличается от света обычных дней. Шаббат приносит особое духовное сияние.</p>
-<p>Поэтому слово <b>«Ваякhель»</b> намекает на собрание народа в Шаббат для слушания учения Торы.</p>
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">פרשת ויקהל</div>
+  <div class="hero-sub">Парашат Ваякhэль · Комментарий Бааль а‑Турим</div>
+  <div class="hero-title">Тайны Шаббата и Мишкана</div>
+  <div class="hero-verse">וַיַּקְהֵל מֹשֶׁה</div>
+  <div class="hero-verse-ru">«И собрал Моше» (Шмот 35:1)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
 </div>
 
-<div class="card">
-<h2>2. Тайна 39 работ Шаббата</h2>
-<p>В стихе сказано: <b>אלה הדברים</b>.</p>
-<p>Бааль а‑Турим объясняет, что здесь скрыт намёк на число работ, запрещённых в Шаббат.</p>
-<ul>
-<li>אלה = 36</li>
-<li>דברים = 2</li>
-<li>ה = 1</li>
-</ul>
-<p><b>36 + 2 + 1 = 39</b></p>
-<p>Это число основных работ Шаббата.</p>
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1 -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Введение</div>
+        <div class="sec-title">«И собрал Моше»</div>
+        <div class="sec-heb-sub">וַיַּקְהֵל מֹשֶׁה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Глава начинается словами: <em>«Ваякhэль Моше» — «И собрал Моше»</em>. Бааль а‑Турим замечает, что перед этим сказано о сиянии лица Моше после получения скрижалей.</p>
+      <p>Почему сразу после этого говорится о Шаббате? Потому что свет Шаббата отличается от света обычных дней. Шаббат приносит особое духовное сияние.</p>
+      <p>Поэтому слово <strong>«Ваякhэль»</strong> намекает на собрание народа в Шаббат для слушания учения Торы.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיַּקְהֵל מֹשֶׁה אֶת כָּל עֲדַת בְּנֵי יִשְׂרָאֵל</div>
+      <div class="heb-src">— שמות לה:א · Шмот 35:1</div>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">✨</div>
+      <div class="key-body">
+        <div class="key-title">Главная идея</div>
+        <p>Моше собрал весь народ Израиля <strong style="color:var(--gold2)">именно в Шаббат</strong> — чтобы показать: Шаббат — это особое время для духовного объединения и изучения Торы.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Гематрия</div>
+        <div class="sec-title">Тайна 39 работ Шаббата</div>
+        <div class="sec-heb-sub">סוד ל״ט מלאכות</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>В стихе сказано: <em>אֵלֶּה הַדְּבָרִים</em>.</p>
+      <p>Бааль а‑Турим объясняет, что здесь скрыт намёк на число работ, запрещённых в Шаббат.</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);color:var(--gold2)">אֵלֶּה<br><small>= 36</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">הַ<br><small>= 1</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);color:var(--gold2)">דְּבָרִים<br><small>= 2</small></div>
+      <div class="f-eq">=</div>
+      <div class="f-result">39 работ</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Это число основных работ Шаббата. Бааль а‑Турим раскрывает, что сама формулировка стиха является намёком на это число.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Дефектное написание</div>
+        <div class="sec-title">Намёк в слове «לַעֲשֹׂת»</div>
+        <div class="sec-heb-sub">רמז בכתיב חסר</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Бааль а‑Турим замечает, что слово <em>לַעֲשֹׂת</em> написано без буквы ו (дефектное написание — כְּתִיב חָסֵר).</p>
+      <p>Буквы дают намёк через гематрию:</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);color:var(--gold2)">ל<br><small>= 30</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">תשע<br><small>= 9</small></div>
+      <div class="f-eq">=</div>
+      <div class="f-result">39</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Итого снова получается <strong>39</strong>.</p>
+      <p>Это намёк: 39 работ разрешены в шесть дней недели, но запрещены в Шаббат.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Закон Шаббата</div>
+        <div class="sec-title">Почему упоминается огонь</div>
+        <div class="sec-heb-sub">לֹא תְבַעֲרוּ אֵשׁ</div>
+      </div>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">לֹא תְבַעֲרוּ אֵשׁ בְּכֹל מֹשְׁבֹתֵיכֶם בְּיוֹם הַשַּׁבָּת</div>
+      <div class="heb-src">— שמות לה:ג · Шмот 35:3</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Тора говорит: <em>«Не зажигайте огня в день Шаббата»</em>.</p>
+      <p>Бааль а‑Турим объясняет: огонь был необходим для работы Мишкана — плавки металлов, приготовления красителей и обработки материалов.</p>
+      <p>Поэтому Тора подчёркивает: даже ради строительства Мишкана нельзя нарушать Шаббат.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🔥</div>
+      <div class="key-body">
+        <div class="key-title">Принцип: Шаббат выше Мишкана</div>
+        <p>Строительство Мишкана — великая заповедь. Но Шаббат стоит выше неё. Никакая цель, даже самая святая, не отменяет Шаббат.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="sec-5">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Намёк в буквах</div>
+        <div class="sec-title">Тайна слова «Шаббат»</div>
+        <div class="sec-heb-sub">סוד המילה שַׁבָּת</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Бааль а‑Турим пишет удивительный намёк. В словах:</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">הַשַּׁבָּת וַיֹּאמֶר</div>
+      <div class="heb-src">— שמות לה:א · Шмот 35:1</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Начальные и конечные буквы этих слов образуют слово:</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);color:var(--gold2)">הַשַּׁבָּ<strong>ת</strong><br><small>ה + ת</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">וַיֹּאמֶ<strong>ר</strong><br><small>ו + ר</small></div>
+      <div class="f-eq">→</div>
+      <div class="f-result">תּוֹרָה</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Это намёк: <strong>Шаббат — главное время изучения Торы</strong>.</p>
+      <p>Потому что человек свободен от работы и может посвятить себя учению.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">📖</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Шаббат и Тора — одно целое</div>
+        <p>Буквы самого стиха о Шаббате содержат слово «Тора». Это указывает: <strong style="color:var(--gold2)">Шаббат и изучение Торы неразрывно связаны</strong>.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="sec-6">
+    <div class="sec-header">
+      <div class="sec-num">6</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Пожертвования</div>
+        <div class="sec-title">Почему сказано «она принесёт»</div>
+        <div class="sec-heb-sub">יְבִיאֶהָ — женская форма глагола</div>
+      </div>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">יְבִיאֶהָ אֵת תְּרוּמַת ה׳</div>
+      <div class="heb-src">— שמות לה:ה · Шмот 35:5</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Тора говорит: <em>יְבִיאֶהָ אֵת תְּרוּמַת ה'</em> — используя глагол в женской форме.</p>
+      <p>Почему именно женская форма? Бааль а‑Турим объясняет: пожертвования включали украшения женщин:</p>
+    </div>
+
+    <div class="card fade-in">
+      <ul>
+        <li>серьги</li>
+        <li>кольца</li>
+        <li>браслеты</li>
+      </ul>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Поэтому Тора подчёркивает: <strong>муж не должен жертвовать украшения жены без её согласия</strong>.</p>
+      <p>Они должны быть принесены по её собственной воле.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">💍</div>
+      <div class="key-body">
+        <div class="key-title">Урок о согласии</div>
+        <p>Даже ради такого великого дела, как строительство Мишкана, муж не имеет права распоряжаться украшениями жены без её ведома и согласия.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="sec-7">
+    <div class="sec-header">
+      <div class="sec-num">7</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Единство семьи</div>
+        <div class="sec-title">Муж и жена строят Мишкан вместе</div>
+        <div class="sec-heb-sub">אִישׁ וְאִשָּׁה — שׁוּתָּפִים בַּמִּשְׁכָּן</div>
+      </div>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיָּבֹאוּ הָאֲנָשִׁים עַל הַנָּשִׁים</div>
+      <div class="heb-src">— שמות לה:כב · Шмот 35:22</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>В стихе сказано: <em>«И пришли мужчины вместе с женщинами»</em>.</p>
+      <p>Бааль а‑Турим говорит: гематрия намекает на то, что муж и жена приходят вместе.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Это показывает: <strong>строительство Мишкана было общим делом семьи</strong>.</p>
+      <p>Муж и жена приносили пожертвования совместно, как единое целое.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">👫</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Мишкан — дело всей семьи</div>
+        <p>Святилище строится не отдельным человеком, а <strong style="color:var(--gold2)">всей общиной и каждой семьёй вместе</strong>. Муж и жена как партнёры — это основа Мишкана.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section" id="sec-8">
+    <div class="sec-header">
+      <div class="sec-num">8</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Роль женщин</div>
+        <div class="sec-title">Мудрость женщин</div>
+        <div class="sec-heb-sub">חָכְמַת הַנָּשִׁים</div>
+      </div>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְכָל אִשָּׁה חַכְמַת לֵב בְּיָדֶיהָ טָווּ</div>
+      <div class="heb-src">— שמות לה:כה · Шмот 35:25</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Тора говорит: <em>«И каждая мудрая женщина пряла своими руками»</em>.</p>
+      <p>Бааль а‑Турим сравнивает три стиха Писания со словами <em>«все женщины»</em>.</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>Иногда женщины в Торе упоминаются:</p>
+      <ul>
+        <li>как участницы идолопоклонства</li>
+        <li>как часть военной добычи</li>
+      </ul>
+      <p>Но <strong>здесь</strong> они представлены как источник мудрости.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְהַחָכְמָה תְּחַיֶּה בְעָלֶיהָ</div>
+      <div class="heb-src">— קהלת ז:יב · Коэлет 7:12</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Как сказано: <em>«Мудрость оживляет своего обладателя»</em>.</p>
+      <p>Именно мудрость женщин стала основой для создания Мишкана — священного жилища для Всевышнего.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section" id="sec-9">
+    <div class="sec-header">
+      <div class="sec-num">9</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Ошибка вождей</div>
+        <div class="sec-title">Ошибка князей Израиля</div>
+        <div class="sec-heb-sub">טָעוּת הַנְּשִׂיאִים</div>
+      </div>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְהַנְּשִׂאִם הֵבִיאוּ אֵת אַבְנֵי הַשֹּׁהַם</div>
+      <div class="heb-src">— שמות לה:כז · Шмот 35:27</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Слово <em>וְהַנְּשִׂאִם</em> написано <strong>без буквы י</strong> (дефектное написание).</p>
+      <p>Бааль а‑Турим объясняет: князья Израиля задержались с пожертвованиями.</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>Они сказали:</p>
+      <ul>
+        <li>«Пусть народ принесёт сначала,</li>
+        <li>а мы принесём недостающее».</li>
+      </ul>
+      <p>Но народ принёс всё сразу — не оставив ничего недостающего.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Поэтому буква י была убрана из слова — <strong>как намёк на их промедление</strong>.</p>
+      <p>Урок: в служении Всевышнему не следует откладывать. Тот, кто промедлил — упустил своё место.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">⏳</div>
+      <div class="key-body">
+        <div class="key-title">Не откладывай добрые дела</div>
+        <p>Промедление в исполнении доброго дела может привести к тому, что возможность будет упущена. <strong style="color:var(--gold2)">Торопись делать добро — не медли.</strong></p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 10: MAIN LESSON -->
+  <div class="section" id="sec-10">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Итог урока</div>
+        <div class="sec-title">Главный урок</div>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Шаббат — источник духовного света. Именно в этот день евреи собираются вместе, изучают Тору и соединяются со Всевышним.</p>
+      <p>Как намекают буквы самого стиха: <strong>הַשַּׁבָּת וַיֹּאמֶר → תּוֹרָה</strong> — Шаббат указывает на Тору.</p>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">🕍</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Строительство Мишкана — общее дело</div>
+        <p>Мишкан строился всем Израилем: мужчинами и женщинами, вождями и простым народом. Каждый вносил свою часть. <strong style="color:var(--gold2)">Не медли — твой вклад незаменим.</strong></p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">К викторине →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 11: QUIZ -->
+  <div class="section" id="sec-11">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Мини-Викторина</div>
+        <div class="sec-title">Проверь себя</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Правильных ответов:</span>
+      <span class="score-val" id="scoreVal">0 / 7</span>
+      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
+        Завершить урок 🎓
+      </button>
+    </div>
+  </div>
+
 </div>
 
-<div class="card">
-<h2>3. Намёк в слове «לעשת»</h2>
-<p>Бааль а‑Турим замечает, что слово написано без буквы ו.</p>
-<p>Буквы дают намёк:</p>
-<ul>
-<li>ל = 30</li>
-<li>תשע = 9</li>
-</ul>
-<p>Итого снова получается <b>39</b>.</p>
-<p>Это намёк, что 39 работ разрешены в шесть дней недели, но запрещены в Шаббат.</p>
-</div>
-
-<div class="card">
-<h2>4. Почему упоминается огонь</h2>
-<p>Тора говорит: <b>«Не зажигайте огня в день Шаббата»</b>.</p>
-<p>Бааль а‑Турим объясняет: огонь был необходим для работы Мишкана — плавки металлов, приготовления красителей и обработки материалов.</p>
-<p>Поэтому Тора подчеркивает: даже ради строительства Мишкана нельзя нарушать Шаббат.</p>
-</div>
-
-<div class="card highlight">
-<h2>Главный урок</h2>
-<p>Шаббат — источник духовного света. Именно в этот день евреи собираются вместе, изучают Тору и соединяются со Всевышним.</p>
-</div>
-
-<div class="quiz">
-<h2>Викторина</h2>
-
-<div class="question" data-correct="2">
-<p>1. Сколько основных работ запрещено в Шаббат?</p>
-<button class="option">7</button>
-<button class="option">10</button>
-<button class="option">39</button>
-<button class="option">70</button>
-</div>
-
-<div class="question" data-correct="1">
-<p>2. Из каких слов выводится число 39?</p>
-<button class="option">Берешит бара</button>
-<button class="option">אלה הדברים</button>
-<button class="option">ששת ימים</button>
-<button class="option">לא תבערו</button>
-</div>
-
-<div class="question" data-correct="0">
-<p>3. Почему Тора отдельно запрещает зажигать огонь?</p>
-<button class="option">Он использовался при строительстве Мишкана</button>
-<button class="option">Это самый тяжёлый грех</button>
-<button class="option">Огонь был редкостью</button>
-<button class="option">Это символический запрет</button>
-</div>
-
-<div class="question" data-correct="1">
-<p>4. Что означает слово «Ваякhель»?</p>
-<button class="option">Моше учил народ</button>
-<button class="option">Моше собрал народ</button>
-<button class="option">Моше молился</button>
-<button class="option">Моше построил Мишкан</button>
-</div>
-
-<div class="question" data-correct="2">
-<p>5. Когда разрешено выполнять 39 работ?</p>
-<button class="option">Только в праздники</button>
-<button class="option">В Шаббат</button>
-<button class="option">В шесть дней недели</button>
-<button class="option">Никогда</button>
-</div>
-
-<button onclick="finishQuiz()" style="padding:12px 25px;margin-top:10px;background:#f5c542;border:none;border-radius:6px;font-weight:bold;cursor:pointer">Проверить</button>
-
-<div id="result"></div>
-
-</div>
-
+<!-- RESULT -->
+<div class="lesson-container">
+  <div class="result-screen" id="resultScreen">
+    <div class="result-star" id="resultStar">⭐</div>
+    <div class="result-title" id="result-title">Урок завершён!</div>
+    <div class="result-score-big" id="resultScoreBig">0</div>
+    <div class="result-score-label" id="result-score-label">из 7 правильных</div>
+    <div class="result-sub" id="result-sub">Молодец! Ты познакомился с тайнами Бааль а‑Турима.</div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="restart-btn" onclick="restartLesson()">↺ Начать снова</button>
+      <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+    </div>
+  </div>
 </div>
 
 <script>
-function finishQuiz(){
-let questions=document.querySelectorAll('.question')
-let score=0
-questions.forEach(q=>{
-let correct=q.dataset.correct
-let buttons=q.querySelectorAll('button.option')
-buttons.forEach((btn,i)=>{
-if(btn.classList.contains('selected')){
-if(i==correct){
-btn.classList.add('correct')
-score++
-}else{
-btn.classList.add('wrong')
-}
-}
-})
-})
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Сколько основных работ запрещено в Шаббат?',
+    opts: ['7', '10', '39', '70'],
+    correct: 2,
+    fb_ok: '✓ Верно! Бааль а‑Турим выводит число 39 из слов «אֵלֶּה הַדְּבָרִים»: 36 + 1 + 2 = 39.',
+    fb_no: '✗ Неверно. Число запрещённых работ — 39. Бааль а‑Турим выводит его из слов «אֵלֶּה הַדְּבָרִים».'
+  },
+  {
+    q: 'Из каких слов Бааль а‑Турим выводит число 39 работ?',
+    opts: ['Берешит бара', 'אֵלֶּה הַדְּבָרִים', 'ששת ימים', 'לא תבערו'],
+    correct: 1,
+    fb_ok: '✓ Правильно! Из слов «אֵלֶּה הַדְּבָרִים»: אֵלֶּה = 36, הַ = 1, דְּבָרִים = 2, итого 39.',
+    fb_no: '✗ Неверно. Намёк на число 39 содержится в словах «אֵלֶּה הַדְּבָרִים».'
+  },
+  {
+    q: 'Почему Тора отдельно запрещает зажигать огонь в Шаббат?',
+    opts: [
+      'Он использовался при строительстве Мишкана',
+      'Это самый тяжёлый грех',
+      'Огонь был редкостью',
+      'Это символический запрет'
+    ],
+    correct: 0,
+    fb_ok: '✓ Верно! Огонь нужен был для плавки металлов при строительстве Мишкана. Тора подчёркивает: даже ради Мишкана нельзя нарушать Шаббат.',
+    fb_no: '✗ Неверно. Огонь использовался при строительстве Мишкана, поэтому Тора особо подчёркивает его запрет в Шаббат.'
+  },
+  {
+    q: 'Какое слово образуют начальные и конечные буквы слов «הַשַּׁבָּת וַיֹּאמֶר»?',
+    opts: ['שָׁלוֹם', 'תּוֹרָה', 'מִשְׁכָּן', 'שַׁבָּת'],
+    correct: 1,
+    fb_ok: '✓ Правильно! Из четырёх букв — ה, ת, ו, ר — складывается «תּוֹרָה». Это намёк: Шаббат — главное время изучения Торы.',
+    fb_no: '✗ Неверно. Начальные и конечные буквы этих слов образуют «תּוֹרָה» — Тора.'
+  },
+  {
+    q: 'Почему Тора использует женскую форму глагола в стихе «יְבִיאֶהָ אֵת תְּרוּמַת ה\'»?',
+    opts: [
+      'Потому что говорится только о женских пожертвованиях',
+      'Потому что пожертвования включали женские украшения, которыми муж не вправе распоряжаться без согласия жены',
+      'Потому что женщины жертвовали больше, чем мужчины',
+      'Это грамматическая особенность текста без смыслового значения'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Бааль а‑Турим объясняет: среди пожертвований были женские украшения, и муж не может отдавать их без согласия жены.',
+    fb_no: '✗ Неверно. Женская форма намекает: украшения принадлежат женщинам, и их согласие обязательно для пожертвования.'
+  },
+  {
+    q: 'Что означает отсутствие буквы י в слове «וְהַנְּשִׂאִם»?',
+    opts: [
+      'Это просто вариант написания без особого смысла',
+      'Намёк на то, что их было мало',
+      'Намёк на промедление князей с пожертвованиями',
+      'Намёк на их особую святость'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! Бааль а‑Турим объясняет: буква убрана как намёк на промедление князей. Они ждали, пока народ принесёт сначала — но народ принёс всё сразу.',
+    fb_no: '✗ Неверно. Отсутствие буквы י — намёк на промедление князей, которые решили ждать остатков после народа.'
+  },
+  {
+    q: 'Что произошло, когда князья решили подождать с пожертвованиями?',
+    opts: [
+      'Народ подождал их и они принесли вместе',
+      'Народ принёс всё сразу, не оставив ничего для князей',
+      'Всевышний принял их пожертвования первыми',
+      'Моше похвалил их мудрость'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Народ Израиля принёс всё необходимое сразу — не оставив ничего недостающего. Промедление князей привело к упущенной возможности.',
+    fb_no: '✗ Неверно. Народ принёс всё сразу, и для князей не осталось ничего — их промедление стало уроком для будущих поколений.'
+  }
+];
 
-document.getElementById('result').innerText="Правильных ответов: "+score+" из "+questions.length
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+let quizInitialized = false;
+
+const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  goToSection(1);
+  buildNavDots();
 }
 
-document.querySelectorAll('.option').forEach(btn=>{
-btn.addEventListener('click',()=>{
-let parent=btn.parentElement
-parent.querySelectorAll('.option').forEach(b=>b.classList.remove('selected'))
-btn.classList.add('selected')
-})
-})
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 11 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил тайны Бааль а‑Турима.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.6 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  goToSection(1);
+}
 </script>
+
+<footer class="site-footer">
+  <span>© <a href="https://t.me/chitas" target="_blank" rel="noopener">chitasclub</a></span>
+  <span class="footer-sep">·</span>
+  <a href="mailto:kosherletter@gmail.com">kosherletter@gmail.com</a>
+</footer>
+
+<!-- Settings button -->
+<button class="settings-btn" id="settingsBtn" title="Настройки отображения" aria-label="Настройки">⚙</button>
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settingsPanel">
+  <h3>Настройки</h3>
+
+  <div class="setting-row">
+    <label>Размер шрифта</label>
+    <input type="range" id="fontSizeRange" min="14" max="22" step="1" value="16">
+  </div>
+
+  <div class="setting-row">
+    <label>Фон</label>
+    <div class="color-swatches" id="bgSwatches">
+      <div class="color-swatch selected" data-bg="#0d0a1a" style="background:#0d0a1a;" title="Тёмно-синий"></div>
+      <div class="color-swatch" data-bg="#111111" style="background:#111111;" title="Чёрный"></div>
+      <div class="color-swatch" data-bg="#2d2416" style="background:#2d2416;" title="Сепия тёмная"></div>
+      <div class="color-swatch" data-bg="#f5f0e8" style="background:#f5f0e8;" title="Сепия светлая"></div>
+      <div class="color-swatch" data-bg="#ffffff" style="background:#ffffff;" title="Белый"></div>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Шрифт</label>
+    <div class="font-options" id="fontOptions">
+      <button class="font-option selected" data-font="'Rubik', sans-serif">Rubik</button>
+      <button class="font-option" data-font="'Merriweather', serif">Merriweather</button>
+      <button class="font-option" data-font="'Frank Ruhl Libre', serif">Frank Ruhl</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../assets/settings.js"></script>
 
 </body>
 </html>
