@@ -8,127 +8,62 @@
 <link rel="stylesheet" href="assets/shared.css">
 <link rel="stylesheet" href="assets/index.css">
 <style>
-/* ── Onboarding modal ── */
-.onboard-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5,3,12,0.88);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(6px);
-  animation: fadeIn 0.4s ease;
-}
-.onboard-overlay.hidden { display: none; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.onboard-modal {
-  background: #13102a;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px 36px;
-  max-width: 520px;
-  width: 100%;
+/* ── About section ── */
+.about-section {
+  max-width: 920px;
+  margin: 0 auto 56px;
+  padding: 0 20px;
   position: relative;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-  animation: slideUp 0.4s ease;
+  z-index: 1;
 }
-@keyframes slideUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
 
-.onboard-steps {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 32px;
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
-.onboard-step-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: all 0.3s;
-}
-.onboard-step-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
 
-.onboard-icon {
-  font-size: 44px;
-  text-align: center;
-  margin-bottom: 16px;
+.about-block {
+  background: var(--card);
+  border: 1px solid var(--border-faint);
+  border-radius: 16px;
+  padding: 28px 24px;
 }
-.onboard-title {
+
+.about-block-title {
   font-family: 'Merriweather', serif;
-  font-size: clamp(20px, 3vw, 26px);
+  font-size: 17px;
   font-weight: 700;
   color: var(--text);
-  text-align: center;
-  margin-bottom: 16px;
-  line-height: 1.3;
+  margin-bottom: 8px;
 }
-.onboard-body {
-  font-size: 15px;
+
+.about-block-lead {
+  font-size: 14px;
   color: var(--text-dim);
-  line-height: 1.8;
-  text-align: center;
-  margin-bottom: 28px;
+  line-height: 1.7;
+  margin-bottom: 18px;
 }
-.onboard-body strong { color: var(--gold2); font-weight: 600; }
-.onboard-features {
+.about-block-lead strong { color: var(--gold2); font-weight: 600; }
+
+.about-features {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 28px;
-  text-align: left;
 }
-.onboard-feature {
+
+.about-feature {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  background: var(--card);
-  border: 1px solid var(--border-faint);
-  border-radius: 10px;
-  padding: 12px 14px;
 }
-.onboard-feature-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-.onboard-feature-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
-.onboard-feature-text strong { color: var(--text); display: block; margin-bottom: 2px; }
 
-.onboard-btns {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.onboard-btn-primary {
-  background: linear-gradient(135deg, var(--gold), #a87800);
-  color: #0d0a1a;
-  font-family: 'Rubik', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 18px rgba(212,168,67,0.25);
-}
-.onboard-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212,168,67,0.35); }
-.onboard-btn-skip {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-faint);
-  font-family: 'Rubik', sans-serif;
-  font-size: 13px;
-  padding: 12px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.onboard-btn-skip:hover { border-color: var(--text-faint); color: var(--text-dim); }
-.onboard-slide { display: none; }
-.onboard-slide.active { display: block; }
-@media (max-width: 520px) {
-  .onboard-modal { padding: 28px 20px; }
+.about-feature-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.about-feature-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+.about-feature-text strong { color: var(--text); display: block; margin-bottom: 1px; }
+
+@media (max-width: 620px) {
+  .about-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -138,6 +73,81 @@
   <div class="site-logo">תורה חיה</div>
   <div class="site-subtitle">Living Torah · Живая Тора</div>
   <div class="site-desc">Уроки по учению Ребе </div>
+</div>
+
+<div class="about-section">
+  <div class="section-label">О проекте</div>
+  <div class="about-grid">
+
+    <!-- Block 1: What is Living Torah -->
+    <div class="about-block">
+      <div class="about-block-title">📜 Что такое Living Torah?</div>
+      <div class="about-block-lead">
+        <strong>Живая Тора</strong> — интерактивные уроки по учению Ребе
+        Менахема Менделя Шнеерсона. Каждый урок — глубокое погружение
+        в идеи хасидизма, доступное каждому.
+      </div>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">🕍</div>
+          <div class="about-feature-text">
+            <strong>Глубокое содержание</strong>
+            Уроки основаны на Ликутей сихот и других первоисточниках
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🌍</div>
+          <div class="about-feature-text">
+            <strong>Три языка</strong>
+            Уроки доступны на русском, украинском и немецком
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">✅</div>
+          <div class="about-feature-text">
+            <strong>Проверь себя</strong>
+            Каждый урок завершается мини-викториной
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Block 2: How to use the site -->
+    <div class="about-block">
+      <div class="about-block-title">🗺️ Как пользоваться сайтом</div>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">▶</div>
+          <div class="about-feature-text">
+            <strong>Начните урок</strong>
+            Выберите урок из списка и нажмите «Начать урок»
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">☰</div>
+          <div class="about-feature-text">
+            <strong>Боковое оглавление</strong>
+            Кнопка ☰ слева открывает список разделов для быстрой навигации
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">⚡</div>
+          <div class="about-feature-text">
+            <strong>Быстрое чтение</strong>
+            В настройках (⚙) включите режим «Быстрое чтение» — только ключевые идеи
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">↩</div>
+          <div class="about-feature-text">
+            <strong>Прогресс сохраняется</strong>
+            Вернитесь позже — урок продолжится с того места, где вы остановились
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <div class="lessons-section">
@@ -201,134 +211,6 @@
   </div>
 </div>
 
-<!-- Onboarding modal -->
-<div class="onboard-overlay hidden" id="onboardOverlay">
-  <div class="onboard-modal">
-    <div class="onboard-steps">
-      <div class="onboard-step-dot active" id="odot-0"></div>
-      <div class="onboard-step-dot" id="odot-1"></div>
-    </div>
-
-    <!-- Slide 1: What is Living Torah -->
-    <div class="onboard-slide active" id="oslide-0">
-      <div class="onboard-icon">📜</div>
-      <div class="onboard-title">Что такое Living Torah?</div>
-      <div class="onboard-body">
-        <strong>Живая Тора</strong> — интерактивные уроки по учению<br>
-        Ребе Менахема Менделя Шнеерсона.<br><br>
-        Каждый урок — это глубокое погружение в идеи хасидизма,
-        доступное каждому.
-      </div>
-      <div class="onboard-features">
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">🕍</div>
-          <div class="onboard-feature-text">
-            <strong>Глубокое содержание</strong>
-            Уроки основаны на Ликутей сихот и других первоисточниках
-          </div>
-        </div>
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">🌍</div>
-          <div class="onboard-feature-text">
-            <strong>Три языка</strong>
-            Уроки доступны на русском, украинском и немецком
-          </div>
-        </div>
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">✅</div>
-          <div class="onboard-feature-text">
-            <strong>Проверь себя</strong>
-            Каждый урок завершается мини-викториной
-          </div>
-        </div>
-      </div>
-      <div class="onboard-btns">
-        <button class="onboard-btn-primary" onclick="onboardNext()">Далее →</button>
-        <button class="onboard-btn-skip" onclick="onboardClose()">Пропустить</button>
-      </div>
-    </div>
-
-    <!-- Slide 2: How to use the site -->
-    <div class="onboard-slide" id="oslide-1">
-      <div class="onboard-icon">🗺️</div>
-      <div class="onboard-title">Как пользоваться сайтом</div>
-      <div class="onboard-features">
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">▶</div>
-          <div class="onboard-feature-text">
-            <strong>Начните урок</strong>
-            Выберите урок из списка и нажмите «Начать урок»
-          </div>
-        </div>
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">☰</div>
-          <div class="onboard-feature-text">
-            <strong>Боковое оглавление</strong>
-            Кнопка ☰ слева открывает список разделов для быстрой навигации
-          </div>
-        </div>
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">⚡</div>
-          <div class="onboard-feature-text">
-            <strong>Быстрое чтение</strong>
-            В настройках (⚙) включите режим «Быстрое чтение» — только ключевые идеи
-          </div>
-        </div>
-        <div class="onboard-feature">
-          <div class="onboard-feature-icon">↩</div>
-          <div class="onboard-feature-text">
-            <strong>Прогресс сохраняется</strong>
-            Вернитесь позже — урок продолжится с того места, где вы остановились
-          </div>
-        </div>
-      </div>
-      <div class="onboard-btns">
-        <button class="onboard-btn-primary" onclick="onboardClose()">Начать →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-(function() {
-  var LS = {
-    get: function(k, def) { try { var v = localStorage.getItem(k); return v !== null ? v : def; } catch(e) { return def; } },
-    set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
-  };
-
-  var currentSlide = 0;
-  var totalSlides = 2;
-
-  function showOnboarding() {
-    document.getElementById('onboardOverlay').classList.remove('hidden');
-  }
-
-  window.onboardNext = function() {
-    if (currentSlide < totalSlides - 1) {
-      document.getElementById('oslide-' + currentSlide).classList.remove('active');
-      document.getElementById('odot-' + currentSlide).classList.remove('active');
-      currentSlide++;
-      document.getElementById('oslide-' + currentSlide).classList.add('active');
-      document.getElementById('odot-' + currentSlide).classList.add('active');
-    }
-  };
-
-  window.onboardClose = function() {
-    document.getElementById('onboardOverlay').classList.add('hidden');
-    LS.set('lt-onboarding-seen', '1');
-  };
-
-  // Show on first visit
-  if (LS.get('lt-onboarding-seen', '0') !== '1') {
-    showOnboarding();
-  }
-
-  // Close on overlay click (outside modal)
-  document.getElementById('onboardOverlay').addEventListener('click', function(e) {
-    if (e.target === this) onboardClose();
-  });
-})();
-</script>
 
 <footer class="site-footer">
   <span>© <a href="https://t.me/chitas" target="_blank" rel="noopener">chitasclub</a></span>
