@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קְדֻשַּׁת לֵוִי — Свет Ицхака: тайна огня Меноры</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/shared.css">
+<style>
+/* (Variables, reset, body are in ../../assets/shared.css) */
+
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
+/* Lang toggle */
+.lang-toggle {
+  position:fixed; top:16px; right:16px;
+  display:flex; gap:6px; z-index:99;
+}
+.lang-btn {
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px;
+}
+.lang-btn.active { background:var(--gold); color:#0d0a1a; border-color:var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  text-align:center;
+  padding: 80px 20px 60px;
+  border-bottom: 1px solid var(--border-faint);
+  overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center 60%, rgba(212,168,67,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.parasha-label {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:4px;
+  text-shadow: 0 0 40px rgba(212,168,67,0.4);
+  direction:rtl;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+.hero-sub {
+  font-size:clamp(13px,2vw,16px);
+  color:var(--text-dim);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(22px,4vw,38px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  max-width:700px;
+  margin:0 auto 16px;
+}
+
+.hero-verse {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--gold);
+  direction:rtl;
+  padding: 12px 24px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--gold-faint);
+  margin-bottom:12px;
+}
+
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  font-style:italic; margin-bottom:32px;
+}
+
+/* Section nav dots */
+.nav-dots {
+  display:flex; gap:8px; justify-content:center;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border);
+  cursor:pointer; transition:all 0.3s;
+  position:relative;
+}
+.nav-dot.active, .nav-dot.done { background:var(--gold); }
+.nav-dot.done::after {
+  content:'✓'; position:absolute; top:-20px; left:50%;
+  transform:translateX(-50%); font-size:10px; color:var(--gold);
+  white-space:nowrap;
+}
+
+/* Start btn */
+.start-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 40px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow: 0 8px 30px rgba(212,168,67,0.3);
+  letter-spacing:1px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.4); }
+
+/* ── SECTIONS ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:0 20px 80px;
+  position:relative; z-index:1;
+}
+
+.section {
+  display:none; opacity:0;
+  transform:translateY(24px);
+  transition:all 0.5s ease;
+}
+.section.active {
+  display:block; opacity:1; transform:translateY(0);
+}
+
+/* Section header */
+.sec-header {
+  display:flex; align-items:center; gap:16px;
+  margin:48px 0 28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border-faint);
+}
+
+.sec-num {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6010);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:18px;
+  color:#0d0a1a; flex-shrink:0;
+}
+
+.sec-title-wrap {}
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(18px,3vw,26px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold);
+  direction:rtl;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* Content cards */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+
+.card p {
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.85;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.card p:last-child { margin-bottom:0; }
+
+.card p em { color:var(--gold2); font-style:normal; font-weight:500; }
+.card p strong { color:var(--gold2); }
+
+.footnote {
+  font-size:12px;
+  color:var(--text-faint);
+  line-height:1.6;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--border-faint);
+}
+
+/* Hebrew quote */
+.heb-quote {
+  background:rgba(212,168,67,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin:20px 0;
+  direction:rtl;
+  text-align:right;
+}
+.heb-quote .heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2);
+  line-height:1.9;
+  margin-bottom:10px;
+}
+.heb-quote .heb-src {
+  font-size:12px; color:var(--text-faint);
+  letter-spacing:1px; direction:rtl;
+}
+
+/* Key concept box */
+.key-concept {
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin:20px 0;
+}
+.key-icon {
+  font-size:28px; flex-shrink:0; margin-top:2px;
+}
+.key-body .key-title {
+  font-weight:700; color:var(--blue2);
+  font-size:15px; margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.key-body p {
+  font-size:15px; line-height:1.7;
+  color:var(--text); margin:0;
+}
+
+/* Two columns */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin:20px 0;
+}
+@media(max-width:560px){ .two-col{ grid-template-columns:1fr; } }
+
+.col-card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:10px;
+  padding:18px 20px;
+}
+.col-card .col-title {
+  font-weight:700; font-size:15px;
+  margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.col-card p { font-size:14px; line-height:1.7; color:var(--text-dim); }
+
+/* Formula style */
+.formula-block {
+  display:flex; align-items:center;
+  justify-content:center; gap:12px;
+  flex-wrap:wrap;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(58,123,213,0.05));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin:20px 0;
+  font-family:'Merriweather',serif;
+}
+.f-part {
+  padding:8px 18px; border-radius:8px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+  text-align:center;
+}
+.f-eq { font-size:22px; color:var(--gold); }
+.f-result {
+  background:var(--gold);
+  color:#0d0a1a;
+  padding:10px 20px; border-radius:10px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+}
+
+/* Navigation buttons */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:40px; gap:16px; flex-wrap:wrap;
+}
+
+.btn-prev, .btn-next {
+  font-family:'Rubik',sans-serif; font-weight:600;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; font-size:15px; transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-prev {
+  background:transparent; color:var(--text-dim);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { background:var(--card); color:var(--text); }
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a;
+  box-shadow: 0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── QUIZ ── */
+.quiz-wrap { margin:28px 0; }
+
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  transition:all 0.3s;
+}
+
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+
+.q-options { display:flex; flex-direction:column; gap:10px; }
+
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  animation:fadeInUp 0.5s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+
+/* ── Continue reading button ── */
+.continue-btn {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+.continue-btn:hover { border-color: var(--gold); color: var(--gold2); }
+.continue-btn.shown { display: inline-flex; }
+
+/* ── TOC Sidebar ── */
+.toc-sidebar {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: none;
+}
+.toc-sidebar.visible { display: block; }
+.toc-toggle-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--gold);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.toc-toggle-btn:hover { background: var(--gold-dim); }
+.toc-panel {
+  position: absolute;
+  left: 0;
+  top: 48px;
+  width: 230px;
+  background: #1a1630;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toc-panel.open { opacity: 1; pointer-events: all; transform: translateX(0); }
+.toc-panel-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-faint);
+}
+.toc-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-family: 'Rubik', sans-serif;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+.toc-item:hover { background: var(--gold-dim); color: var(--text); }
+.toc-item.toc-current { color: var(--gold2); background: var(--gold-faint); font-weight: 600; }
+.toc-item.toc-done { color: var(--text-faint); }
+@media (max-width: 920px) { .toc-sidebar { display: none !important; } }
+
+/* ── Quick Read mode ── */
+.quick-read .card:not(.card-accent) { display: none; }
+.quick-read .two-col { display: none; }
+.quick-read .formula-block { display: none; }
+</style>
+</head>
+<body>
+
+<div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnRu">RU</button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">קְדֻשַּׁת לֵוִי</div>
+  <div class="hero-sub">Кдушат Леви · Рав Леви Ицхак из Бердичева</div>
+  <div class="hero-title">Свет Ицхака: тайна огня Меноры</div>
+  <div class="hero-verse">בְּהַעֲלֹתְךָ אֶת הַנֵּרֹת</div>
+  <div class="hero-verse-ru">«Когда ты зажигаешь светильники» (Бемидбар 8:2)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
+  <br>
+  <button class="continue-btn" id="continueBtn" onclick="continueLesson()">
+    <span>↩</span>
+    <span id="continueBtnLabel">Продолжить урок</span>
+  </button>
+</div>
+
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1 -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Введение</div>
+        <div class="sec-title">Менора: семь огней, один источник</div>
+        <div class="sec-heb-sub">מְנוֹרָה — שִׁבְעָה נֵרוֹת, מָקוֹר אֶחָד</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Тора описывает Менору как предмет особой святости: семь ветвей, отлитых из цельного куска золота. <em>«Из цельного куска пусть будет сделана Менора»</em> (Шмот 25:36) — ни одного шва, ни одной скрепки.</p>
+      <p>Когда первосвященник Аарон зажигал светильники, Тора использует необычное слово: <em>«בְּהַעֲלֹתְךָ»</em> — «когда ты поднимаешь». Не «зажигаешь», а именно <strong>«поднимаешь»</strong>. Огонь уходит вверх, к небесам.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">מִקְשָׁה אַחַת זָהָב טָהוֹר עָשָׂה אֶת הַמְּנוֹרָה</div>
+      <div class="heb-src">— שמות לז:יז · Шмот 37:17</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Рав Леви Ицхак из Бердичева — автор книги <em>«Кдушат Леви»</em> — задаёт вопрос: если семь огней символизируют семь дней творения или семь духовных сил (сфирот), то <strong>почему Тора особо связывает зажигание Меноры с именем Аарона?</strong> Почему именно ему?</p>
+      <p>Ответ Рава Леви Ицхака открывает глубокий принцип: <em>каждый огонь</em> Меноры соответствует духовному пути <em>одного из праотцов и праматерей</em> Израиля. А центральный светильник — это путь Ицхака (Исаака), второго праотца.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🕎</div>
+      <div class="key-body">
+        <div class="key-title">Центральный вопрос урока</div>
+        <p>Чем Ицхак отличается от Авраама и Яакова в духовном смысле? И как именно его путь — путь <strong style="color:var(--gold2)">страха Б-жия (יִרְאָה) и самоограничения</strong> — становится центральным огнём, освещающим всю Менору?</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Имя и его тайна</div>
+        <div class="sec-title">Ицхак — «будет смеяться»: радость из страха</div>
+        <div class="sec-heb-sub">יִצְחָק — שֶׂחוֹק מִתּוֹךְ יִרְאָה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Имя <em>יִצְחָק (Ицхак)</em> происходит от слова <em>צְחוֹק (цхок)</em> — смех, радость. Когда Сарра услышала предсказание о сыне, она засмеялась. Б-г назвал ребёнка в честь этого смеха — <strong>«будет смеяться»</strong>.</p>
+      <p>Но разве Ицхак — образ радости? Его жизнь — жертвоприношение на горе Мория (Акеда), ослепление в старости, скорбь об Эсаве. <strong>Откуда смех?</strong></p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">צְחֹק עָשָׂה לִי אֱלֹהִים כָּל הַשֹּׁמֵעַ יִצְחַק לִי</div>
+      <div class="heb-src">— בראשית כא:ו · Берешит 21:6</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p><strong>Рав Леви Ицхак объясняет:</strong> есть два вида радости. Первый — поверхностная радость, которая приходит от удовольствий мира. Второй — <em>глубинная радость</em>, рождённая из принятия воли Б-жией, даже когда это требует самопожертвования.</p>
+      <p>Ицхак олицетворяет именно эту <em>скрытую радость</em> — ту, что живёт внутри страха Небес (יִרְאַת שָׁמַיִם). Когда человек полностью принимает суд Всевышнего и не сопротивляется ему, <strong>внутри этого принятия вспыхивает особый свет.</strong></p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card">
+        <div class="col-title">Авраам — Хесед (חֶסֶד)</div>
+        <p>Любовь и милосердие. Авраам открыт всему миру: его шатёр открыт с четырёх сторон. Его служение — давать, принимать гостей, любить.</p>
+      </div>
+      <div class="col-card">
+        <div class="col-title">Ицхак — Гвура (גְּבוּרָה)</div>
+        <p>Сила и самоограничение. Ицхак закапывает колодцы, не спорит с врагами. Его служение — сдержанность, страх Небес, внутренняя дисциплина.</p>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«Кдушат Леви» указывает: слово <em>יִצְחָק</em> состоит из букв <em>יצ-חק</em>, что намекает на два понятия: <em>יֵצֶא חֵק</em> — «выходит закон», т.е. из строгого закона (גְּבוּרָה) рождается свет. Именно этот свет — огонь среднего светильника Меноры.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Три праотца и Менора</div>
+        <div class="sec-title">Семь ветвей — семь духовных путей</div>
+        <div class="sec-heb-sub">שִׁבְעָה קָנִים — שִׁבְעָה נְתִיבוֹת</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Менора состоит из центрального ствола и трёх пар ветвей — итого семь. «Кдушат Леви» объясняет: три правые ветви соответствуют трём праотцам (Авраам, Ицхак, Яаков), три левые — трём праматерям (Сарра, Ривка, Рахель и Лея).</p>
+      <p>Центральный ствол — это <em>«нер hа-маарав»</em>, западный светильник, который, по преданию, горел сам по себе всю ночь. Он символизирует <strong>суть связи между Израилем и Б-гом</strong> — ту искру, которая никогда не гаснет.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְהָאִיר עַל-עֵבֶר פָּנֶיהָ</div>
+      <div class="heb-src">— במדבר ח:ב · Бемидбар 8:2 — «и будет светить к лицу своему»</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Рав Леви Ицхак обращает внимание: Тора говорит — все шесть боковых светильников должны быть направлены <em>к центральному</em>. Почему?</p>
+      <p>Потому что <strong>все духовные пути — любовь Авраама, сила Ицхака, гармония Яакова — обретают смысл лишь тогда, когда они направлены к центру</strong>, к той точке, где Б-жественный свет встречается с человеческой душой.</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(212,168,67,0.1); color:var(--gold2);">Хесед<br><small>Авраам</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(212,168,67,0.2); color:var(--gold2);">Гвура<br><small>Ицхак</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(212,168,67,0.1); color:var(--gold2);">Тиферет<br><small>Яаков</small></div>
+      <div class="f-eq">=</div>
+      <div class="f-result">Полный свет<br><small>Менора</small></div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p><strong>Важная деталь:</strong> без «гвуры» — силы и самоограничения Ицхака — Менора бы не горела ровно. Если бы все светильники только «давали» (как Авраам), огонь бы разгорался неконтролируемо. Именно <em>дисциплина Ицхака</em> — это то, что удерживает пламя в правильных границах.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Акеда и Менора</div>
+        <div class="sec-title">Огонь жертвоприношения — огонь Меноры</div>
+        <div class="sec-heb-sub">עֲקֵידַת יִצְחָק וְנֵר הַמְּנוֹרָה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«Кдушат Леви» проводит поразительную параллель между <em>Акедат Ицхак</em> (Связыванием Ицхака) и огнём Меноры.</p>
+      <p>На горе Мория Авраам поднял нож над своим сыном. И именно в этот момент, говорит Мидраш, <em>душа Ицхака «поднялась» к Небесам</em> — а затем вернулась. Ицхак пережил символическую смерть и воскрешение. Это событие оставило в нём <strong>особую отметину — отблеск Высшего света.</strong></p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיִּשָּׂא אַבְרָהָם אֶת-עֵינָיו וַיַּרְא אַיִל אַחַר נֶאֱחַז בַּסְּבַךְ בְּקַרְנָיו</div>
+      <div class="heb-src">— בראשית כב:יג · Берешит 22:13</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Рав Леви Ицхак объясняет: когда Ицхак лежал связанным на жертвеннике, его глаза были открыты — и он увидел то, что недоступно обычному человеческому взору. Поэтому, говорит «Кдушат Леви», <em>глаза Ицхака в старости ослабели</em> — не болезнь, а <strong>последствие созерцания Высшего света</strong>.</p>
+      <p>Этот свет, вошедший в Ицхака на Мория, — это именно тот огонь, который горит в центральном светильнике Меноры. <em>Огонь, прошедший через испытание.</em></p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🔥</div>
+      <div class="key-body">
+        <div class="key-title">Главный принцип Кдушат Леви</div>
+        <p>Истинный духовный свет рождается не из лёгкости, а из испытания. <strong style="color:var(--gold2)">Огонь Меноры — это свет, прошедший через «связывание»</strong>: через принятие страданий с радостью (симха шель мицва), через самоотречение ради Небес.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Вот почему, говорит «Кдушат Леви», заповедь зажигания Меноры была дана <strong>Аарону — брату Моше</strong>, а не самому Моше. Моше — это «хесед», безграничное милосердие. А Аарон — это связующее звено между строгостью суда и любовью народа. <em>Именно он мог «поднять» огонь Ицхака к Небесам.</em></p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="sec-5">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Главный урок</div>
+        <div class="sec-title">Свет, рождённый из тьмы</div>
+        <div class="sec-heb-sub">אוֹר הַנּוֹלָד מִתּוֹךְ הַחֹשֶׁךְ</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«Кдушат Леви» задаёт финальный вопрос: зачем вообще нужна Менора в Храме? Ведь Б-г не нуждается в нашем свете — <em>Он Сам является источником всякого света!</em></p>
+      <p>Ответ поражает: Менора нужна <strong>не Б-гу, а нам</strong>. Когда мы зажигаем светильники, мы не освещаем Храм — мы <em>открываем в себе способность принимать Б-жественный свет.</em></p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">לֹא לְאוֹרִי אַתֶּם מְדַלְּקִין — אֶלָּא לְהַרְאוֹת שֶׁשְּׁכִינָה שׁוֹרָה בְּיִשְׂרָאֵל</div>
+      <div class="heb-src">— ספרי, בהעלותך · Сифрей, Бехаалотха</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«Не для Моего света вы зажигаете — а чтобы показать, что Шхина пребывает в Израиле».</p>
+      <p>Рав Леви Ицхак развивает: путь Ицхака — Гвура, самоограничение — это путь создания <em>пространства для Б-жественного света</em>. Когда человек <strong>сдерживает своё «я»</strong>, когда он принимает страдания с миром, когда он не требует от мира соответствия своим желаниям — <em>в этом опустошённом пространстве зажигается Менора.</em></p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p><strong>Практический вывод «Кдушат Леви»:</strong> каждый раз, когда мы переживаем трудность и принимаем её без ропота — когда мы «связываем» себя, как Ицхак на Мория — мы зажигаем в себе светильник Меноры. <em>«Поднять» огонь (бехаалотха) означает поднять своё служение на уровень Ицхака — туда, где страх перед Б-гом превращается в чистую радость.</em></p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">✨</div>
+      <div class="key-body">
+        <div class="key-title">Связь с нашим временем</div>
+        <p>Даже сегодня, когда Храм разрушен и Менора не горит физически, путь Ицхака открыт каждому. Принять вызов без жалоб. Ограничить своё эго ради высшей цели. Найти радость в самом служении — а не в его награде. <strong style="color:var(--gold2)">Это и есть зажигание внутренней Меноры.</strong></p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="sec-6">
+    <div class="sec-header">
+      <div class="sec-num">6</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Практика</div>
+        <div class="sec-title">Как зажечь свою Менору</div>
+        <div class="sec-heb-sub">כֵּיצַד מַדְלִיקִים אֶת מְנוֹרַת הַנֶּפֶשׁ</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>«Кдушат Леви» — это не только теология, это практическое руководство для жизни. Рав Леви Ицхак из Бердичева был известен как защитник евреев перед Небесным судом. Его учение — это учение о том, как превратить <em>обычные испытания</em> в топливо для духовного огня.</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card">
+        <div class="col-title">🕯 Первый светильник</div>
+        <p><strong>Принять испытание.</strong> Когда приходит трудность — не бежать от неё, а спросить себя: «Чему меня учит этот момент?» Это первый шаг к «связыванию» в духе Ицхака.</p>
+      </div>
+      <div class="col-card">
+        <div class="col-title">🕯 Второй светильник</div>
+        <p><strong>Ограничить речь.</strong> Ицхак в Торе почти молчит — он редко говорит. «Кдушат Леви» учит: дисциплина речи (שְׁמִירַת הַלָּשׁוֹן) — это один из ключей к свету Меноры.</p>
+      </div>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card">
+        <div class="col-title">🕯 Третий светильник</div>
+        <p><strong>Найти скрытую радость.</strong> В каждой заповеди, которую мы выполняем даже без вдохновения, скрыта «симха шель мицва» — радость заповеди. Искать её — значит «поднимать» огонь.</p>
+      </div>
+      <div class="col-card">
+        <div class="col-title">🕯 Четвёртый светильник</div>
+        <p><strong>Направить всё к центру.</strong> Как все ветви Меноры обращены к центральному стволу — направить все свои действия (молитва, учёба, благотворительность) к единой цели: близости с Б-гом.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Рав Леви Ицхак заканчивает своё рассуждение о Меноре словами: <em>«Пусть каждый еврей знает — в нём горит искра Ицхака. Эта искра не гаснет никогда. Её нужно лишь "поднять" — дать ей пространство и воздух через трепет перед Небесами и принятие воли Всевышнего»</em>.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Проверить себя →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7: QUIZ -->
+  <div class="section" id="sec-7">
+    <div class="sec-header">
+      <div class="sec-num">7</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Проверь себя</div>
+        <div class="sec-title">Вопросы по уроку</div>
+        <div class="sec-heb-sub">שְׁאֵלוֹת לְחִזּוּק הַלִּמּוּד</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Счёт:</span>
+      <span class="score-val" id="scoreVal">0 / 4</span>
+      <div class="score-progress">
+        <div class="score-fill" id="scoreFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>Завершить урок →</button>
+    </div>
+  </div>
+
+</div><!-- /lesson-container -->
+
+<!-- RESULT SCREEN -->
+<div class="result-screen" id="resultScreen">
+  <div class="result-star" id="resultStar"></div>
+  <div class="result-title">Урок завершён!</div>
+  <div class="result-sub" id="result-sub"></div>
+  <div class="result-score-big" id="resultScoreBig"></div>
+  <div class="result-score-label" id="result-score-label"></div>
+  <button class="restart-btn" onclick="restartLesson()">↩ Пройти снова</button>
+  <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+</div>
+
+<!-- TOC Sidebar -->
+<div class="toc-sidebar" id="tocSidebar">
+  <button class="toc-toggle-btn" id="tocToggleBtn" title="Оглавление" onclick="toggleTOC()">☰</button>
+  <div class="toc-panel" id="tocPanel"></div>
+</div>
+
+<!-- Settings button -->
+<button class="settings-btn" id="settingsBtn" title="Настройки отображения" aria-label="Настройки">⚙</button>
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settingsPanel">
+  <h3>Настройки</h3>
+
+  <div class="setting-row">
+    <label>Размер шрифта</label>
+    <input type="range" id="fontSizeRange" min="14" max="22" step="1" value="16">
+  </div>
+
+  <div class="setting-row">
+    <label>Фон</label>
+    <div class="color-swatches" id="bgSwatches">
+      <div class="color-swatch selected" data-bg="#0d0a1a" style="background:#0d0a1a;" title="Тёмно-синий"></div>
+      <div class="color-swatch" data-bg="#111111" style="background:#111111;" title="Чёрный"></div>
+      <div class="color-swatch" data-bg="#2d2416" style="background:#2d2416;" title="Сепия тёмная"></div>
+      <div class="color-swatch" data-bg="#f5f0e8" style="background:#f5f0e8;" title="Сепия светлая"></div>
+      <div class="color-swatch" data-bg="#ffffff" style="background:#ffffff;" title="Белый"></div>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Шрифт</label>
+    <div class="font-options" id="fontOptions">
+      <button class="font-option selected" data-font="'Rubik', sans-serif">Rubik</button>
+      <button class="font-option" data-font="'Merriweather', serif">Merriweather</button>
+      <button class="font-option" data-font="'Frank Ruhl Libre', serif">Frank Ruhl</button>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Режим чтения</label>
+    <div class="font-options">
+      <button class="font-option" id="qrBtn" onclick="toggleQuickRead()">⚡ Быстрое чтение</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>© <a href="https://t.me/chitas" target="_blank" rel="noopener">chitasclub</a></span>
+  <span class="footer-sep">·</span>
+  <a href="mailto:kosherletter@gmail.com">kosherletter@gmail.com</a>
+</footer>
+
+<script src="../../assets/settings.js"></script>
+
+<script>
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Почему имя «Ицхак» означает «будет смеяться», если его жизнь была полна испытаний?',
+    opts: [
+      'Потому что Сарра смеялась при рождении — это просто воспоминание',
+      'По мнению «Кдушат Леви», в имени зашифрована скрытая радость, рождающаяся из принятия воли Б-жией',
+      'Потому что Ицхак был весёлым и оптимистичным человеком по характеру',
+      'Имя не связано со смыслом — это просто традиционное еврейское имя'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! «Кдушат Леви» учит: имя Ицхак указывает на глубинную радость, которая рождается именно из самоотречения и принятия суда Небес — а не из лёгкости жизни.',
+    fb_no: '✗ Неверно. Рав Леви Ицхак из Бердичева видит в имени Ицхак указание на особый вид радости — ту, что рождается из страха Небес и принятия Б-жественного суда.'
+  },
+  {
+    q: 'Какому из семи светильников Меноры соответствует путь Ицхака по «Кдушат Леви»?',
+    opts: [
+      'Крайнему правому — как старший из праотцов',
+      'Крайнему левому — как символ строгого суда',
+      'Центральному стволу — как суть связи между Израилем и Б-гом',
+      'Второму справа — как второй из трёх праотцов'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! Центральный светильник — «нер hа-маарав» — символизирует глубинную связь Израиля с Б-гом, и именно путь Ицхака (принятие испытаний, страх Небес) является её сутью.',
+    fb_no: '✗ Неверно. По «Кдушат Леви», Ицхак связан с центральным стволом Меноры — тем светильником, который горел самостоятельно и символизирует неугасимую связь между Израилем и Небесами.'
+  },
+  {
+    q: 'Зачем, по мнению «Кдушат Леви», нужна Менора в Храме, если Б-г не нуждается в свете?',
+    opts: [
+      'Для украшения Храма — чтобы он выглядел величественнее',
+      'Для освещения тёмных помещений Храма в ночное время',
+      'Чтобы показать народам мира богатство Израиля',
+      'Чтобы открыть в самом человеке способность принимать Б-жественный свет — и показать, что Шхина пребывает в Израиле'
+    ],
+    correct: 3,
+    fb_ok: '✓ Верно! Сифрей прямо говорит: «Не для Моего света вы зажигаете» — Менора нужна нам, чтобы создать сосуд для Б-жественного присутствия, открыть в себе готовность принять Шхину.',
+    fb_no: '✗ Неверно. «Кдушат Леви», опираясь на Сифрей, объясняет: Менора зажигается не для Б-га, а для нас самих — чтобы мы стали сосудами для Б-жественного света.'
+  },
+  {
+    q: 'Что связывает Акедат Ицхак (Связывание Ицхака) с огнём Меноры по «Кдушат Леви»?',
+    opts: [
+      'На горе Мория горел особый жертвенный огонь, от которого позже зажгли Менору',
+      'Оба события происходили в один и тот же день еврейского календаря',
+      'Душа Ицхака, «поднявшаяся» к Небесам на Мория и вернувшаяся, несёт в себе отблеск Высшего света — тот же огонь, что горит в центральном светильнике',
+      'Связывание Ицхака и Менора не связаны — это два разных события'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! «Кдушат Леви» учит: опыт Акеды — символическая смерть и воскрешение — оставил в Ицхаке особый отблеск Высшего света. Именно этот свет, прошедший через испытание, и есть огонь центрального светильника Меноры.',
+    fb_no: '✗ Неверно. По «Кдушат Леви», на горе Мория душа Ицхака «поднялась» к Небесам и вернулась, неся в себе отпечаток Б-жественного света. Этот свет, рождённый из предельного испытания, — и есть огонь Меноры.'
+  }
+];
+
+// ─── STORAGE HELPER ───
+var LS = {
+  get: function(k, def) { try { var v = localStorage.getItem(k); return v !== null ? v : def; } catch(e) { return def; } },
+  set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+};
+
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+var _navScrolling = false;
+var _scrollSaveTimer;
+let quizInitialized = false;
+
+const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7];
+
+// ─── READING PROGRESS ───
+function getProgressKey() {
+  return 'lt-progress-' + window.location.pathname;
+}
+function saveProgress() {
+  LS.set(getProgressKey(), JSON.stringify({section: currentSection, scroll: Math.round(window.scrollY)}));
+}
+function clearProgress() {
+  LS.set(getProgressKey(), '');
+}
+
+// ─── TOC ───
+function buildTOC() {
+  var panel = document.getElementById('tocPanel');
+  panel.innerHTML = '<div class="toc-panel-title">Содержание</div>';
+  SECTION_ORDER.forEach(function(secNum, idx) {
+    var sec = document.getElementById('sec-' + secNum);
+    if (!sec) return;
+    var titleEl = sec.querySelector('.sec-title');
+    var title = titleEl ? titleEl.textContent.trim() : ('Раздел ' + (idx + 1));
+    var btn = document.createElement('button');
+    btn.className = 'toc-item';
+    btn.textContent = (idx + 1) + '. ' + title;
+    btn.onclick = function() {
+      goToSection(secNum);
+      document.getElementById('tocPanel').classList.remove('open');
+    };
+    panel.appendChild(btn);
+  });
+}
+function toggleTOC() {
+  document.getElementById('tocPanel').classList.toggle('open');
+}
+function updateTOC() {
+  var idx = SECTION_ORDER.indexOf(currentSection);
+  document.querySelectorAll('.toc-item').forEach(function(item, i) {
+    item.classList.remove('toc-current', 'toc-done');
+    if (i === idx) item.classList.add('toc-current');
+    else if (i < idx) item.classList.add('toc-done');
+  });
+}
+
+// ─── QUICK READ ───
+function toggleQuickRead() {
+  var active = document.body.classList.toggle('quick-read');
+  document.getElementById('qrBtn').classList.toggle('selected', active);
+  LS.set('lt-quick-read', active ? '1' : '0');
+}
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(1);
+}
+
+function continueLesson() {
+  var btn = document.getElementById('continueBtn');
+  var section = parseInt(btn.dataset.section, 10);
+  var scroll = parseInt(btn.dataset.scroll || '0', 10);
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(section);
+  if (scroll > 0) {
+    setTimeout(function() { window.scrollTo({top: scroll, behavior: 'smooth'}); }, 400);
+  }
+}
+
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  updateTOC();
+  saveProgress();
+  _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 7 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── SCROLL POSITION AUTOSAVE ───
+window.addEventListener('scroll', function() {
+  if (_navScrolling || currentSection <= 0) return;
+  clearTimeout(_scrollSaveTimer);
+  _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.75 ? '⭐' : pct >= 0.5 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил учение «Кдушат Леви» о свете Ицхака и Меноре.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова — свет Меноры открывается постепенно.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.5 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  clearProgress();
+  goToSection(1);
+}
+
+// Restore quick-read mode
+(function() {
+  if (LS.get('lt-quick-read', '0') === '1') {
+    document.body.classList.add('quick-read');
+    var qrBtn = document.getElementById('qrBtn');
+    if (qrBtn) qrBtn.classList.add('selected');
+  }
+})();
+
+// Check saved progress
+(function() {
+  var saved = LS.get(getProgressKey(), '');
+  if (!saved) return;
+  try {
+    var p = JSON.parse(saved);
+    if (p && p.section && p.section > 0 && SECTION_ORDER.indexOf(p.section) > 0) {
+      var continueBtn = document.getElementById('continueBtn');
+      var orderIdx = SECTION_ORDER.indexOf(p.section);
+      continueBtn.dataset.section = p.section;
+      continueBtn.dataset.scroll = p.scroll || 0;
+      document.getElementById('continueBtnLabel').textContent =
+        'Продолжить (' + (orderIdx + 1) + ' / ' + SECTION_ORDER.length + ')';
+      continueBtn.classList.add('shown');
+    }
+  } catch(e) {}
+})();
+</script>
+
+</body>
+</html>
