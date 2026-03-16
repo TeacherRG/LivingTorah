@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרשת ויקרא — Маленькая алеф: тайна Б-жественного зова</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/shared.css">
+<style>
+/* (Variables, reset, body are in ../../assets/shared.css) */
+
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
+/* Lang toggle */
+.lang-toggle {
+  position:fixed; top:16px; right:16px;
+  display:flex; gap:6px; z-index:99;
+}
+.lang-btn {
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px;
+}
+.lang-btn.active { background:var(--gold); color:#0d0a1a; border-color:var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  text-align:center;
+  padding: 80px 20px 60px;
+  border-bottom: 1px solid var(--border-faint);
+  overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at center 60%, rgba(212,168,67,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.parasha-label {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:4px;
+  text-shadow: 0 0 40px rgba(212,168,67,0.4);
+  direction:rtl;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+.hero-sub {
+  font-size:clamp(13px,2vw,16px);
+  color:var(--text-dim);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(22px,4vw,38px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  max-width:700px;
+  margin:0 auto 16px;
+}
+
+.hero-verse {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--gold);
+  direction:rtl;
+  padding: 12px 24px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--gold-faint);
+  margin-bottom:12px;
+}
+
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  font-style:italic; margin-bottom:32px;
+}
+
+/* Section nav dots */
+.nav-dots {
+  display:flex; gap:8px; justify-content:center;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border);
+  cursor:pointer; transition:all 0.3s;
+  position:relative;
+}
+.nav-dot.active, .nav-dot.done { background:var(--gold); }
+.nav-dot.done::after {
+  content:'✓'; position:absolute; top:-20px; left:50%;
+  transform:translateX(-50%); font-size:10px; color:var(--gold);
+  white-space:nowrap;
+}
+
+/* Start btn */
+.start-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 40px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow: 0 8px 30px rgba(212,168,67,0.3);
+  letter-spacing:1px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.4); }
+
+/* ── SECTIONS ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:0 20px 80px;
+  position:relative; z-index:1;
+}
+
+.section {
+  display:none; opacity:0;
+  transform:translateY(24px);
+  transition:all 0.5s ease;
+}
+.section.active {
+  display:block; opacity:1; transform:translateY(0);
+}
+
+/* Section header */
+.sec-header {
+  display:flex; align-items:center; gap:16px;
+  margin:48px 0 28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border-faint);
+}
+
+.sec-num {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6010);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:18px;
+  color:#0d0a1a; flex-shrink:0;
+}
+
+.sec-title-wrap {}
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(18px,3vw,26px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+
+/* Hebrew section subtitle */
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold);
+  direction:rtl;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* Content cards */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+
+.card p {
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.85;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.card p:last-child { margin-bottom:0; }
+
+.card p em { color:var(--gold2); font-style:normal; font-weight:500; }
+.card p strong { color:var(--gold2); }
+
+/* Footnote style */
+.footnote {
+  font-size:12px;
+  color:var(--text-faint);
+  line-height:1.6;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--border-faint);
+}
+
+/* Hebrew quote */
+.heb-quote {
+  background:rgba(212,168,67,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin:20px 0;
+  direction:rtl;
+  text-align:right;
+}
+.heb-quote .heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2);
+  line-height:1.9;
+  margin-bottom:10px;
+}
+.heb-quote .heb-src {
+  font-size:12px; color:var(--text-faint);
+  letter-spacing:1px; direction:rtl;
+}
+
+/* Key concept box */
+.key-concept {
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin:20px 0;
+}
+.key-icon {
+  font-size:28px; flex-shrink:0; margin-top:2px;
+}
+.key-body .key-title {
+  font-weight:700; color:var(--blue2);
+  font-size:15px; margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.key-body p {
+  font-size:15px; line-height:1.7;
+  color:var(--text); margin:0;
+}
+
+/* Two columns */
+.two-col {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin:20px 0;
+}
+@media(max-width:560px){ .two-col{ grid-template-columns:1fr; } }
+
+.col-card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:10px;
+  padding:18px 20px;
+}
+.col-card .col-title {
+  font-weight:700; font-size:15px;
+  margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.col-card p { font-size:14px; line-height:1.7; color:var(--text-dim); }
+
+/* Formula style */
+.formula-block {
+  display:flex; align-items:center;
+  justify-content:center; gap:12px;
+  flex-wrap:wrap;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(58,123,213,0.05));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin:20px 0;
+  font-family:'Merriweather',serif;
+}
+.f-part {
+  padding:8px 18px; border-radius:8px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+  text-align:center;
+}
+.f-eq { font-size:22px; color:var(--gold); }
+.f-result {
+  background:var(--gold);
+  color:#0d0a1a;
+  padding:10px 20px; border-radius:10px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+}
+
+/* Navigation buttons */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:40px; gap:16px; flex-wrap:wrap;
+}
+
+.btn-prev, .btn-next {
+  font-family:'Rubik',sans-serif; font-weight:600;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; font-size:15px; transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-prev {
+  background:transparent; color:var(--text-dim);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { background:var(--card); color:var(--text); }
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a;
+  box-shadow: 0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── QUIZ ── */
+.quiz-wrap { margin:28px 0; }
+
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  transition:all 0.3s;
+}
+
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+
+.q-options { display:flex; flex-direction:column; gap:10px; }
+
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  animation:fadeInUp 0.5s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+
+/* ── Continue reading button ── */
+.continue-btn {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+.continue-btn:hover { border-color: var(--gold); color: var(--gold2); }
+.continue-btn.shown { display: inline-flex; }
+
+/* ── TOC Sidebar ── */
+.toc-sidebar {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: none;
+}
+.toc-sidebar.visible { display: block; }
+.toc-toggle-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--gold);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.toc-toggle-btn:hover { background: var(--gold-dim); }
+.toc-panel {
+  position: absolute;
+  left: 0;
+  top: 48px;
+  width: 230px;
+  background: #1a1630;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toc-panel.open { opacity: 1; pointer-events: all; transform: translateX(0); }
+.toc-panel-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-faint);
+}
+.toc-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-family: 'Rubik', sans-serif;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+.toc-item:hover { background: var(--gold-dim); color: var(--text); }
+.toc-item.toc-current { color: var(--gold2); background: var(--gold-faint); font-weight: 600; }
+.toc-item.toc-done { color: var(--text-faint); }
+@media (max-width: 920px) { .toc-sidebar { display: none !important; } }
+
+/* ── Quick Read mode ── */
+.quick-read .card:not(.card-accent) { display: none; }
+.quick-read .two-col { display: none; }
+.quick-read .formula-block { display: none; }
+</style>
+</head>
+<body>
+
+<div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnRu">RU</button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">פרשת וַיִּקְרָא</div>
+  <div class="hero-sub">Парашат Ваикра · Урок</div>
+  <div class="hero-title">Маленькая алеф: тайна Б-жественного зова</div>
+  <div class="hero-verse">וַיִּקְרָא אֶל-מֹשֶׁה</div>
+  <div class="hero-verse-ru">«И воззвал Б-г к Моше» (Ваикра 1:1)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
+  <br>
+  <button class="continue-btn" id="continueBtn" onclick="continueLesson()">
+    <span>↩</span>
+    <span id="continueBtnLabel">Продолжить урок</span>
+  </button>
+</div>
+
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1 -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Тема урока</div>
+        <div class="sec-title">Маленькая буква с великим смыслом</div>
+        <div class="sec-heb-sub">האל"ף הקטנה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Книга Ваикра открывается словами: <em>«И воззвал Б-г к Моше, и говорил ему Б-г из Шатра Собрания, сказав»</em> (Ваикра 1:1).</p>
+      <p>Само первое слово — <em>«וַיִּקְרָא»</em> («Вайикра» — «И воззвал») — таит в себе необычную загадку. В свитке Торы последняя буква этого слова, <strong>алеф (א)</strong>, написана значительно меньше остальных букв. Это называется «маленькая алеф» (אל"ף זעירא).</p>
+      <p>Что стоит за этой крошечной буквой? Почему именно здесь, в первом слове книги Ваикра, Тора допускает отступление от привычного написания?</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וַיִּקְרָ<span style="font-size:0.6em;vertical-align:super">א</span> אֶל-מֹשֶׁה</div>
+      <div class="heb-src">— ויקרא א:א · Ваикра 1:1</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>По мидрашу, за этой маленькой алеф стоит глубокий человеческий спор — между <strong>Всевышним и Моше</strong>. Б-г хотел написать «вайикра» с большой алеф. Моше хотел написать иначе.</p>
+      <p>Компромисс между желанием Всевышнего и смирением Моше запечатлён в Торе навсегда — в виде маленькой буквы.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">✍️</div>
+      <div class="key-body">
+        <div class="key-title">Центральный вопрос урока</div>
+        <p>Почему Моше хотел написать своё имя без алеф? В чём разница между «вайикра» и «вайикар»? И какой урок скрыт в маленькой букве для каждого из нас?</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Два слова — два смысла</div>
+        <div class="sec-title">«Вайикра» против «вайикар»</div>
+        <div class="sec-heb-sub">וַיִּקְרָא לְעֻמַּת וַיִּקָּר</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Слово <em>«וַיִּקְרָא»</em> («вайикра» — «И воззвал») отличается от слова <em>«וַיִּקָּר»</em> («вайикар» — «И случилось») ровно одной буквой — алеф на конце.</p>
+      <p>Оба слова встречаются в Торе. В чём разница между ними?</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>📜</span> וַיִּקְרָא — Вайикра</div>
+        <p>«И воззвал» — это <em>язык любви и близости</em>. Так говорится, когда Б-г обращается к человеку по имени, намеренно и с теплотой. Именно это слово используется для описания пророчеств Моше.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>📖</span> וַיִּקָּר — Вайикар</div>
+        <p>«И случилось» — это <em>язык случайности и холодности</em>. Именно это слово использовалось для Билама (Балаама): <em>«и встретился Б-г с Биламом»</em> — то есть как бы случайно, мимоходом.</p>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Таким образом, <strong>«вайикра»</strong> указывает на <em>особую близость</em> Всевышнего к Моше — Он зовёт его по имени, с любовью. А <strong>«вайикар»</strong> — это лишь случайная встреча, лишённая теплоты.</p>
+      <p>Раши прямо объясняет: слово «вайикра» означает язык любви — <em>«לשון חיבה»</em>. Именно таким языком ангелы обращаются друг к другу в небесных сферах.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">לְשׁוֹן חִבָּה — שֶׁנָּקַט בּוֹ לְמֹשֶׁה</div>
+      <div class="heb-src">— רש"י על ויקרא א:א · Раши, Ваикра 1:1</div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Почему же Моше хотел написать <strong>«вайикар»</strong> — слово Билама — вместо «вайикра»? Ответ раскрывает самую суть личности Моше — величайшего из людей, наделённого беспредельным смирением.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Смирение Моше</div>
+        <div class="sec-title">Скромнейший из людей</div>
+        <div class="sec-heb-sub">עָנָו מְאֹד מִכֹּל הָאָדָם</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Тора свидетельствует о Моше: <em>«И человек Моше был скромнейшим из всех людей на лице земли»</em> (Бемидбар 12:3). Это не просто похвала — это описание его духовной сущности.</p>
+      <p>Когда Всевышний сказал Моше записать слово <em>«вайикра»</em>, обозначающее особую Б-жественную близость, Моше засомневался: <strong>достоин ли он, чтобы о нём было написано такое?</strong></p>
+      <p>Он хотел написать «вайикар» — то же слово, что использовалось для Билама, нечестивца, который лишь случайно встречался с Б-гом. Моше в своей скромности считал: <em>«Что такого особенного во мне? Зачем писать обо мне с таким почётом?»</em></p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">וְהָאִישׁ מֹשֶׁה עָנָו מְאֹד מִכֹּל הָאָדָם אֲשֶׁר עַל-פְּנֵי הָאֲדָמָה</div>
+      <div class="heb-src">— במדבר יב:ג · Бемидбар 12:3</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Это подлинное смирение — не притворная скромность. Моше действительно не видел в себе ничего, что ставило бы его выше других. Он знал: всё, чего он достиг — это <em>дар Всевышнего</em>, а не результат его собственных заслуг.</p>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🕊️</div>
+      <div class="key-body">
+        <div class="key-title">Смирение — не слабость</div>
+        <p>Смирение Моше — не слабость и не самоуничижение. Человек, называющий себя ничтожным в попытке произвести впечатление, — не скромен. Настоящее смирение — <strong style="color:var(--gold2)">это ясное осознание того, что все твои дары — от Всевышнего</strong>, и потому нет места гордыне.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Именно поэтому Моше хотел написать слово Билама: не из того же самого нечестия, но из противоположного источника — из <strong>глубочайшего смирения</strong>. Он был буквально не способен написать о себе слово, обозначающее особую Б-жественную любовь.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Воля Всевышнего</div>
+        <div class="sec-title">Компромисс в Торе</div>
+        <div class="sec-heb-sub">פְּשָׁרָה בַּתּוֹרָה</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Всевышний настаивал: <em>«вайикра»</em> — с алеф. Ведь это правда. Моше был удостоен особой Б-жественной близости, и это должно быть записано.</p>
+      <p>В результате между желанием Всевышнего и смирением Моше произошёл своеобразный <strong>компромисс</strong>: алеф была написана — но <em>маленькой</em>. Так в Торе навсегда запечатлелось двойное послание.</p>
+    </div>
+
+    <div class="formula-block fade-in">
+      <div class="f-part" style="background:rgba(212,168,67,0.1);border:1px solid var(--border);color:var(--gold2)">Воля Всевышнего<br><small>«вайикра» — с большой алеф</small></div>
+      <div class="f-eq">+</div>
+      <div class="f-part" style="background:rgba(91,156,246,0.1);border:1px solid rgba(91,156,246,0.3);color:var(--blue2)">Смирение Моше<br><small>«вайикар» — без алеф</small></div>
+      <div class="f-eq">=</div>
+      <div class="f-result">Маленькая алеф</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Маленькая алеф говорит нам сразу о двух вещах:</p>
+      <p><strong>Во-первых:</strong> Да, Б-г действительно зовёт Моше с любовью — это не случайная встреча. <em>Алеф есть</em>.</p>
+      <p><strong>Во-вторых:</strong> Но и смирение Моше учтено — <em>алеф написана скромно</em>, не во весь рост.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Примечательно, что Тора сохранила это навсегда. Во всех свитках Торы, во всех общинах и традициях, эта алеф пишется маленькой. Смирение Моше буквально вошло в текст Торы как её неотъемлемая часть.</p>
+      <div class="footnote">Ликутей Сихот, том 1, Ваикра — беседа Ребе Менахема Менделя Шнеерсона</div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="sec-5">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Смысл жертвоприношений</div>
+        <div class="sec-title">Корбан: приближение к Б-гу</div>
+        <div class="sec-heb-sub">קָרְבָּן — מִן הַשּׁוֹרֶשׁ קָרוֹב</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Большая часть книги Ваикра посвящена законам жертвоприношений — <em>корбанот</em>. Само слово <strong>«корбан» (קָרְבָּן)</strong> происходит от корня <em>«каров» (קָרוֹב)</em> — близкий, приближаться.</p>
+      <p>Корбан — это не «взятка Б-гу» и не способ избавиться от вины. <strong>Корбан — это акт приближения</strong> человека к Всевышнему.</p>
+    </div>
+
+    <div class="heb-quote fade-in">
+      <div class="heb-text">אָדָם כִּי-יַקְרִיב מִכֶּם קָרְבָּן לַה'</div>
+      <div class="heb-src">— ויקרא א:ב · Ваикра 1:2</div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Обратим внимание на формулировку стиха: <em>«Человек, когда принесёт от вас жертву Б-гу»</em> — буквально «когда приблизит из вас». Мидраш объясняет: <strong>слово «из вас» (מִכֶּם)</strong> намекает на то, что приносить в жертву нужно прежде всего <em>самого себя</em> — свои страсти, своё «я», свою животную природу.</p>
+    </div>
+
+    <div class="two-col fade-in">
+      <div class="col-card" style="border-top:3px solid var(--gold)">
+        <div class="col-title" style="color:var(--gold2)"><span>🔥</span> Ола — Всесожжение</div>
+        <p>Жертва, целиком сжигаемая на жертвеннике. Символизирует <em>полное самоотречение</em> — «я» человека полностью растворяется в Б-жественном свете.</p>
+      </div>
+      <div class="col-card" style="border-top:3px solid var(--blue2)">
+        <div class="col-title" style="color:var(--blue2)"><span>☮️</span> Шламим — Мирная жертва</div>
+        <p>Жертва мира и благодарности. Часть приносится на жертвенник, часть — священникам, часть — самому приносящему. Символизирует <em>гармонию</em> между духовным и материальным.</p>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in">
+      <div class="key-icon">🕍</div>
+      <div class="key-body">
+        <div class="key-title">Корбан и смирение Моше</div>
+        <p>Здесь открывается глубокая связь с маленькой алеф. Моше, написавший алеф маленькой, воплотил в себе смысл корбана: <strong style="color:var(--gold2)">приблизиться к Б-гу через отречение от эго</strong>. Его маленькая алеф — это его личный «корбан», его принесение себя в дар Всевышнему.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="sec-6">
+    <div class="sec-header">
+      <div class="sec-num">6</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Урок для каждого</div>
+        <div class="sec-title">Моя маленькая алеф</div>
+        <div class="sec-heb-sub">הָאָל"ף הַקְּטַנָּה שֶׁלִּי</div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <p>Ребе Менахем Мендель Шнеерсон в «Ликутей Сихот» задаёт вопрос: зачем Тора сохранила этот компромисс? Ведь Всевышний мог просто повелеть написать обычную алеф — и всё.</p>
+      <p>Ответ: <strong>маленькая алеф написана для нас</strong>. Чтобы каждый человек, читающий Тору, усвоил этот урок: <em>истинное величие неотделимо от смирения</em>.</p>
+    </div>
+
+    <div class="card fade-in">
+      <p>Моше был величайшим из пророков. Он стоял у горы Синай и принял Тору. Он вёл народ сорок лет в пустыне. И при этом — он был <em>скромнейшим из людей</em>. Не вопреки своему величию, а <strong>благодаря</strong> ему.</p>
+      <p>Чем глубже человек понимает Б-га, тем яснее он видит: всё исходит от Всевышнего. Его силы, его таланты, его достижения — всё это дары. Это и есть <em>подлинное смирение</em>.</p>
+    </div>
+
+    <div class="card card-accent fade-in">
+      <p>Маленькая алеф — это урок <strong>баланса</strong>: не нужно умалять себя до нуля (алеф всё же присутствует!). Но и не нужно делать алеф больше, чем она есть.</p>
+      <p>Б-г зовёт каждого из нас по имени — <em>«вайикра»</em> — с любовью и особой близостью. Наша задача — откликнуться на этот зов, сохраняя смирение Моше.</p>
+      <div class="footnote">Ликутей Сихот, том 1, беседа на главу Ваикра · Ребе Менахем Мендель Шнеерсон</div>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">✨</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Главный вывод</div>
+        <p>Всевышний зовёт каждого еврея по имени — с любовью, как Он звал Моше. Величие этого зова — в том, что он требует от нас не надменности, а смирения. <strong style="color:var(--gold2)">Маленькая алеф — это ключ к настоящей близости с Б-гом.</strong></p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">К викторине →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7: QUIZ -->
+  <div class="section" id="sec-7">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Мини-Викторина</div>
+        <div class="sec-title">Проверь себя</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Правильных ответов:</span>
+      <span class="score-val" id="scoreVal">0 / 6</span>
+      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
+        Завершить урок 🎓
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- RESULT -->
+<div class="lesson-container">
+  <div class="result-screen" id="resultScreen">
+    <div class="result-star" id="resultStar">⭐</div>
+    <div class="result-title" id="result-title">Урок завершён!</div>
+    <div class="result-score-big" id="resultScoreBig">0</div>
+    <div class="result-score-label" id="result-score-label">из 6 правильных</div>
+    <div class="result-sub" id="result-sub">Молодец! Ты познакомился с глубокими идеями о маленькой алеф и смирении Моше.</div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="restart-btn" onclick="restartLesson()">↺ Начать снова</button>
+      <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+    </div>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-faint)">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--text-faint);text-transform:uppercase;margin-bottom:12px">Предыдущий урок</div>
+      <a href="../Pekudei/ru.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--border);color:var(--gold2);font-family:'Rubik',sans-serif;font-size:14px;font-weight:600;padding:12px 24px;border-radius:30px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='var(--gold-faint)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--gold-dim)';this.style.transform='none'">
+        ← Пкудей: секрет возведения Мишкана
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Какая буква написана маленькой в первом слове книги Ваикра?',
+    opts: [
+      'Буква вав (ו)',
+      'Буква йуд (י)',
+      'Буква алеф (א) — последняя буква слова «вайикра»',
+      'Буква реш (ר)'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! В слове «וַיִּקְרָא» (вайикра) последняя буква — алеф — написана значительно меньше остальных букв. Это называется «алеф зеира» (маленькая алеф).',
+    fb_no: '✗ Неверно. Маленькой написана буква алеф (א) — последняя буква слова «וַיִּקְרָא». Это особенность написания во всех свитках Торы.'
+  },
+  {
+    q: 'Чем отличается слово «вайикра» от слова «вайикар»?',
+    opts: [
+      'Они означают одно и то же; разница лишь в произношении',
+      '«Вайикра» означает «и случилось» (язык случайности), а «вайикар» — «и воззвал» (язык любви)',
+      '«Вайикра» означает «и воззвал» (язык любви и близости), а «вайикар» — «и случилось» (язык случайности)',
+      'Разница только грамматическая, смысловой разницы нет'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! «Вайикра» (с алеф) — язык любви и Б-жественной близости, которым Б-г обращался к Моше. «Вайикар» (без алеф) — язык случайности, использованный для Билама.',
+    fb_no: '✗ Неверно. «Вайикра» (с алеф) означает намеренный зов с любовью, а «вайикар» (без алеф) — случайную встречу. Именно так Раши объясняет разницу между пророчествами Моше и Билама.'
+  },
+  {
+    q: 'Почему Моше хотел написать «вайикар» вместо «вайикра»?',
+    opts: [
+      'Потому что он не знал правильного написания',
+      'Из-за своего глубокого смирения: он не хотел, чтобы в Торе было записано о нём слово, обозначающее особую Б-жественную близость',
+      'Потому что «вайикар» — более торжественное слово',
+      'Потому что Б-г сначала сказал ему написать «вайикар»'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Моше был «скромнейшим из всех людей» (Бемидбар 12:3). В своём смирении он считал себя недостойным слова «вайикра», обозначающего особую Б-жественную любовь.',
+    fb_no: '✗ Неверно. Причина в смирении Моше. Тора называет его «скромнейшим из всех людей». Именно поэтому он хотел написать то же слово, что использовалось для Билама, — не видя разницы в своей «значимости».'
+  },
+  {
+    q: 'Как Тора отразила и волю Всевышнего, и смирение Моше?',
+    opts: [
+      'Тора написала «вайикар» — как хотел Моше',
+      'Тора написала «вайикра» с обычной алеф — как настаивал Всевышний',
+      'Тора написала «вайикра», но алеф — маленькой: алеф есть (воля Б-га), но она скромна (смирение Моше)',
+      'В разных традициях это слово написано по-разному'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! Маленькая алеф — это компромисс. Алеф есть, ведь Б-г действительно зовёт Моше с любовью (воля Всевышнего). Но она написана скромно — в знак смирения Моше.',
+    fb_no: '✗ Неверно. Маленькая алеф — это «компромисс» между волей Всевышнего (написать «вайикра» с алеф) и смирением Моше (который хотел обойтись без алеф).'
+  },
+  {
+    q: 'От какого корня происходит слово «корбан» (жертвоприношение)?',
+    opts: [
+      'От слова «коэн» (священник)',
+      'От слова «каров» — близкий, приближаться',
+      'От слова «кар» — холодный',
+      'От слова «кора» — читать'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Слово «корбан» (קָרְבָּן) происходит от корня «каров» (קָרוֹב) — близкий. Жертвоприношение — это акт приближения человека к Б-гу.',
+    fb_no: '✗ Неверно. «Корбан» происходит от «каров» — близкий. Главный смысл жертвоприношения — не «дать что-то Б-гу», а приблизиться к Нему.'
+  },
+  {
+    q: 'Какой практический урок Ребе извлекает из маленькой алеф для каждого еврея?',
+    opts: [
+      'Что нужно всегда писать буквы маленько, чтобы проявлять скромность',
+      'Что Б-г зовёт каждого еврея по имени с любовью, и наш ответ на этот зов должен сочетать принятие этой близости со смирением',
+      'Что Моше был исключительной личностью и его опыт не применим к обычным людям',
+      'Что скромность означает полный отказ от собственного «я»'
+    ],
+    correct: 1,
+    fb_ok: '✓ Правильно! Ребе учит: Б-г зовёт каждого из нас — «вайикра» — с той же любовью, что и Моше. Алеф есть в каждом из нас. Но она должна оставаться «маленькой» — принятой со смирением.',
+    fb_no: '✗ Неверно. Урок маленькой алеф универсален. Б-г зовёт каждого еврея с любовью (алеф есть), и наша задача — откликнуться на этот зов, сохраняя смирение Моше (алеф остаётся маленькой).'
+  }
+];
+
+// ─── STORAGE HELPER ───
+var LS = {
+  get: function(k, def) { try { var v = localStorage.getItem(k); return v !== null ? v : def; } catch(e) { return def; } },
+  set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+};
+
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+var _navScrolling = false;
+var _scrollSaveTimer;
+let quizInitialized = false;
+
+const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7];
+
+// ─── READING PROGRESS ───
+function getProgressKey() {
+  return 'lt-progress-' + window.location.pathname;
+}
+function saveProgress() {
+  LS.set(getProgressKey(), JSON.stringify({section: currentSection, scroll: Math.round(window.scrollY)}));
+}
+function clearProgress() {
+  LS.set(getProgressKey(), '');
+}
+
+// ─── TOC ───
+function buildTOC() {
+  var panel = document.getElementById('tocPanel');
+  panel.innerHTML = '<div class="toc-panel-title">Содержание</div>';
+  SECTION_ORDER.forEach(function(secNum, idx) {
+    var sec = document.getElementById('sec-' + secNum);
+    if (!sec) return;
+    var titleEl = sec.querySelector('.sec-title');
+    var title = titleEl ? titleEl.textContent.trim() : ('Раздел ' + (idx + 1));
+    var btn = document.createElement('button');
+    btn.className = 'toc-item';
+    btn.textContent = (idx + 1) + '. ' + title;
+    btn.onclick = function() {
+      goToSection(secNum);
+      document.getElementById('tocPanel').classList.remove('open');
+    };
+    panel.appendChild(btn);
+  });
+}
+function toggleTOC() {
+  document.getElementById('tocPanel').classList.toggle('open');
+}
+function updateTOC() {
+  var idx = SECTION_ORDER.indexOf(currentSection);
+  document.querySelectorAll('.toc-item').forEach(function(item, i) {
+    item.classList.remove('toc-current', 'toc-done');
+    if (i === idx) item.classList.add('toc-current');
+    else if (i < idx) item.classList.add('toc-done');
+  });
+}
+
+// ─── QUICK READ ───
+function toggleQuickRead() {
+  var active = document.body.classList.toggle('quick-read');
+  document.getElementById('qrBtn').classList.toggle('selected', active);
+  LS.set('lt-quick-read', active ? '1' : '0');
+}
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(1);
+}
+
+function continueLesson() {
+  var btn = document.getElementById('continueBtn');
+  var section = parseInt(btn.dataset.section, 10);
+  var scroll = parseInt(btn.dataset.scroll || '0', 10);
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(section);
+  if (scroll > 0) {
+    setTimeout(function() { window.scrollTo({top: scroll, behavior: 'smooth'}); }, 400);
+  }
+}
+
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  updateTOC();
+  saveProgress();
+  _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 7 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── SCROLL POSITION AUTOSAVE ───
+window.addEventListener('scroll', function() {
+  if (_navScrolling || currentSection <= 0) return;
+  clearTimeout(_scrollSaveTimer);
+  _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил идеи урока о маленькой алеф и смирении Моше.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.6 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  clearProgress();
+  goToSection(1);
+}
+
+// Restore quick-read mode
+(function() {
+  if (LS.get('lt-quick-read', '0') === '1') {
+    document.body.classList.add('quick-read');
+    var qrBtn = document.getElementById('qrBtn');
+    if (qrBtn) qrBtn.classList.add('selected');
+  }
+})();
+
+// Check saved progress
+(function() {
+  var saved = LS.get(getProgressKey(), '');
+  if (!saved) return;
+  try {
+    var p = JSON.parse(saved);
+    if (p && p.section && p.section > 0 && SECTION_ORDER.indexOf(p.section) > 0) {
+      var continueBtn = document.getElementById('continueBtn');
+      var orderIdx = SECTION_ORDER.indexOf(p.section);
+      continueBtn.dataset.section = p.section;
+      continueBtn.dataset.scroll = p.scroll || 0;
+      document.getElementById('continueBtnLabel').textContent =
+        'Продолжить (' + (orderIdx + 1) + ' / ' + SECTION_ORDER.length + ')';
+      continueBtn.classList.add('shown');
+    }
+  } catch(e) {}
+})();
+</script>
+
+<footer class="site-footer">
+  <span>© <a href="https://t.me/chitas" target="_blank" rel="noopener">chitasclub</a></span>
+  <span class="footer-sep">·</span>
+  <a href="mailto:kosherletter@gmail.com">kosherletter@gmail.com</a>
+</footer>
+
+<!-- TOC Sidebar -->
+<div class="toc-sidebar" id="tocSidebar">
+  <button class="toc-toggle-btn" id="tocToggleBtn" title="Оглавление" onclick="toggleTOC()">☰</button>
+  <div class="toc-panel" id="tocPanel"></div>
+</div>
+
+<!-- Settings button -->
+<button class="settings-btn" id="settingsBtn" title="Настройки отображения" aria-label="Настройки">⚙</button>
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settingsPanel">
+  <h3>Настройки</h3>
+
+  <div class="setting-row">
+    <label>Размер шрифта</label>
+    <input type="range" id="fontSizeRange" min="14" max="22" step="1" value="16">
+  </div>
+
+  <div class="setting-row">
+    <label>Фон</label>
+    <div class="color-swatches" id="bgSwatches">
+      <div class="color-swatch selected" data-bg="#0d0a1a" style="background:#0d0a1a;" title="Тёмно-синий"></div>
+      <div class="color-swatch" data-bg="#111111" style="background:#111111;" title="Чёрный"></div>
+      <div class="color-swatch" data-bg="#2d2416" style="background:#2d2416;" title="Сепия тёмная"></div>
+      <div class="color-swatch" data-bg="#f5f0e8" style="background:#f5f0e8;" title="Сепия светлая"></div>
+      <div class="color-swatch" data-bg="#ffffff" style="background:#ffffff;" title="Белый"></div>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Шрифт</label>
+    <div class="font-options" id="fontOptions">
+      <button class="font-option selected" data-font="'Rubik', sans-serif">Rubik</button>
+      <button class="font-option" data-font="'Merriweather', serif">Merriweather</button>
+      <button class="font-option" data-font="'Frank Ruhl Libre', serif">Frank Ruhl</button>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Режим чтения</label>
+    <div class="font-options">
+      <button class="font-option" id="qrBtn" onclick="toggleQuickRead()">⚡ Быстрое чтение</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../assets/settings.js"></script>
+
+</body>
+</html>
