@@ -189,6 +189,58 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Chapter section heading ── */
+.chapter-section {
+  margin-bottom: 56px;
+}
+
+.chapter-heading {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-faint);
+  position: relative;
+}
+
+.chapter-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ── Coming soon card ── */
+.coming-soon-card {
+  background: var(--card);
+  border: 1px dashed var(--border-faint);
+  border-radius: 16px;
+  padding: 48px 28px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.coming-soon-card .coming-soon-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  display: block;
+  opacity: 0.5;
+}
+
+.coming-soon-card .coming-soon-text {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
 /* ── Lesson preview popup ── */
 .lesson-popup {
   position: absolute;
