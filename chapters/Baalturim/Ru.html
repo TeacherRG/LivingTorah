@@ -1107,6 +1107,7 @@ let score = 0;
 let answered = 0;
 let quizInitialized = false;
 var _navScrolling = false;
+var _handlingPopState = false;
 var _scrollSaveTimer;
 
 const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -1167,6 +1168,15 @@ window.addEventListener('scroll', function() {
   _scrollSaveTimer = setTimeout(saveProgress, 600);
 });
 
+// ─── MOBILE BACK BUTTON NAVIGATION ───
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.inLesson && e.state.section !== undefined) {
+    _handlingPopState = true;
+    goToSection(e.state.section);
+    _handlingPopState = false;
+  }
+});
+
 // ─── NAVIGATION ───
 function startLesson() {
   document.getElementById('heroSection').style.display = 'none';
@@ -1203,6 +1213,7 @@ function goToSection(n) {
   updateNavDots();
   updateTOC();
   saveProgress();
+  if (!_handlingPopState) history.pushState({section: n, inLesson: true}, '');
   _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
   window.scrollTo({top: 0, behavior: 'smooth'});
 

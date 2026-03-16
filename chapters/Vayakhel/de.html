@@ -1292,6 +1292,7 @@ let quiz2Initialized = false;
 let score2 = 0;
 let answered2 = 0;
 var _navScrolling = false;
+var _handlingPopState = false;
 var _scrollSaveTimer;
 
 // ─── LANGUAGE ───
@@ -1369,6 +1370,15 @@ window.addEventListener('scroll', function() {
   _scrollSaveTimer = setTimeout(saveProgress, 600);
 });
 
+// ─── MOBILE BACK BUTTON NAVIGATION ───
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.inLesson && e.state.section !== undefined) {
+    _handlingPopState = true;
+    goToSection(e.state.section);
+    _handlingPopState = false;
+  }
+});
+
 // ─── NAVIGATION ───
 function startLesson() {
   document.getElementById('heroSection').style.display = 'none';
@@ -1407,6 +1417,7 @@ function goToSection(n) {
   updateNavDots();
   updateTOC();
   saveProgress();
+  if (!_handlingPopState) history.pushState({section: n, inLesson: true}, '');
   _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
   window.scrollTo({top:0, behavior:'smooth'});
 

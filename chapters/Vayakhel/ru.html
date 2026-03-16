@@ -1304,6 +1304,7 @@ var LS = {
 let currentLang = 'ru';
 let currentSection = 0;
 var _navScrolling = false;
+var _handlingPopState = false;
 var _scrollSaveTimer;
 let totalSections = 9;
 let score = 0;
@@ -1419,6 +1420,7 @@ function goToSection(n) {
   updateNavDots();
   updateTOC();
   saveProgress();
+  if (!_handlingPopState) history.pushState({section: n, inLesson: true}, '');
   _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
   window.scrollTo({top:0, behavior:'smooth'});
 
@@ -1477,6 +1479,15 @@ window.addEventListener('scroll', function() {
   if (_navScrolling || currentSection <= 0) return;
   clearTimeout(_scrollSaveTimer);
   _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
+
+// ─── MOBILE BACK BUTTON NAVIGATION ───
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.inLesson && e.state.section !== undefined) {
+    _handlingPopState = true;
+    goToSection(e.state.section);
+    _handlingPopState = false;
+  }
 });
 
 // ─── QUIZ ───
