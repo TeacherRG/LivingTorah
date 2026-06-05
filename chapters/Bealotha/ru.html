@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרשת בהעלותך — Карточки Бааль а‑Турим</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/shared.css">
+<style>
+/* Progress bar */
+#progressBar {
+  position:fixed; top:0; left:0; height:3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue2));
+  transition: width 0.5s ease;
+  z-index:100;
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* Home button */
+.home-btn {
+  position:fixed; top:16px; left:16px; z-index:99;
+  font-family:'Rubik',sans-serif; font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+  background:var(--bg2); color:var(--text-dim); cursor:pointer;
+  transition:all 0.2s; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:5px;
+}
+.home-btn:hover { background:var(--gold-dim); color:var(--text); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  text-align:center;
+  padding:80px 20px 60px;
+  border-bottom:1px solid var(--border-faint);
+  overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at center 60%, rgba(212,168,67,0.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+.parasha-label {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:4px;
+  text-shadow:0 0 40px rgba(212,168,67,0.4);
+  direction:rtl;
+  line-height:1;
+  margin-bottom:12px;
+}
+.hero-sub {
+  font-size:clamp(13px,2vw,16px);
+  color:var(--text-dim);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(22px,4vw,38px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  max-width:700px;
+  margin:0 auto 16px;
+}
+.hero-verse {
+  display:inline-block;
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--gold);
+  direction:rtl;
+  padding:12px 24px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--gold-faint);
+  margin-bottom:12px;
+}
+.hero-verse-ru {
+  font-size:14px; color:var(--text-dim);
+  font-style:italic; margin-bottom:32px;
+}
+
+/* Section nav dots */
+.nav-dots {
+  display:flex; gap:8px; justify-content:center;
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border);
+  cursor:pointer; transition:all 0.3s;
+  position:relative;
+}
+.nav-dot.active, .nav-dot.done { background:var(--gold); }
+.nav-dot.done::after {
+  content:'✓'; position:absolute; top:-20px; left:50%;
+  transform:translateX(-50%); font-size:10px; color:var(--gold);
+  white-space:nowrap;
+}
+
+/* Start button */
+.start-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  color:#0d0a1a; font-family:'Rubik',sans-serif;
+  font-size:16px; font-weight:700;
+  padding:16px 40px; border-radius:40px; border:none;
+  cursor:pointer; transition:all 0.3s;
+  box-shadow:0 8px 30px rgba(212,168,67,0.3);
+  letter-spacing:1px;
+}
+.start-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(212,168,67,0.4); }
+
+/* ── LESSON CONTAINER ── */
+.lesson-container {
+  max-width:860px; margin:0 auto;
+  padding:0 20px 80px;
+  position:relative; z-index:1;
+}
+.section {
+  display:none; opacity:0;
+  transform:translateY(24px);
+  transition:all 0.5s ease;
+}
+.section.active {
+  display:block; opacity:1; transform:translateY(0);
+}
+
+/* Section header */
+.sec-header {
+  display:flex; align-items:center; gap:16px;
+  margin:48px 0 28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border-faint);
+}
+.sec-num {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6010);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:18px;
+  color:#0d0a1a; flex-shrink:0;
+}
+.sec-title-wrap {}
+.sec-label {
+  font-size:11px; letter-spacing:3px; color:var(--gold);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.sec-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(18px,3vw,26px); font-weight:700;
+  color:var(--text); line-height:1.3;
+}
+.sec-heb-sub {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--gold);
+  direction:rtl;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* Content cards */
+.card {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+.card-accent {
+  border-left:3px solid var(--gold);
+  background:var(--gold-faint);
+}
+.card p {
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.85;
+  color:var(--text);
+  margin-bottom:12px;
+}
+.card p:last-child { margin-bottom:0; }
+.card p em { color:var(--gold2); font-style:normal; font-weight:500; }
+.card p strong { color:var(--gold2); }
+.card ul {
+  margin:10px 0 10px 20px;
+  line-height:1.85;
+}
+.card ul li {
+  font-size:clamp(15px,2vw,17px);
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+/* Hebrew quote */
+.heb-quote {
+  background:rgba(212,168,67,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 24px;
+  margin:20px 0;
+  direction:rtl;
+  text-align:right;
+}
+.heb-quote .heb-text {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2);
+  line-height:1.9;
+  margin-bottom:10px;
+}
+.heb-quote .heb-src {
+  font-size:12px; color:var(--text-faint);
+  letter-spacing:1px; direction:rtl;
+}
+
+/* Key concept box */
+.key-concept {
+  display:flex; gap:16px; align-items:flex-start;
+  background:var(--blue-dim);
+  border:1px solid rgba(58,123,213,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin:20px 0;
+}
+.key-icon { font-size:28px; flex-shrink:0; margin-top:2px; }
+.key-body .key-title {
+  font-weight:700; color:var(--blue2);
+  font-size:15px; margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.key-body p {
+  font-size:15px; line-height:1.7;
+  color:var(--text); margin:0;
+}
+
+/* Formula style */
+.formula-block {
+  display:flex; align-items:center;
+  justify-content:center; gap:12px;
+  flex-wrap:wrap;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(58,123,213,0.05));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin:20px 0;
+  font-family:'Merriweather',serif;
+}
+.f-part {
+  padding:8px 18px; border-radius:8px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+  text-align:center;
+}
+.f-part small { display:block; font-weight:400; font-size:12px; opacity:0.8; margin-top:4px; }
+.f-eq { font-size:22px; color:var(--gold); }
+.f-result {
+  background:var(--gold);
+  color:#0d0a1a;
+  padding:10px 20px; border-radius:10px;
+  font-size:clamp(14px,2vw,18px); font-weight:700;
+}
+
+/* Navigation buttons */
+.nav-btns {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:40px; gap:16px; flex-wrap:wrap;
+}
+.btn-prev, .btn-next {
+  font-family:'Rubik',sans-serif; font-weight:600;
+  padding:12px 28px; border-radius:30px; border:none;
+  cursor:pointer; font-size:15px; transition:all 0.25s;
+  display:flex; align-items:center; gap:8px;
+}
+.btn-prev {
+  background:transparent; color:var(--text-dim);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { background:var(--card); color:var(--text); }
+.btn-next {
+  background:linear-gradient(135deg,var(--gold),#a87800);
+  color:#0d0a1a;
+  box-shadow:0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(212,168,67,0.35); }
+.btn-next:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── QUIZ ── */
+.quiz-wrap { margin:28px 0; }
+.quiz-q {
+  background:var(--card);
+  border:1px solid var(--border-faint);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  transition:all 0.3s;
+}
+.quiz-q.answered-correct { border-color:var(--teal); background:rgba(46,196,182,0.07); }
+.quiz-q.answered-wrong { border-color:var(--rose); background:rgba(224,92,122,0.07); }
+.q-num {
+  font-size:11px; letter-spacing:2px; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:10px;
+}
+.q-text {
+  font-family:'Merriweather',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700; color:var(--text);
+  line-height:1.5; margin-bottom:18px;
+}
+.q-options { display:flex; flex-direction:column; gap:10px; }
+.q-opt {
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px; color:var(--text);
+  transition:all 0.2s; text-align:left;
+  font-family:'Rubik',sans-serif;
+  display:flex; align-items:center; gap:10px;
+}
+.q-opt:hover:not(:disabled) {
+  border-color:var(--gold); background:var(--gold-faint);
+  transform:translateX(4px);
+}
+.q-opt.correct {
+  border-color:var(--teal); background:rgba(46,196,182,0.12);
+  color:#a0f0e8;
+}
+.q-opt.wrong {
+  border-color:var(--rose); background:rgba(224,92,122,0.12);
+  color:#f0a0b0;
+}
+.q-opt:disabled { cursor:default; transform:none; }
+.q-opt .opt-icon { font-size:18px; flex-shrink:0; }
+.q-feedback {
+  margin-top:14px; padding:12px 16px;
+  border-radius:8px; font-size:14px;
+  line-height:1.6; display:none;
+}
+.q-feedback.show { display:block; }
+.q-feedback.correct-fb { background:rgba(46,196,182,0.1); color:#80e8df; border:1px solid rgba(46,196,182,0.2); }
+.q-feedback.wrong-fb { background:rgba(224,92,122,0.1); color:#f0b0c0; border:1px solid rgba(224,92,122,0.2); }
+
+/* Score */
+.score-bar {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:24px;
+  background:var(--gold-faint);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 20px;
+}
+.score-label { font-size:13px; color:var(--text-dim); }
+.score-val { font-weight:700; color:var(--gold2); font-size:20px; }
+.score-progress {
+  flex:1; height:6px; background:rgba(255,255,255,0.08);
+  border-radius:3px; overflow:hidden;
+}
+.score-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),var(--blue2));
+  transition:width 0.5s ease;
+}
+
+/* ── FINAL RESULT ── */
+.result-screen {
+  display:none;
+  text-align:center; padding:48px 20px;
+}
+.result-screen.show { display:block; }
+.result-star {
+  font-size:72px; margin-bottom:16px;
+  animation:starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes starPop {
+  from { transform:scale(0) rotate(-30deg); opacity:0; }
+  to { transform:scale(1) rotate(0); opacity:1; }
+}
+.result-title {
+  font-family:'Merriweather',serif;
+  font-size:clamp(24px,4vw,36px); font-weight:700;
+  color:var(--gold2); margin-bottom:12px;
+}
+.result-sub {
+  font-size:16px; color:var(--text-dim);
+  max-width:500px; margin:0 auto 32px;
+  line-height:1.6;
+}
+.result-score-big {
+  font-size:64px; font-weight:700;
+  color:var(--gold); font-family:'Rubik',sans-serif;
+  line-height:1; margin-bottom:8px;
+}
+.result-score-label {
+  font-size:14px; color:var(--text-faint); letter-spacing:2px;
+  margin-bottom:36px;
+}
+.restart-btn {
+  background:linear-gradient(135deg,var(--blue),#1a4a90);
+  color:#fff; font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px; border:none;
+  cursor:pointer; transition:all 0.2s;
+  box-shadow:0 6px 24px rgba(58,123,213,0.3);
+  margin-right:12px;
+}
+.restart-btn:hover { transform:translateY(-2px); }
+.home-result-btn {
+  background:transparent;
+  color:var(--text-dim); font-family:'Rubik',sans-serif;
+  font-size:15px; font-weight:600;
+  padding:14px 36px; border-radius:30px;
+  border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.home-result-btn:hover { background:var(--card); color:var(--text); }
+
+/* ── ANIMATIONS ── */
+.fade-in { animation:fadeInUp 0.5s ease both; }
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:480px){
+  .card { padding:18px 16px; }
+  .heb-quote { padding:16px 16px; }
+  .nav-btns { justify-content:center; }
+}
+
+/* ── Continue button ── */
+.continue-btn {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+.continue-btn:hover { border-color: var(--gold); color: var(--gold2); }
+.continue-btn.shown { display: inline-flex; }
+
+/* ── TOC Sidebar ── */
+.toc-sidebar {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: none;
+}
+.toc-sidebar.visible { display: block; }
+.toc-toggle-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--gold);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.toc-toggle-btn:hover { background: var(--gold-dim); }
+.toc-panel {
+  position: absolute;
+  left: 0;
+  top: 48px;
+  width: 230px;
+  background: #1a1630;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toc-panel.open { opacity: 1; pointer-events: all; transform: translateX(0); }
+.toc-panel-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-faint);
+}
+.toc-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-family: 'Rubik', sans-serif;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+.toc-item:hover { background: var(--gold-dim); color: var(--text); }
+.toc-item.toc-current { color: var(--gold2); background: var(--gold-faint); font-weight: 600; }
+.toc-item.toc-done { color: var(--text-faint); }
+@media (max-width: 920px) { .toc-sidebar { display: none !important; } }
+
+/* ── Quick Read mode ── */
+.quick-read .card:not(.card-accent) { display: none; }
+.quick-read .two-col { display: none; }
+.quick-read .formula-block { display: none; }
+
+/* Card-num badge */
+.card-num-badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:50%;
+  background:var(--gold); color:#0d0a1a;
+  font-family:'Rubik',sans-serif; font-weight:700; font-size:12px;
+  flex-shrink:0;
+}
+.card-header-row {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:12px; flex-wrap:wrap;
+}
+.card-heb-title {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(16px,2.5vw,20px);
+  color:var(--gold2); direction:rtl;
+}
+.method-label {
+  font-size:11px; letter-spacing:2px; color:var(--blue2);
+  text-transform:uppercase; font-family:'Rubik',sans-serif;
+  margin-bottom:10px;
+}
+
+/* Chapter divider */
+.chapter-divider {
+  text-align:center; margin:32px 0 24px;
+  padding:16px 24px;
+  background:linear-gradient(135deg,rgba(212,168,67,0.12),rgba(58,123,213,0.08));
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.chapter-divider-heb {
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(18px,3vw,26px);
+  color:var(--gold2); direction:rtl; margin-bottom:4px;
+}
+.chapter-divider-ru {
+  font-size:13px; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+
+<div id="progressBar" style="width:0%"></div>
+
+<a class="home-btn" href="../../index.html">← Все уроки</a>
+
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div class="parasha-label">בְּהַעֲלֹתְךָ</div>
+  <div class="hero-sub">Парашат Беалотха · Книга Бамидбар, Главы 9–10</div>
+  <div class="hero-title">Тайны букв, чисел и масоретских традиций</div>
+  <div class="hero-verse">בְּהַעֲלֹתְךָ אֶת הַנֵּרֹת</div>
+  <div class="hero-verse-ru">«Когда ты зажигаешь светильники» (Бамидбар 8:2)</div>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="start-btn" onclick="startLesson()">
+    <span>▶</span>
+    <span>Начать урок</span>
+  </button>
+  <br>
+  <button class="continue-btn" id="continueBtn" onclick="continueLesson()">
+    <span>↩</span>
+    <span id="continueBtnLabel">Продолжить урок</span>
+  </button>
+</div>
+
+<!-- LESSON CONTAINER -->
+<div class="lesson-container" id="lessonContainer" style="display:none">
+
+  <!-- SECTION 1: Cards 1–3 -->
+  <div class="section" id="sec-1">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 9 · Песах Шени</div>
+        <div class="sec-title">Связь тем, буквы и дефектное написание</div>
+        <div class="sec-heb-sub">פסח שני — קשר הפרשיות</div>
+      </div>
+    </div>
+
+    <!-- Card 1 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">1</div>
+        <div class="card-heb-title">סמך פ' פסח לטהרת לוים</div>
+      </div>
+      <div class="method-label">Связь тем (Смихут паршийот)</div>
+      <p>Тора ставит законы Песаха сразу после очищения левитов, чтобы намекнуть: именно левиты сдирают шкуру с пасхальных жертв.</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">2</div>
+        <div class="card-heb-title">בְּמוֹעֲדוֹ («В свое время»)</div>
+      </div>
+      <div class="method-label">Форма букв и Атбаш</div>
+      <p>1. Слово написано полностью с буквой <em>Вав</em> (וי''ו), намекая на <strong>6 часов</strong> (день делится на 12 часов, 6-й час — полдень, время начала убоя жертвы).</p>
+      <p>2. В системе шифра «Атбаш» слово превращается в ש-י-פ-ז-ק-ף, что по гематрии равно слову <strong>בשבת</strong> (в Шаббат) — Песах приносится, даже если выпадет на субботу.</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">3</div>
+        <div class="card-heb-title">לַעֲשֹׂת הַפֶּסַח</div>
+      </div>
+      <div class="method-label">Недостающие буквы (Хасер)</div>
+      <p>Слово «сделать» написано без буквы <em>Вав</em>. Это намек на то, что в пустыне евреи праздновали Песах <strong>всего один раз</strong> (этот самый), больше в пустыне они его не делали.</p>
+    </div>
+
+    <div class="nav-btns">
+      <div></div>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Cards 4–6 -->
+  <div class="section" id="sec-2">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 9 · Нечистые и Путь</div>
+        <div class="sec-title">Гематрия, знаки препинания и точки</div>
+        <div class="sec-heb-sub">טְמֵאִים וּבַדֶּרֶךְ</div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">4</div>
+        <div class="card-heb-title">אֲנָשִׁים אֲשֶׁר הָיוּ טְמֵאִים</div>
+      </div>
+      <div class="method-label">Гематрия</div>
+      <p>1. Гематрия фразы равна: «Это те, кто несли ковчег с костями Иосифа».</p>
+      <p>2. Гематрия второй фразы <em>אֲשֶׁר הָיוּ טְמֵאִים</em> указывает на <strong>Мет Мицва</strong> (оставленный мертвец, у которого нет близких, и его обязаны похоронить те, кто его нашел).</p>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">5</div>
+        <div class="card-heb-title">טָמֵא לָנֶפֶשׁ [יֵשׁ פָּסִיק]</div>
+      </div>
+      <div class="method-label">Знаки препинания (Псик)</div>
+      <p>Между словами «нечист» и «душою» стоит разделительный знак (псик). Урок: есть разделение. Отдельный человек из-за нечистоты переносится на Песах Шени, но если нечиста вся община (цибур) — праздник не переносится, а празднуется вовремя.</p>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">6</div>
+        <div class="card-heb-title">(אוֹ בַדֶּרֶךְ) רְחֹקָה («Или в дальнем пути»)</div>
+      </div>
+      <div class="method-label">Гематрия и Точки над буквами</div>
+      <p>Гематрия слова указывает на «порог» (мифтан). Над буквой <em>hей</em> (ה) стоит точка, как бы отменяя её.</p>
+      <p>Слово также намекает на месяц Ияр: при переносе года Ияр встает на место Нисана. 15 Ияра выпал Ман, поэтому Песах Шени празднуется всего 1 день.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Cards 7–9 -->
+  <div class="section" id="sec-3">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 9 · Масора и Карет</div>
+        <div class="sec-title">Наказание, Путь и конечные буквы</div>
+        <div class="sec-heb-sub">כָּרֵת וְסוֹפֵי תֵּבוֹת</div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">7</div>
+        <div class="card-heb-title">וּבַדֶּרֶךְ («И в пути»)</div>
+      </div>
+      <div class="method-label">Масора (4 упоминания)</div>
+      <p>Слово встречается в Танахе 4 раза (включая грехи Иеровоама и путь грешников в Псалмах). Урок: тот, кто умышленно находится «не в пути» (не идет дорогой Бога) и отменяет Песах, уподобляется Иеровоаму, который отменил приношения и ввел Израиль в грех.</p>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">8</div>
+        <div class="card-heb-title">וְחָדַל («И перестал»)</div>
+      </div>
+      <div class="method-label">Масора и Наказание (Карет)</div>
+      <p>Встречается 2 раза в Масоре. Связывает Песах и Юбилейный год (50 лет). Наказание за отмену Песаха — <em>Карет</em> (истребление души), что означает, что человек умирает, не дожив до 50 лет.</p>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">9</div>
+        <div class="card-heb-title">וְנִכְרְתָה הַנֶּפֶשׁ הַהִוא</div>
+      </div>
+      <div class="method-label">Конечные буквы (Софей Тевот)</div>
+      <p>Последние буквы этих слов складываются в слово <strong>אִשָּׁה</strong> (женщина). Это учит, что законы наказания и ответственности за Песах одинаково распространяются как на мужчин, так и на женщин.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Cards 10–12 -->
+  <div class="section" id="sec-4">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 9 · Облака Славы</div>
+        <div class="sec-title">Семь Святилищ, вечер и подъём из изгнания</div>
+        <div class="sec-heb-sub">עַנְנֵי הַכָּבוֹד</div>
+      </div>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">10</div>
+        <div class="card-heb-title">וּבְיוֹם הָקִים אֶת הַמִּשְׁכָּן</div>
+      </div>
+      <div class="method-label">Число повторений</div>
+      <p>Эта фраза написана в главе <strong>7 раз</strong>, что соответствует 7 различным Святилищам (Мишканам), которые существовали в истории Израиля (в пустыне, Гилгал, Шило, Нов, Гивон и два Храма).</p>
+    </div>
+
+    <!-- Card 11 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">11</div>
+        <div class="card-heb-title">וּבָעֶרֶב («А к вечеру»)</div>
+      </div>
+      <div class="method-label">Масора и Пророчество</div>
+      <p>Встречается 4 раза. Связывает вечер Мишкана с пророчеством Иезекииля о разрушении Храма («вечером я прокопал стену») и будущим избавлением, когда евреи снова будут воскурять благовония утром и вечером.</p>
+    </div>
+
+    <!-- Card 12 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">12</div>
+        <div class="card-heb-title">הֵעָלוֹת («Поднятие»)</div>
+      </div>
+      <div class="method-label">Масора и История</div>
+      <p>Встречается 2 раза: поднятие облака и поднятие из Изгнания (во времена Эзры). Евреи были достойны великих чудес при Эзре, как при Моше, но грех помешал этому.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Cards 13–14 -->
+  <div class="section" id="sec-5">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 9 · Скромность и Трубы</div>
+        <div class="sec-title">Этикет у Облака и серебряные трубы Моше</div>
+        <div class="sec-heb-sub">צְנִיעוּת וַחֲצוֹצְרוֹת</div>
+      </div>
+    </div>
+
+    <!-- Card 13 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">13</div>
+        <div class="card-heb-title">וּבִמְקוֹם («И на месте»)</div>
+      </div>
+      <div class="method-label">Масора и Этикет</div>
+      <p>Встречается 2 раза (здесь и в Притчах: «На месте великих не ставай»). Учит скромности: левиты и коэны не справляли нужду впереди или по бокам от Облака Славы, а только позади него.</p>
+    </div>
+
+    <!-- Card 14 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">14</div>
+        <div class="card-heb-title">בְּיַד מֹשֶׁה («Рукою Моше»)</div>
+      </div>
+      <div class="method-label">Смихут паршийот</div>
+      <p>Сразу после этого идет повеление сделать две серебряные трубы. Они были сделаны лично для Моше («твои») и после его смерти были скрыты, никто другой ими не пользовался.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Cards 15–17 -->
+  <div class="section" id="sec-6">
+    <div class="sec-header">
+      <div class="sec-num">6</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 10 · Трубы и Праздники</div>
+        <div class="sec-title">Серебряные трубы, Гог и Магог, радость праздников</div>
+        <div class="sec-heb-sub">חֲצוֹצְרוֹת כֶּסֶף</div>
+      </div>
+    </div>
+
+    <div class="chapter-divider fade-in">
+      <div class="chapter-divider-heb">פרק י · פרשת בהעלותך</div>
+      <div class="chapter-divider-ru">Глава 10 · Серебряные трубы, порядок колен и секрет перевернутых букв «Нун»</div>
+    </div>
+
+    <!-- Card 15 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">15</div>
+        <div class="card-heb-title">לְךָ שְׁתֵּי חֲצֹצְרוֹת כֶּסֶף</div>
+      </div>
+      <div class="method-label">Намеки и символизм</div>
+      <p>1. Буквы слова <em>Лех</em> (לְךָ) означают «твои» — сделаны на личные средства Моше.</p>
+      <p>2. <strong>Две трубы</strong> соответствуют Аврааму и Якову, которые воевали с народами и победили.</p>
+      <p>3. <strong>Серебро</strong>, а не золото, чтобы звук не напоминал Богу о грехе Золотого тельца.</p>
+    </div>
+
+    <!-- Card 16 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">16</div>
+        <div class="card-heb-title">וְכִי תָבֹאוּ מִלְחָמָה</div>
+      </div>
+      <div class="method-label">Гематрия и Нотарикон</div>
+      <p>Указывает на будущую войну Гога и Магога в дни Машиаха. Гематрия слов в точности равна фразе <strong>בְּמִלְחֶמֶת גּוֹג</strong> (в войне Гога). Буквы слова תָבֹאוּ составляют слово אָבוֹת (Отцы) — заслуги Патриархов защитят в этой войне.</p>
+    </div>
+
+    <!-- Card 17 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">17</div>
+        <div class="card-heb-title">שִׂמְחֹתֵכֶם / וּבְמוֹעֲדֵיכֶם</div>
+      </div>
+      <div class="method-label">Гематрия и Вав</div>
+      <p>1. Гематрия слова «ваша радость» равна фразе <strong>גַּם בְּיוֹם הַשַּׁבָּת</strong> (также в день Шаббата).</p>
+      <p>2. Слово «в ваши праздники» написано с буквой <em>Вав</em>, указывая на 6 праздников: Песах, Шавуот, Рош а-Шана, Йом Кипур, Суккот, Шмини Ацерет.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7: Cards 18–20 -->
+  <div class="section" id="sec-7">
+    <div class="sec-header">
+      <div class="sec-num">7</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 10 · Движение колен</div>
+        <div class="sec-title">Йеhуда, Дан и Облако Славы</div>
+        <div class="sec-heb-sub">נְסִיעַת הַדְּגָלִים</div>
+      </div>
+    </div>
+
+    <!-- Card 18 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">18</div>
+        <div class="card-heb-title">וַיִּסַּע דֶּגֶל מַחֲנֵה בְנֵי יְהוּדָה</div>
+      </div>
+      <div class="method-label">Пропущенная буква</div>
+      <p>У всех колен написано <em>Внеса</em> (וְנָסַע — «и двинулся»), а у Йеhуды — <em>Вайиса</em> (וַיִּסַּע), пропущена буква <em>Мем</em> (значение 40). Намек на то, что все 40 лет кости Йеhуды перекатывались в гробу из-за старого обета, он как будто «не покоился».</p>
+    </div>
+
+    <!-- Card 19 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">19</div>
+        <div class="card-heb-title">מְאַסֵּף («Замыкающий»)</div>
+      </div>
+      <div class="method-label">Масора и Секрет Дана</div>
+      <p>Встречается 3 раза. Колено Дана шло последним. Из-за того, что у них был идол (Михи), Облако Славы извергало их наружу, они теряли защиту, и Амалек нападал на них сзади, «срезая» как колосья жнецы.</p>
+    </div>
+
+    <!-- Card 20 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">20</div>
+        <div class="card-heb-title">וַיִּסְעוּ («И двинулись»)</div>
+      </div>
+      <div class="method-label">Масора и Сравнение</div>
+      <p>Встречается 2 раза (здесь и при Иакове, когда «ужас Б-жий пал на города»). Но если Яков убрал идолов и они шли с величием, то колено Дана из-за идолопоклонства шло сзади, без защиты Облака.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 8: Cards 21–23 -->
+  <div class="section" id="sec-8">
+    <div class="sec-header">
+      <div class="sec-num">8</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 10 · Итро, бунт и Нун</div>
+        <div class="sec-title">Иерихон, Вавилонская башня и перевёрнутые Нун</div>
+        <div class="sec-heb-sub">יְרִיחוֹ וְנוּנִים הֲפוּכִים</div>
+      </div>
+    </div>
+
+    <!-- Card 21 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">21</div>
+        <div class="card-heb-title">וְהָיָה הַטּוֹב הַהוּא</div>
+      </div>
+      <div class="method-label">Гематрия и Награда</div>
+      <p>Слово «благо» (טוֹב) в разных формах написано тут 5 раз — намек на 500 ама (мер длины) плодородной земли Иерихона, переданной потомкам Итро. Гематрия слова <strong>וְהֵטַבְנוּ</strong> равна слову <strong>יְרִיחוֹ</strong> (Иерихон).</p>
+    </div>
+
+    <!-- Card 22 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">22</div>
+        <div class="card-heb-title">בְּנָסְעָם («При их движении»)</div>
+      </div>
+      <div class="method-label">Масора и Бунт</div>
+      <p>Встречается 2 раза: здесь и в Бытии («когда они двигались с востока» к Вавилонской башне). Как там был бунт против Бога, так и здесь евреи начали роптать.</p>
+    </div>
+
+    <!-- Card 23 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">23</div>
+        <div class="card-heb-title">Секрет перевернутых букв Нун ( ׀ נ ׀ )</div>
+      </div>
+      <div class="method-label">Форма букв и Мистический смысл</div>
+      <p>1. Моше хотел перевести через Иордан (ширина которого 50 локтей, буква Нун = 50) колена, в чьих именах есть Нун, но грех помешал.</p>
+      <p>2. Перевернутые «Нун» — это разделительные знаки, отделяющие один грех народа от другого.</p>
+      <p>3. Они показывают, что этот отрывок должен стоять за 50 глав до этого места (в начале книги Бамидбар).</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 9: Cards 24–25 -->
+  <div class="section" id="sec-9">
+    <div class="sec-header">
+      <div class="sec-num">9</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Глава 10 · Ковчег и 85 букв</div>
+        <div class="sec-title">Ковчег, Иаков на Престоле и защита от огня</div>
+        <div class="sec-heb-sub">אֲרוֹן וּשְׁמִירָה מֵאֵשׁ</div>
+      </div>
+    </div>
+
+    <!-- Card 24 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">24</div>
+        <div class="card-heb-title">וַיְהִי בִּנְסֹעַ הָאָרֹן («И было, когда ковчег отправлялся...»)</div>
+      </div>
+      <div class="method-label">Тайные смыслы слова и Гематрия</div>
+      <p>1. Слово <em>Вайhи</em> (וַיְהִי) несет горечь — «Вай» (горе) для народов мира.</p>
+      <p>2. Гематрия <em>Вайhи</em> = 31 (намек на 31 царя Ханаана).</p>
+      <p>3. Ковчег не двигался, пока Моше не говорил: «Восстань, Господь!».</p>
+      <p>4. По системе шифра «Атбаш» слово превращается в שטח''ז, что по гематрии равно <strong>כְּכְבוֹד הַמֶּרְכָּבָה</strong> (как слава Колесницы).</p>
+      <p>5. Гематрия слова <em>Бнесоа</em> = <strong>יַעֲקֹב</strong> (Иаков), чей образ высечен на Небесном Престоле и движется с ними.</p>
+    </div>
+
+    <!-- Card 25 -->
+    <div class="card fade-in">
+      <div class="card-header-row">
+        <div class="card-num-badge">25</div>
+        <div class="card-heb-title">וּבְנֻחֹה («А когда останавливался...»)</div>
+      </div>
+      <div class="method-label">Структура стиха и Защита от Огня</div>
+      <p>В слове есть буква <em>hей</em> (ה) — намек на 4 флага и стан левитов (всего 5 групп). Стихи «Вайhи бинсоа...» содержат <strong>85 букв</strong>. Любой отрывок Торы, где есть 85 букв, считается самостоятельной Книгой Торы.</p>
+      <p>Такой отрывок спасают из пожара в Шаббат. И не случайно сразу после этого идет стих «И возгорелся у них огонь Господень» — Тора показывает, что 85 букв этого отрывка (и заслуга обрезания, гематрия которого тоже 85) защищают человека от огня Геены.</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">Далее →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 10: Tips -->
+  <div class="section" id="sec-10">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Практика</div>
+        <div class="sec-title">Как использовать эти карточки</div>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(212,168,67,0.08);border-color:rgba(212,168,67,0.3)">
+      <div class="key-icon">💡</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--gold2)">Гематрия и загадки</div>
+        <p>Вы можете задавать вопросы за столом: <em>«Какое слово в нашей главе численно равно городу Иерихон?»</em> (Ответ: וְהֵטַבְנוּ).</p>
+      </div>
+    </div>
+
+    <div class="key-concept fade-in" style="background:rgba(58,123,213,0.08);border-color:rgba(58,123,213,0.25)">
+      <div class="key-icon">📜</div>
+      <div class="key-body">
+        <div class="key-title" style="color:var(--blue2)">Тайны букв</div>
+        <p>Обратите внимание детей или гостей на свиток Торы, где стих <em>«Вайhи бинсоа а-арон»</em> выделен перевернутыми буквами «Нун», и расскажите секрет карточки №23.</p>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" onclick="nextSection()">К викторине →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 11: QUIZ -->
+  <div class="section" id="sec-11">
+    <div class="sec-header">
+      <div class="sec-num">✦</div>
+      <div class="sec-title-wrap">
+        <div class="sec-label">Мини-Викторина</div>
+        <div class="sec-title">Проверь себя</div>
+      </div>
+    </div>
+
+    <div class="score-bar fade-in">
+      <span class="score-label">Правильных ответов:</span>
+      <span class="score-val" id="scoreVal">0 / 7</span>
+      <div class="score-progress"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap"></div>
+
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevSection()">← Назад</button>
+      <button class="btn-next" id="finishBtn" onclick="showResult()" disabled>
+        Завершить урок 🎓
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div class="lesson-container">
+  <div class="result-screen" id="resultScreen">
+    <div class="result-star" id="resultStar">⭐</div>
+    <div class="result-title" id="result-title">Урок завершён!</div>
+    <div class="result-score-big" id="resultScoreBig">0</div>
+    <div class="result-score-label" id="result-score-label">из 7 правильных</div>
+    <div class="result-sub" id="result-sub">Молодец! Ты познакомился с тайнами Беалотха.</div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <button class="restart-btn" onclick="restartLesson()">↺ Начать снова</button>
+      <a class="home-result-btn" href="../../index.html">← Все уроки</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── QUIZ DATA ───
+const quizData = [
+  {
+    q: 'Что намекает разделительный знак (псик) между словами «טָמֵא» и «לָנֶפֶשׁ»?',
+    opts: [
+      'Что нечистота заразна для всей общины',
+      'Что отдельный нечистый переносится на Песах Шени, но нечистая община — нет',
+      'Что этот закон касается только коэнов',
+      'Что между двумя видами нечистоты нет разницы'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Псик разделяет: отдельный человек переносится на Песах Шени, но если нечиста вся община (цибур) — праздник не переносится.',
+    fb_no: '✗ Неверно. Псик указывает на разделение: отдельный нечистый переносится на Песах Шени, нечистая община — нет.'
+  },
+  {
+    q: 'Сколько раз фраза «וּבְיוֹם הָקִים אֶת הַמִּשְׁכָּן» написана в главе и что это означает?',
+    opts: [
+      '3 раза — три Патриарха',
+      '5 раз — пять книг Торы',
+      '7 раз — семь Святилищ в истории Израиля',
+      '12 раз — двенадцать колен'
+    ],
+    correct: 2,
+    fb_ok: '✓ Правильно! 7 раз соответствуют 7 Святилищам: в пустыне, Гилгал, Шило, Нов, Гивон и два Храма.',
+    fb_no: '✗ Неверно. Фраза написана 7 раз, соответствуя 7 Святилищам в истории Израиля.'
+  },
+  {
+    q: 'Что означают перевёрнутые буквы Нун ( ׀ נ ׀ ) в свитке Торы?',
+    opts: [
+      'Начало новой книги Торы',
+      'Знак пропущенного фрагмента текста',
+      'Они отделяют один грех народа от другого',
+      'Намёк на 50 лет юбилейного цикла'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! Перевёрнутые «Нун» — разделительные знаки, отделяющие один грех народа от другого.',
+    fb_no: '✗ Неверно. Перевёрнутые «Нун» отделяют один грех народа от другого и указывают, что отрывок должен стоять за 50 глав до этого места.'
+  },
+  {
+    q: 'Сколько букв содержат стихи «וַיְהִי בִּנְסֹעַ» и «וּבְנֻחֹה» и какое значение это имеет?',
+    opts: [
+      '39 букв — число запрещённых работ в Шаббат',
+      '50 букв — число ворот мудрости',
+      '70 букв — число народов мира',
+      '85 букв — такой отрывок считается самостоятельной Книгой Торы'
+    ],
+    correct: 3,
+    fb_ok: '✓ Правильно! 85 букв — любой отрывок с таким количеством считается самостоятельной Книгой Торы и спасают из пожара в Шаббат.',
+    fb_no: '✗ Неверно. Стихи содержат 85 букв — такой отрывок считается самостоятельной Книгой Торы.'
+  },
+  {
+    q: 'Почему трубы для Моше были сделаны из серебра, а не из золота?',
+    opts: [
+      'Серебро дешевле и было в большем количестве',
+      'Чтобы звук не напоминал Богу о грехе Золотого тельца',
+      'Серебро даёт более чистый и далеко слышимый звук',
+      'Золото было полностью использовано для Ковчега Завета'
+    ],
+    correct: 1,
+    fb_ok: '✓ Верно! Серебро выбрано специально, чтобы звук труб не напоминал Богу о грехе Золотого тельца.',
+    fb_no: '✗ Неверно. Трубы сделаны из серебра именно для того, чтобы их звук не напоминал Богу о грехе Золотого тельца.'
+  },
+  {
+    q: 'Гематрия какого слова из главы равна слову יְרִיחוֹ (Иерихон)?',
+    opts: [
+      'הַטּוֹב',
+      'וְהֵטַבְנוּ',
+      'מִלְחָמָה',
+      'וְנָסַע'
+    ],
+    correct: 1,
+    fb_ok: '✓ Правильно! Гематрия слова «וְהֵטַבְנוּ» равна слову «יְרִיחוֹ» — это намёк на плодородные земли Иерихона, переданные потомкам Итро.',
+    fb_no: '✗ Неверно. Гематрия слова «וְהֵטַבְנוּ» равна слову «יְרִיחוֹ» (Иерихон).'
+  },
+  {
+    q: 'Последние буквы слов «וְנִכְרְתָה הַנֶּפֶשׁ הַהִוא» складываются в слово:',
+    opts: [
+      'אֱמֶת (истина)',
+      'שָׁלוֹם (мир)',
+      'אִשָּׁה (женщина)',
+      'חַיִּים (жизнь)'
+    ],
+    correct: 2,
+    fb_ok: '✓ Верно! Последние буквы — ה, שׁ, א — складываются в слово «אִשָּׁה» (женщина): законы Песаха одинаково распространяются на мужчин и женщин.',
+    fb_no: '✗ Неверно. Последние буквы этих слов складываются в «אִשָּׁה» (женщина) — законы Песаха равны для обоих полов.'
+  }
+];
+
+// ─── STORAGE HELPER ───
+var LS = {
+  get: function(k, def) { try { var v = localStorage.getItem(k); return v !== null ? v : def; } catch(e) { return def; } },
+  set: function(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+};
+
+// ─── STATE ───
+let currentSection = 0;
+let score = 0;
+let answered = 0;
+let quizInitialized = false;
+var _navScrolling = false;
+var _handlingPopState = false;
+var _scrollSaveTimer;
+
+const SECTION_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+// ─── READING PROGRESS ───
+function getProgressKey() {
+  return 'lt-progress-' + window.location.pathname;
+}
+function saveProgress() {
+  LS.set(getProgressKey(), JSON.stringify({section: currentSection, scroll: Math.round(window.scrollY)}));
+}
+function clearProgress() {
+  LS.set(getProgressKey(), '');
+}
+
+// ─── TOC ───
+function buildTOC() {
+  var panel = document.getElementById('tocPanel');
+  panel.innerHTML = '<div class="toc-panel-title">Содержание</div>';
+  SECTION_ORDER.forEach(function(secNum, idx) {
+    var sec = document.getElementById('sec-' + secNum);
+    if (!sec) return;
+    var titleEl = sec.querySelector('.sec-title');
+    var title = titleEl ? titleEl.textContent.trim() : ('Раздел ' + (idx + 1));
+    var btn = document.createElement('button');
+    btn.className = 'toc-item';
+    btn.textContent = (idx + 1) + '. ' + title;
+    btn.onclick = function() {
+      goToSection(secNum);
+      document.getElementById('tocPanel').classList.remove('open');
+    };
+    panel.appendChild(btn);
+  });
+}
+function toggleTOC() {
+  document.getElementById('tocPanel').classList.toggle('open');
+}
+function updateTOC() {
+  var idx = SECTION_ORDER.indexOf(currentSection);
+  document.querySelectorAll('.toc-item').forEach(function(item, i) {
+    item.classList.remove('toc-current', 'toc-done');
+    if (i === idx) item.classList.add('toc-current');
+    else if (i < idx) item.classList.add('toc-done');
+  });
+}
+
+// ─── QUICK READ ───
+function toggleQuickRead() {
+  var active = document.body.classList.toggle('quick-read');
+  document.getElementById('qrBtn').classList.toggle('selected', active);
+  LS.set('lt-quick-read', active ? '1' : '0');
+}
+
+// ─── SCROLL POSITION AUTOSAVE ───
+window.addEventListener('scroll', function() {
+  if (_navScrolling || currentSection <= 0) return;
+  clearTimeout(_scrollSaveTimer);
+  _scrollSaveTimer = setTimeout(saveProgress, 600);
+});
+
+// ─── MOBILE BACK BUTTON NAVIGATION ───
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.inLesson && e.state.section !== undefined) {
+    _handlingPopState = true;
+    goToSection(e.state.section);
+    _handlingPopState = false;
+  }
+});
+
+// ─── NAVIGATION ───
+function startLesson() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(1);
+}
+
+function continueLesson() {
+  var btn = document.getElementById('continueBtn');
+  var section = parseInt(btn.dataset.section, 10);
+  var scroll = parseInt(btn.dataset.scroll || '0', 10);
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('lessonContainer').style.display = 'block';
+  document.getElementById('tocSidebar').classList.add('visible');
+  buildNavDots();
+  buildTOC();
+  goToSection(section);
+  if (scroll > 0) {
+    setTimeout(function() { window.scrollTo({top: scroll, behavior: 'smooth'}); }, 400);
+  }
+}
+
+function goToSection(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + n);
+  if (sec) {
+    setTimeout(() => sec.classList.add('active'), 50);
+  }
+  currentSection = n;
+  updateProgress();
+  updateNavDots();
+  updateTOC();
+  saveProgress();
+  if (!_handlingPopState) history.pushState({section: n, inLesson: true}, '');
+  _navScrolling = true; setTimeout(function(){_navScrolling=false;}, 900);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 11 && !quizInitialized) {
+    buildQuiz();
+    quizInitialized = true;
+  }
+}
+
+function nextSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx < SECTION_ORDER.length - 1) goToSection(SECTION_ORDER[idx + 1]);
+}
+function prevSection() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  if (idx > 0) goToSection(SECTION_ORDER[idx - 1]);
+}
+
+function updateProgress() {
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  const pct = ((idx + 1) / SECTION_ORDER.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function buildNavDots() {
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= SECTION_ORDER.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot';
+    d.title = 'Раздел ' + i;
+    const secNum = SECTION_ORDER[i - 1];
+    d.onclick = () => goToSection(secNum);
+    wrap.appendChild(d);
+  }
+}
+
+function updateNavDots() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const idx = SECTION_ORDER.indexOf(currentSection);
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i === idx) d.classList.add('active');
+    else if (i < idx) d.classList.add('done');
+  });
+}
+
+// ─── QUIZ ───
+function buildQuiz() {
+  score = 0; answered = 0;
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  document.getElementById('scoreVal').textContent = '0 / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = '0%';
+  document.getElementById('finishBtn').disabled = true;
+
+  const labels = ['А', 'Б', 'В', 'Г'];
+
+  quizData.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-q fade-in';
+    card.id = 'qq-' + qi;
+    card.style.animationDelay = (qi * 0.1) + 's';
+
+    card.innerHTML = `
+      <div class="q-num">Вопрос ${qi + 1} / ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <button class="q-opt" onclick="answerQ(${qi},${oi})" id="opt-${qi}-${oi}">
+            <span class="opt-icon">${labels[oi]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQ(qi, oi) {
+  const q = quizData[qi];
+  const card = document.getElementById('qq-' + qi);
+  const fb = document.getElementById('fb-' + qi);
+  const opts = card.querySelectorAll('.q-opt');
+
+  opts.forEach(o => o.disabled = true);
+
+  const correct = q.correct === oi;
+  opts[q.correct].classList.add('correct');
+  opts[q.correct].querySelector('.opt-icon').textContent = '✓';
+
+  if (!correct) {
+    opts[oi].classList.add('wrong');
+    opts[oi].querySelector('.opt-icon').textContent = '✗';
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  fb.textContent = correct ? q.fb_ok : q.fb_no;
+  fb.className = 'q-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+
+  if (correct) score++;
+  answered++;
+
+  document.getElementById('scoreVal').textContent = score + ' / ' + quizData.length;
+  document.getElementById('scoreFill').style.width = (score / quizData.length * 100) + '%';
+
+  if (answered === quizData.length) {
+    document.getElementById('finishBtn').disabled = false;
+    document.getElementById('finishBtn').style.animation = 'starPop 0.4s ease';
+  }
+}
+
+function showResult() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const total = quizData.length;
+  const pct = score / total;
+  const star = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '👍' : '📖';
+  document.getElementById('resultStar').textContent = star;
+  document.getElementById('resultScoreBig').textContent = score;
+  document.getElementById('result-score-label').textContent = `из ${total} правильных`;
+
+  const subs = [
+    'Отличный результат! Ты глубоко усвоил тайны Беалотха.',
+    'Хорошо! Ещё раз пройди разделы, где была ошибка.',
+    'Рекомендуем перечитать урок и попробовать снова.'
+  ];
+  const subIdx = pct === 1 ? 0 : pct >= 0.6 ? 1 : 2;
+  document.getElementById('result-sub').textContent = subs[subIdx];
+
+  document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function restartLesson() {
+  document.getElementById('resultScreen').classList.remove('show');
+  quizInitialized = false;
+  clearProgress();
+  goToSection(1);
+}
+
+// Restore quick-read mode
+(function() {
+  if (LS.get('lt-quick-read', '0') === '1') {
+    document.body.classList.add('quick-read');
+    var qrBtn = document.getElementById('qrBtn');
+    if (qrBtn) qrBtn.classList.add('selected');
+  }
+})();
+
+// Check saved progress
+(function() {
+  var saved = LS.get(getProgressKey(), '');
+  if (!saved) return;
+  try {
+    var p = JSON.parse(saved);
+    if (p && p.section && p.section > 0 && SECTION_ORDER.indexOf(p.section) > 0) {
+      var continueBtn = document.getElementById('continueBtn');
+      var orderIdx = SECTION_ORDER.indexOf(p.section);
+      continueBtn.dataset.section = p.section;
+      continueBtn.dataset.scroll = p.scroll || 0;
+      document.getElementById('continueBtnLabel').textContent =
+        'Продолжить (' + (orderIdx + 1) + ' / ' + SECTION_ORDER.length + ')';
+      continueBtn.classList.add('shown');
+    }
+  } catch(e) {}
+})();
+</script>
+
+<footer class="site-footer">
+  <span>© <a href="https://t.me/chitas" target="_blank" rel="noopener">chitasclub</a></span>
+  <span class="footer-sep">·</span>
+  <a href="mailto:kosherletter@gmail.com">kosherletter@gmail.com</a>
+</footer>
+
+<!-- Settings button -->
+<button class="settings-btn" id="settingsBtn" title="Настройки отображения" aria-label="Настройки">⚙</button>
+
+<!-- Settings panel -->
+<div class="settings-panel" id="settingsPanel">
+  <h3>Настройки</h3>
+
+  <div class="setting-row">
+    <label>Размер шрифта</label>
+    <input type="range" id="fontSizeRange" min="14" max="22" step="1" value="16">
+  </div>
+
+  <div class="setting-row">
+    <label>Фон</label>
+    <div class="color-swatches" id="bgSwatches">
+      <div class="color-swatch selected" data-bg="#0d0a1a" style="background:#0d0a1a;" title="Тёмно-синий"></div>
+      <div class="color-swatch" data-bg="#111111" style="background:#111111;" title="Чёрный"></div>
+      <div class="color-swatch" data-bg="#2d2416" style="background:#2d2416;" title="Сепия тёмная"></div>
+      <div class="color-swatch" data-bg="#f5f0e8" style="background:#f5f0e8;" title="Сепия светлая"></div>
+      <div class="color-swatch" data-bg="#ffffff" style="background:#ffffff;" title="Белый"></div>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Шрифт</label>
+    <div class="font-options" id="fontOptions">
+      <button class="font-option selected" data-font="'Rubik', sans-serif">Rubik</button>
+      <button class="font-option" data-font="'Merriweather', serif">Merriweather</button>
+      <button class="font-option" data-font="'Frank Ruhl Libre', serif">Frank Ruhl</button>
+    </div>
+  </div>
+
+  <div class="setting-row">
+    <label>Режим чтения</label>
+    <div class="font-options">
+      <button class="font-option" id="qrBtn" onclick="toggleQuickRead()">⚡ Быстрое чтение</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOC Sidebar -->
+<div class="toc-sidebar" id="tocSidebar">
+  <button class="toc-toggle-btn" id="tocToggleBtn" title="Оглавление" onclick="toggleTOC()">☰</button>
+  <div class="toc-panel" id="tocPanel"></div>
+</div>
+
+<script src="../../assets/settings.js"></script>
+
+</body>
+</html>
