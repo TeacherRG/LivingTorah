@@ -1,0 +1,487 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+   <meta charset="UTF-8">
+   <title>SmarTTorah: Все 12 Триад — Глава Шлах (Исправлено)</title>
+   <style>
+       @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans:wght@400;700&display=swap');
+       
+       body {
+           font-family: 'Noto Sans', sans-serif;
+           background-color: #ffffff;
+           color: #000000;
+           margin: 0;
+           padding: 10px;
+       }
+
+       h1 {
+           text-align: center;
+           font-family: 'Cinzel', serif;
+           font-size: 22px;
+           margin-bottom: 2px;
+           letter-spacing: 1px;
+       }
+
+       p.subtitle {
+           text-align: center;
+           font-size: 11px;
+           color: #555;
+           margin-bottom: 20px;
+       }
+
+       .triad-row {
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           gap: 12px;
+           max-width: 900px;
+           margin: 0 auto 25px auto;
+           page-break-inside: avoid;
+       }
+
+       .card {
+           width: 275px;
+           height: 215px;
+           background-color: #ffffff;
+           border: 2px solid #000000;
+           outline: 1px dashed #777777;
+           outline-offset: -6px;
+           box-sizing: border-box;
+           padding: 12px;
+           display: flex;
+           flex-direction: column;
+           justify-content: space-between;
+           align-items: center;
+           text-align: center;
+           position: relative;
+       }
+
+       .logo {
+           font-family: 'Cinzel', serif;
+           font-size: 11px;
+           font-weight: 700;
+           letter-spacing: 2px;
+           border-bottom: 1px solid #000000;
+           padding-bottom: 2px;
+           width: fit-content;
+       }
+       .logo span {
+           font-family: 'Noto Sans', sans-serif;
+           font-weight: 400;
+       }
+
+       .card-type {
+           font-size: 8px;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           font-weight: bold;
+           color: #444444;
+       }
+
+       .art-container {
+           width: 100%;
+           height: 110px;
+           border: 1px solid #000000;
+           margin: 4px 0;
+           background: #fafafa;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+       }
+
+       .vector-art {
+           width: 75px;
+           height: 75px;
+           color: #000000;
+       }
+
+       .quote {
+           font-size: 13.5px;
+           font-weight: 700;
+           margin: 2px 0;
+           direction: rtl;
+       }
+
+       .info-text {
+           font-size: 10.5px;
+           line-height: 1.35;
+           text-align: left;
+           width: 100%;
+       }
+
+       .highlight {
+           font-weight: bold;
+           text-decoration: underline;
+       }
+
+       .card-footer {
+           width: 100%;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+       }
+
+       .triad-number {
+           font-size: 8px;
+           font-weight: bold;
+           border: 1px solid #000000;
+           padding: 1px 5px;
+       }
+   </style>
+</head>
+<body>
+
+   <h1>SmarTTorah • ПОЛНЫЙ НАБОР ТРИАД (1-12)</h1>
+   <p class="subtitle">Глава Шлах. В наборе 36 карт. Найдите тройки: Арт + Арт со стихом + Смысл тайны</p>
+
+   <!-- ТРИАДА 1 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 21h20M4 21v-5l3-3 3 3 v5M14 21v-8l3-3 3 3v8M10 21v-4h4v4M12 2v4M9 4h6"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 1</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">שְׁלַח-לְךָ אֲנָשִׁים (13:2)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 21h20M4 21v-5l3-3 3 3 v5M14 21v-8l3-3 3 3v8M10 21v-4h4v4M12 2v4M9 4h6"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 1</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Посылание разведчиков. <br>
+               1. Последние буквы (софей тевот) слов дают <span class="highlight">חכם (Мудрец)</span> — изначально они были праведны.<br>
+               2. Гематрия «Шлах» = <span class="highlight">338</span>. В 3338 году от сотворения мира пал Первый Храм, и евреи были «отосланы» в изгнание.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 1</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 2 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 2</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">רָאשֵׁי בְנֵי-יִשְׂרָאֵל הֵמָּה (13:3)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 2</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «Главы сынов Израиля они». <br>
+               Слово <span class="highlight">הֵמָּה (Хема)</span> по гематрии равно числу <span class="highlight">50</span>. Это указывает на то, что лазутчики были не просто известными людьми, а занимали официальный пост начальников над пятидесятью мужчинами (сарей нун).
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 2</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 3 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 16v-4M12 8h.01"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 3</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">גַּדִּיאֵל בֶּן-סוּדִי (13:10)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 16v-4M12 8h.01"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 3</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Имя «Суди» (от слова Сод — секрет). <br>
+               Масора связывает его со стихом Иова «Гнушаются мною все близкие мои...» (מתי סודי). Лазутчики были допущены к <span class="highlight">государственной тайне</span>, но предали её, за что стали омерзительны Богу и народу.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 3</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 4 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 21v-4a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4M9 14V9h6v5M3 21h18"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 4</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">וַיַּעֲלוּ בַנֶּגֶב וַיָּבֹא... (13:22)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 21v-4a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4M9 14V9h6v5M3 21h18"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 4</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Переход на единственное число («и пришел»). <br>
+               Последние буквы этой фразы в обратном порядке образуют слово <span class="highlight">אבות (Отцы)</span>. Это указывает на то, что <span class="highlight">Калев</span> отделился от группы грешных лазутчиков, чтобы помолиться на могилах Патриархов в Хевроне.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 4</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 5 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="13" r="2"/><circle cx="12" cy="19" r="2"/><path d="M12 2v1"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 5</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">נַחַל אֶשְׁכּוֹל (13:24)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><circle cx="9" cy="9" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="13" r="2"/><circle cx="12" cy="19" r="2"/><path d="M12 2v1"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 5</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Ручей Эшколь и огромный виноград. <br>
+               Весь этот стих начинается и заканчивается на букву «Ламед» (ל = 30). Это намек на <span class="highlight">30 дней назорейства</span>. Плоды этой земли несут невероятную мудрость (פקחיн), но только тем, кто умеет подходить к ним свято.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 5</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 6 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3v18M18 3v18M6 7h12M6 12h12M6 17h12"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 6</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">עָלֹה נַעֲלֶה (13:30)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3v18M18 3v18M6 7h12M6 12h12M6 17h12"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 6</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «Мужественно взойдем!». <br>
+               Призыв написан с дополнительной буквой «hей» (ה = 5). Калев объявляет народу: даже если Моше прикажет сделать огромные лестницы и подняться прямо <span class="highlight">на небо</span> (путь до которого по мидрашу равен 500 годам) — мы поднимемся, ведь с нами Бог.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 6</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 7 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 7</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">כִּי-חָזָק הוּא מִמֶּנּוּ (13:31)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 7</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «Ибо он сильнее нас (мимэну)». <br>
+               В слове <span class="highlight">מִמֶּנּוּ</span> буквы Мем и Нун сдвоены (на что указывает дагеш). Мудрецы говорят: лазутчики впали в ересь, заявляя, будто даже «Сам Хозяин (Всевышний) не сможет вынести Свои сосуды оттуда». Буквы отражают грех против людей и Бога.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 7</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 8 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v6M6 10h12M4 14h16M5 18l3-4M19 18l-3-4"/><circle cx="12" cy="14" r="3"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 8</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">וַנְּהִי בְעֵינֵינוּ כַּחֲגָבִים (13:33)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v6M6 10h12M4 14h16M5 18l3-4M19 18l-3-4"/><circle cx="12" cy="14" r="3"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 8</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «...и были мы в глазах своих как кузнечики». <br>
+               Гематрия следующей фразы «и такими же мы были в их глазах» (וְכֵן הָיִינוּ בְּעֵינֵיהֶם) в точности равна словосочетанию <span class="highlight">קן נמלים (муравейник)</span>. Это объясняет, почему великаны назвали их муравьями в кустах.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 8</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 9 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 9</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">נִתְּנָה רֹאשׁ וְנָשׁוּבָה (14:4)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 9</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «Назначим главу и вернемся в Египет». <br>
+               Слово «Глава» (Rosh) всегда намекает на восстание против Бога. Акроним (первые буквы) всей этой испуганной фразы по своей гематрии равен аббревиатуре <span class="highlight">ע"ז</span> (Авода Зара — идолопоклонство). Они хотели выбрать языческого кумира.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 9</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 10 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 10</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">וְהֵטַבְנוּ לָךְ (10:32)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 10</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               «И мы сделаем тебе благо» (Бамидбар 10:32). <br>
+               Моше обещает великую награду семье праведного Итро. Гематрия слова «Веhетавну» (והטבנו) в точности равна названию священного города <span class="highlight">יריחו (Иерихон)</span>. Позже его потомкам действительно выделили лучшие земли Иерихона.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 10</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 11 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 18v-8M14 18v-6M6 18V8M18 18v-4M12 2v3M3 21h18"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 11</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">וְעַתָּה יִגְדַּל-נָא כֹּחַ (14:17)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 18v-8M14 18v-6M6 18V8M18 18v-4M12 2v3M3 21h18"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 11</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Аномально большая буква Йод в слове יִגְדַּל. <br>
+               Буква Йод имеет значение <span class="highlight">10</span>. Моше взывает к Богу: «Да, этот народ согрешил 10 раз за 10 испытаний в этой пустыне. Но Ты, Господи, со со своей стороны вспомни великие <span class="highlight">10 испытаний Авраама</span> и ради них прости их!»
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 11</span></div>
+       </div>
+   </div>
+
+   <!-- ТРИАДА 12 -->
+   <div class="triad-row">
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Иллюстрация • Арт</span>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8M9 10h6M8 14h8M7 18h10M5 22h14"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта А</span><span class="triad-number">Триада 12</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <div class="quote">וְעָשׂוּ לָהֶם צִיצִת (15:38)</div>
+           <div class="art-container">
+               <svg class="vector-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8M9 10h6M8 14h8M7 18h10M5 22h14"/></svg>
+           </div>
+           <div class="card-footer"><span class="card-type">Карта Б</span><span class="triad-number">Триада 12</span></div>
+       </div>
+       <div class="card">
+           <div class="logo">SmarT<span>Torah</span></div>
+           <span class="card-type">Тайна Комментария • סוֹד</span>
+           <div class="info-text">
+               Заповедь о Цицит. <br>
+               1. В системе Атбаш слово «Цицит» превращается в буквы, равные значению слова <span class="highlight">כסאי (Мой Престол)</span>.<br>
+               2. Само слово Цицит (600) + 8 нитей + 5 узлов дают <span class="highlight">613</span>, напоминая обо всей Торе разом.
+           </div>
+           <div class="card-footer"><span class="card-type">Карта В</span><span class="triad-number">Триада 12</span></div>
+       </div>
+   </div>
+
+</body>
+</html>
